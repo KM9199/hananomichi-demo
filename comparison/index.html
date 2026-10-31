@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>花のこみち｜数量単価連続入力_比較デモ（保存なし）</title>
 <style>
@@ -208,14 +208,16 @@ body.iphone-demo .demo-bar button{width:76px;padding:0 1px}
 body.iphone-demo #show-guide{font-size:13px;font-weight:600}.date{padding:0}.payment>button.btn{padding:0 1px}
 body.iphone-demo.focus-view #show-guide{width:50.5px;font-size:10.5px;padding:0}.nav-last .next{width:50px;padding:0 1px}@media(max-width:410px){.nav-last .next{width:44px}}
 /* 比較試作値です。第6版の正式仕様は変更しません。 */
-col:nth-child(1){width:auto}col:nth-child(2){width:27%}col:nth-child(3){width:34px}col:nth-child(4){width:44px}
-td:nth-child(-n+2){font-size:17px}
+col:nth-child(1){width:auto}col:nth-child(2){width:27%}col:nth-child(3){width:40px}col:nth-child(4){width:28px}col:nth-child(5){width:50px}
+th:nth-child(3){font-size:11px}th:nth-child(4){font-size:10px}
+td:nth-child(n+3){padding-left:2px;padding-right:2px}
+td:nth-child(-n+2){font-size:14px}
 td:nth-child(-n+2) .cell-text{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-td.pair-cell{padding:0;cursor:pointer}
-td.pair-cell .pair-value{display:flex;align-items:center;justify-content:flex-end;min-height:48px;padding:4px}
+td.pair-cell{padding:0 2px;cursor:pointer}
+td.pair-cell .pair-value{display:flex;align-items:center;justify-content:flex-end;min-height:48px;padding:4px 2px}
 .quantity-panel .context,.price-panel .context{overflow-wrap:anywhere}
 body #a-over:checked~.workspace .cash-qty,body #a-over:checked~.workspace .cash-amount{display:inline-block}
-@media(max-width:374px){col:nth-child(3){width:32px}col:nth-child(4){width:42px}}
+@media(max-width:374px){col:nth-child(3){width:38px}col:nth-child(4){width:26px}col:nth-child(5){width:48px}}
 </style></head><body class="iphone-demo focus-view">
 <input class="state" type="radio" name="preview" id="main" checked aria-label="会計入力の見本"><input class="state" type="radio" name="preview" id="product" aria-label="品名パネルの見本"><input class="state" type="radio" name="preview" id="quantity" aria-label="数量パネルの見本"><input class="state" type="radio" name="preview" id="price" aria-label="単価パネルの見本"><input class="state" type="radio" name="preview" id="paypay" aria-label="別会計の見本">
 <input class="state" type="radio" name="account-preview" id="a-first"  aria-label="先頭会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-middle" checked aria-label="途中会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-last"  aria-label="最後の既存会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-new"  aria-label="新しい来客の空白会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-over"  aria-label="桁超過の固定見本"><input class="state" type="radio" name="account-preview" id="a-qty-only"><input class="state" type="radio" name="account-preview" id="a-money-only"><input class="state" type="radio" name="account-preview" id="a-boundary"><input class="state" type="checkbox" id="paid-preview" aria-label="現金の決済状態の表示切替"><main class="workspace"><aside class="guide"><div class="preview-tools"><button type="button" id="focus-view">デモへ戻る</button></div><div class="eyebrow">第6版から分けた比較試作</div><h1>実寸と押しやすさを試します</h1><p>花のこみち売上入力システム<br>数量・単価の3タップ連続入力を試します。</p><div class="rule"></div>
@@ -233,9 +235,9 @@ body #a-over:checked~.workspace .cash-qty,body #a-over:checked~.workspace .cash-
 <div class="phone"><div class="demo-bar"><span>連続入力・比較デモ／保存なし<small id="js-status">JavaScript：未確認です</small></span><button type="button" id="show-guide">見本・手順</button></div><header class="app-header"><div class="title-row"><h2>花のこみち売上入力システム</h2><button class="date" type="button" title="日付変更は未実装です">2026/10/31</button></div></header>
 <div class="account"><div class="serial"><strong class="visitor-no"><span class="no-first">No.1</span><span class="no-middle">No.5</span><span class="no-last">No.6</span><span class="no-new">No.7</span><span class="no-over">No.8</span></strong><button class="add-account" type="button" title="名称・操作は仮案です">追加会計</button></div><div class="sum"><span class="total-qty">総数量 <b class="cash-qty"><span class="normal-value">6</span><span class="new-value">0</span><span class="over-value">123</span></b><b class="pay-qty">2</b></span><span class="total-label">会計合計</span><span class="amount"><span class="cash-amount"><span class="normal-value">1,550</span><span class="new-value">0</span><span class="over-value">153,750</span></span><span class="pay-amount">600</span><small>円</small></span></div></div>
 <div class="payment"><button class="btn" type="button" title="取り置き詳細は未実装です">取り置き ›</button><label class="status unpaid-status" for="paid-preview">未決済</label><label class="status paid-status" for="paid-preview">決済済</label><div class="payment-method"><label class="btn cash" for="main">現金</label><label class="btn paypay" for="paypay">PayPay</label></div></div>
-<div class="details-heading"><strong>購入明細</strong><span>金額単位：円</span></div><div class="sheet-scroll"><table aria-label="5列の購入明細見本"><colgroup><col><col><col><col><col></colgroup><thead><tr><th>品名</th><th>名称2</th><th aria-label="数量">数</th><th>単価</th><th>計</th></tr></thead>
-<tbody class="cash-body"><tr><td title="ビオラ"><label for="product"><span class="row-no">1</span>ビオラ</label></td><td title="フリル紫">フリル紫</td><td><label for="quantity">3</label></td><td><label for="price">150</label></td><td>450</td></tr><tr><td><span class="row-no">2</span>パンジー</td><td>黄</td><td>2</td><td>200</td><td>400</td></tr><tr><td><span class="row-no">3</span>培養土</td><td>14L</td><td>1</td><td>700</td><td>700</td></tr><tr class="excluded" title="除外行：総数量・会計合計の対象外です"><td><span class="row-no">4</span>ビオラ</td><td>白</td><td>4</td><td>150</td><td>600</td></tr></tbody>
-<tbody class="overflow-body"><tr><td title="ガーデンシクラメン・冬の限定品種"><span class="row-no">1</span>ガーデンシクラメン・冬の限定品種</td><td title="フリル咲きピンク・仕入番号12345">フリル咲きピンク・仕入番号12345</td><td><span class="number over-number">123</span></td><td><span class="number over-number">1,250</span></td><td><span class="number over-total">153,750</span></td></tr></tbody><tbody class="pay-body"><tr><td title="ガーデンシクラメン"><span class="row-no">1</span>ガーデンシクラメン</td><td>白</td><td>2</td><td>300</td><td>600</td></tr></tbody><tbody><tr class="blank"><td><label for="product">品名を選択</label></td><td></td><td></td><td></td><td></td></tr><tr class="blank"><td></td><td></td><td></td><td></td><td></td></tr><tr class="blank"><td></td><td></td><td></td><td></td><td></td></tr><tr class="blank"><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+<div class="details-heading"><strong>購入明細</strong><span>金額単位：円</span></div><div class="sheet-scroll"><table aria-label="5列の購入明細見本"><colgroup><col><col><col><col><col></colgroup><thead><tr><th>品名</th><th>名称2</th><th>単価</th><th aria-label="数量">数</th><th>計</th></tr></thead>
+<tbody class="cash-body"><tr><td title="ビオラ"><label for="product"><span class="row-no">1</span>ビオラ</label></td><td title="フリル紫">フリル紫</td><td><label for="price">150</label></td><td><label for="quantity">3</label></td><td>450</td></tr><tr><td><span class="row-no">2</span>パンジー</td><td>黄</td><td>200</td><td>2</td><td>400</td></tr><tr><td><span class="row-no">3</span>培養土</td><td>14L</td><td>700</td><td>1</td><td>700</td></tr><tr class="excluded" title="除外行：総数量・会計合計の対象外です"><td><span class="row-no">4</span>ビオラ</td><td>白</td><td>150</td><td>4</td><td>600</td></tr></tbody>
+<tbody class="overflow-body"><tr><td title="ガーデンシクラメン・冬の限定品種"><span class="row-no">1</span>ガーデンシクラメン・冬の限定品種</td><td title="フリル咲きピンク・仕入番号12345">フリル咲きピンク・仕入番号12345</td><td><span class="number over-number">1,250</span></td><td><span class="number over-number">123</span></td><td><span class="number over-total">153,750</span></td></tr></tbody><tbody class="pay-body"><tr><td title="ガーデンシクラメン"><span class="row-no">1</span>ガーデンシクラメン</td><td>白</td><td>300</td><td>2</td><td>600</td></tr></tbody><tbody><tr class="blank"><td><label for="product">品名を選択</label></td><td></td><td></td><td></td><td></td></tr><tr class="blank"><td></td><td></td><td></td><td></td><td></td></tr><tr class="blank"><td></td><td></td><td></td><td></td><td></td></tr><tr class="blank"><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
 <div class="table-note">グレーの行は除外中です。<br>行の左スワイプ → 除外／戻すの操作は今後実装します。</div><div class="actions"><button class="btn add-line" type="button">＋ 行追加</button><nav class="navigation" aria-label="会計移動の静的見本"><button class="btn list-button" type="button" title="一覧の詳細は未実装です">一覧</button><div class="nav-pair nav-first"><button class="btn" disabled>〈前</button><label class="btn next" for="a-middle">次〉</label></div><div class="nav-pair nav-middle"><label class="btn" for="a-first">〈前</label><label class="btn next" for="a-last">次〉</label></div><div class="nav-pair nav-last"><label class="btn" for="a-middle">〈前</label><label class="btn next" for="a-new">新規〉</label></div><div class="nav-pair nav-new"><label class="btn" for="a-last">〈前</label><button class="btn" disabled title="空白会計からの次操作は詳細未確定です">次〉</button></div><div class="nav-pair nav-over"><label class="btn" for="a-middle">〈前</label><label class="btn next" for="a-last">次〉</label></div></nav></div><div class="footer-note"><span>数量・単価の比較試作</span><span>数量×単価を計算／保存なし</span></div>
 <label class="scrim" for="main" aria-label="取消してパネルを閉じます"></label>
 <section class="bottom-sheet product-panel" aria-label="品名選択の表示見本"><div class="handle"></div><header class="panel-header"><h3>品名を選択</h3><div class="context"><strong>明細行No.1 ｜ ビオラ</strong><br>現在の品名：ビオラ ／ 名称2：フリル紫</div><label class="close" for="main" aria-label="取消して閉じます">×</label></header><div class="panel-content"><div class="recent-switch"><input class="recent-state" type="radio" name="recent" id="recent-flowers" checked><input class="recent-state" type="radio" name="recent" id="recent-materials"><button class="recent-toggle" type="button" aria-label="最近使用：花。タップして資材へ切替" aria-pressed="false">花</button><div class="recent recent-flowers"><div class="choice word" title="ビオラ">ビオラ</div><div class="choice word" title="パンジー">パンジー</div><div class="choice word" title="アリッサム">アリッサム</div><div class="choice word" title="ガーデンシクラメン">ガーデンシクラメン</div><div class="choice word" title="キク">キク</div><div class="choice word" title="カルーナ">カルーナ</div><div class="choice word" title="ハボタン">ハボタン</div><div class="choice word" title="プリムラ">プリムラ</div></div><div class="recent recent-materials"><div class="choice word" title="培養土">培養土</div><div class="choice word" title="鉢">鉢</div><div class="choice word" title="肥料">肥料</div><div class="choice word" title="支柱">支柱</div><div class="choice word" title="鉢底石">鉢底石</div><div class="choice word" title="プランター">プランター</div></div></div><div class="categories"><div class="seasons"><span class="category">春</span><span class="category">夏</span><span class="category active">秋</span><span class="category">冬</span></div><span class="category">資材 ›</span><span class="category">イベント</span></div><div class="catalog"><div class="product-list" aria-label="縦1列の品名一覧"><section id="kana-a" class="kana-group"><div class="product-item" data-kana="ありっさむ"><span>アリッサム</span></div><div class="product-item" data-kana="うぃんたーこすもす"><span>ウィンターコスモス</span></div></section><section id="kana-ka" class="kana-group"><div class="product-item" data-kana="がーでんしくらめん"><span>ガーデンシクラメン</span></div><div class="product-item" data-kana="かるーな"><span>カルーナ</span></div><div class="product-item" data-kana="きく"><span>キク</span></div></section><section id="kana-sa" class="kana-group"><div class="product-item" data-kana="しくらめん"><span>シクラメン</span></div><div class="product-item" data-kana="すいーとありっさむ"><span>スイートアリッサム</span></div></section><section id="kana-ta" class="kana-group"><div class="product-item" data-kana="だいあんさす"><span>ダイアンサス</span></div></section><section id="kana-na" class="kana-group"><div class="product-item" data-kana="なでしこ"><span>ナデシコ</span></div></section><section id="kana-ha" class="kana-group"><div class="product-item" data-kana="はぼたん"><span>ハボタン</span></div><div class="product-item" data-kana="ぱんじー"><span>パンジー</span></div><div class="product-item" data-kana="びおら"><span>ビオラ</span></div><div class="product-item" data-kana="ぷりむら"><span>プリムラ</span></div></section><section id="kana-ma" class="kana-group"><div class="product-item" data-kana="まーがれっと"><span>マーガレット</span></div></section><section id="kana-ya" class="kana-group"><div class="product-item" data-kana="ゆりおぷすでーじー"><span>ユリオプスデージー</span></div></section><section id="kana-ra" class="kana-group"><div class="product-item" data-kana="らべんだー"><span>ラベンダー</span></div></section><section id="kana-wa" class="kana-group"><div class="product-item" data-kana="わすれなぐさ"><span>ワスレナグサ</span></div></section></div><nav class="jumps" aria-label="五十音行ジャンプ"><a href="#kana-a" aria-label="あ行へ">ア</a><a href="#kana-ka" aria-label="か行へ">カ</a><a href="#kana-sa" aria-label="さ行へ">サ</a><a href="#kana-ta" aria-label="た行へ">タ</a><a href="#kana-na" aria-label="な行へ">ナ</a><a href="#kana-ha" aria-label="は行へ">ハ</a><a href="#kana-ma" aria-label="ま行へ">マ</a><a href="#kana-ya" aria-label="や行へ">ヤ</a><a href="#kana-ra" aria-label="ら行へ">ラ</a><a href="#kana-wa" aria-label="わ行へ">ワ</a></nav></div></div><footer class="panel-footer"><button class="direct" type="button">品名を直接入力</button><button class="direct" type="button">差額</button></footer></section>
@@ -261,7 +263,7 @@ function fitNumbers(){
   const header=el.closest('.account');
   const cell=el.closest('td');
   const slot=el.closest('.total-qty') ? el.parentElement : el.closest('.cash-amount,.pay-amount');
-  const limit=header ? slot.getBoundingClientRect().width : cell.clientWidth-8;
+  const limit=header ? slot.getBoundingClientRect().width : cell.clientWidth-parseFloat(getComputedStyle(cell).paddingLeft)-parseFloat(getComputedStyle(cell).paddingRight);
   // 実際の文字幅で計測し、超過した数値だけを必要量だけ縮めます。
   const range=document.createRange();range.selectNodeContents(el);
   const width=range.getBoundingClientRect().width;
@@ -273,7 +275,7 @@ function wrapNumbers(){
  all('td:nth-child(n+3)').forEach(td=>{
   const target=td.querySelector('label,.number')||td;
   if(!target.textContent.trim()||target.querySelector('.fit-value'))return;
-  const el=document.createElement('span');el.className='fit-value';el.dataset.normal=td.cellIndex===2?'2':td.cellIndex===3?'3':'4';
+  const el=document.createElement('span');el.className='fit-value';el.dataset.normal=td.cellIndex===2?'3':td.cellIndex===3?'2':'4';
   el.textContent=target.textContent;target.textContent='';target.append(el);
  });
  all('.cash-qty>span,.pay-qty,.cash-amount>span,.pay-amount').forEach(el=>{
@@ -287,7 +289,7 @@ function sampleState(){
  if(sample){
   $('.over-value').textContent=sample.qty;
   $('.cash-amount .over-value').textContent=sample.money;
-  $('.overflow-body').innerHTML=[sample.row,sample.row2,sample.row3].filter(Boolean).map((r,i)=>'<tr><td title="'+(i?'パンジー':'ビオラ')+'"><span class="row-no">'+(i+1)+'</span>'+(i?'パンジー':'ビオラ')+'</td><td>'+(i?'黄':'フリル紫')+'</td>'+r.map(v=>'<td>'+v+'</td>').join('')+'</tr>').join('');
+  $('.overflow-body').innerHTML=[sample.row,sample.row2,sample.row3].filter(Boolean).map((r,i)=>'<tr><td title="'+(i?'パンジー':'ビオラ')+'"><span class="row-no">'+(i+1)+'</span>'+(i?'パンジー':'ビオラ')+'</td><td>'+(i?'黄':'フリル紫')+'</td>'+[r[1],r[0],r[2]].map(v=>'<td>'+v+'</td>').join('')+'</tr>').join('');
  }else{$('.over-value').textContent='123';$('.cash-amount .over-value').textContent='153,750';}
  all('.extra-state-style').forEach(el=>el.remove());
  if(extraStates.includes(id)){
@@ -342,7 +344,7 @@ window.addEventListener('resize',metrics);if(window.visualViewport)visualViewpor
 metrics();
 
 
-// Comparison only: pending quantity never writes through until price commits.
+// Comparison only: pending price never writes through until quantity commits.
 let pendingPair=null;
 const initialCash=$('.cash-body').innerHTML,initialPay=$('.pay-body').innerHTML;
 function visibleBody(){return all('.sheet-scroll tbody').find(b=>b.matches('.cash-body,.pay-body,.overflow-body')&&getComputedStyle(b).display!=='none');}
@@ -359,7 +361,7 @@ function prepareRows(){
   [2,3].forEach(i=>{
    const cell=row.cells[i],value=cell.textContent.trim();
    cell.classList.add('pair-cell');cell.tabIndex=i===2?0:-1;
-   cell.setAttribute('role','button');cell.setAttribute('aria-label','数量と単価を連続入力：'+row.cells[0].textContent.trim());
+   cell.setAttribute('role','button');cell.setAttribute('aria-label','単価と数量を連続入力：'+row.cells[0].textContent.trim());
    cell.innerHTML='';const label=document.createElement('span');label.className='pair-value';label.textContent=value;cell.append(label);
   });
  });wrapNumbers();requestAnimationFrame(fitNumbers);
@@ -369,16 +371,16 @@ function panelContext(panel,step){
  const {row,qty,price}=pendingPair;
  const context=panel.querySelector('.context');context.replaceChildren();
  const strong=document.createElement('strong');strong.textContent='明細行 '+row.cells[0].textContent.trim();context.append(strong,document.createElement('br'));
- context.append(step==='quantity'?'現在：数量 '+qty+' ／ 単価 '+price.toLocaleString('ja-JP')+'円':'選択中の数量：'+pendingPair.nextQty+' ／ 元の単価：'+price.toLocaleString('ja-JP')+'円');
- context.append(document.createElement('br'),step==='quantity'?'1/2 数量を選ぶと単価へ進みます。':'2/2 単価を選ぶと両方を確定します。');
+ context.append(step==='price'?'現在：単価 '+price.toLocaleString('ja-JP')+'円 ／ 数量 '+qty:'選択中の単価：'+pendingPair.nextPrice.toLocaleString('ja-JP')+'円 ／ 元の数量：'+qty);
+ context.append(document.createElement('br'),step==='price'?'1/2 単価を選ぶと数量へ進みます。':'2/2 数量を選ぶと両方を確定します。');
 }
 function startPair(row){
- pendingPair={row,body:row.parentElement,qty:numeric(row.cells[2]),price:numeric(row.cells[3]),nextQty:null};
- panelContext($('.quantity-panel'),'quantity');$('#quantity').checked=true;
+ pendingPair={row,body:row.parentElement,qty:numeric(row.cells[3]),price:numeric(row.cells[2]),nextPrice:null};
+ panelContext($('.price-panel'),'price');$('#price').checked=true;
 }
 function updateTotals(body){
  let qty=0,money=0;
- [...body.rows].filter(r=>!r.classList.contains('excluded')).forEach(r=>{qty+=numeric(r.cells[2]);money+=numeric(r.cells[4]);});
+ [...body.rows].filter(r=>!r.classList.contains('excluded')).forEach(r=>{qty+=numeric(r.cells[3]);money+=numeric(r.cells[4]);});
  let q,m;
  if(body.matches('.pay-body')){q=$('.pay-qty');m=$('.pay-amount');}
  else if(body.matches('.overflow-body')){q=$('.cash-qty .over-value');m=$('.cash-amount .over-value');}
@@ -392,11 +394,11 @@ document.addEventListener('click',e=>{
  const choice=e.target.closest('.quantity-panel .choice,.price-panel .choice');
  if(choice){
   e.preventDefault();if(dragged&&e.detail!==0)return;if(!pendingPair)return;
-  if(choice.closest('.quantity-panel')){
-   pendingPair.nextQty=Number(choice.textContent);panelContext($('.price-panel'),'price');$('#price').checked=true;
-  }else if(pendingPair.nextQty!==null){
-   const {row,body,nextQty}=pendingPair,price=Number(choice.textContent);
-   [nextQty,price,nextQty*price].forEach((v,i)=>{const cell=row.cells[i+2];cell.textContent=v.toLocaleString('ja-JP');});
+  if(choice.closest('.price-panel')){
+   pendingPair.nextPrice=Number(choice.textContent);panelContext($('.quantity-panel'),'quantity');$('#quantity').checked=true;
+  }else if(pendingPair.nextPrice!==null){
+   const {row,body,nextPrice}=pendingPair,qty=Number(choice.textContent);
+   [nextPrice,qty,qty*nextPrice].forEach((v,i)=>{const cell=row.cells[i+2];cell.textContent=v.toLocaleString('ja-JP');});
    cancelPair();prepareRows();updateTotals(body);
   }return;
  }
@@ -427,8 +429,8 @@ all('.quantity-panel .choice,.price-panel .choice').forEach(el=>{
  el.tabIndex=0;el.setAttribute('role','button');el.classList.add('tap-target');
  el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();dragged=false;el.click();}});
 });
-$('.quantity-panel .panel-note').textContent='単価を選ぶまでは元の2値を保持します。×・外側で両方取消です。';
-$('.price-panel .panel-note').textContent='単価の選択で数量・単価を同時確定します。×・外側で両方取消です。';
+$('.quantity-panel .panel-note').textContent='数量の選択で単価・数量を同時確定します。×・外側で両方取消です。';
+$('.price-panel .panel-note').textContent='数量を選ぶまでは元の2値を保持します。×・外側で両方取消です。';
 prepareRows();
 
 </script></body></html>
