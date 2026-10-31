@@ -1,0 +1,434 @@
+﻿<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>花のこみち｜数量単価連続入力_比較デモ（保存なし）</title>
+<style>
+:root{font-family:"Yu Gothic UI","Meiryo",sans-serif;color:#293c33;background:#eff2ed;--green:#315e49;--line:#cbd5cb;--soft:#eef4ee}*{box-sizing:border-box}body{margin:0}a{color:inherit}button{font:inherit;color:inherit;cursor:default}a,label{ -webkit-tap-highlight-color:transparent}a:focus-visible,button:focus-visible,label:focus-visible,input:focus-visible{outline:3px solid #ba7e30;outline-offset:2px}.state{position:fixed;left:-200px}.workspace{max-width:1120px;margin:0 auto;padding:38px 28px;display:grid;grid-template-columns:270px 1fr;gap:70px}.guide{padding-top:15px}.eyebrow{font-size:11px;letter-spacing:.12em;color:#748174}.guide h1{font-size:25px;line-height:1.65;font-weight:650;margin:14px 0}.guide p{font-size:13px;line-height:1.9;color:#607064}.rule{height:1px;background:#d0d8ce;margin:23px 0}.preview-menu{display:grid;gap:8px}.preview-menu label{border:1px solid var(--line);background:#fafcf9;border-radius:6px;padding:12px 14px;cursor:pointer;font-size:13px;display:flex;justify-content:space-between}.preview-menu small{font-size:10px;opacity:.75}.guide .small{font-size:11px;line-height:1.9}.guide ul{padding-left:18px;font-size:12px;line-height:1.9;color:#607064}.tag{display:inline-block;padding:2px 6px;border:1px solid #c9cdbb;border-radius:3px;font-size:10px;color:#6a7154;background:#f8f8ef}.stage{display:flex;flex-direction:column;align-items:center}.stage-caption,.caption{width:430px;max-width:100%;font-size:11px;color:#748174;line-height:1.8}.stage-caption{display:flex;justify-content:space-between;margin-bottom:10px}.phone{width:430px;max-width:100%;height:850px;position:relative;background:#fff;border:1px solid #bac8bd;border-radius:9px;box-shadow:0 14px 40px #315e4912;display:flex;flex-direction:column;overflow:hidden}.app-header{border-top:4px solid var(--green);border-bottom:1px solid var(--line);padding:14px 12px 12px}.title-row{display:flex;align-items:center;justify-content:space-between;gap:8px}.title-row h2{font-size:15px;letter-spacing:-.04em;margin:0;white-space:nowrap}.date{font-size:11px;padding:9px 7px;white-space:nowrap;background:#fff;border:1px solid #b9c9be;border-radius:4px}.account{padding:12px 10px;background:var(--soft);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.serial{display:flex;align-items:center;gap:5px;margin-right:auto;white-space:nowrap}.serial strong{font-size:16px}.add-account{font-size:10px;padding:6px 4px;background:white;border:1px dashed #aabcae;border-radius:3px}.sum{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap;margin-left:auto}.status{color:#737c76;background:#fff;border:1px solid #aeb8af;border-radius:2px;padding:6px 5px;font-size:10px;white-space:nowrap}.paid-status{display:none;color:#ba3e3e;border-color:#ba7878}.total-qty{font-size:11px;white-space:nowrap}.total-qty b{font-size:15px}.total-label{font-size:11px;white-space:nowrap}.amount{font-size:23px;font-weight:650;letter-spacing:-.04em;font-variant-numeric:tabular-nums;white-space:nowrap}.amount small{font-size:11px;margin-left:2px}.payment{display:flex;justify-content:space-between;align-items:center;padding:12px;gap:8px;border-bottom:1px solid var(--line)}.payment-method{display:flex;align-items:center;gap:6px}.payment-method>span{font-size:11px;color:#6d7b70}.btn{display:inline-flex;align-items:center;justify-content:center;height:39px;padding:0 12px;border:1px solid #bccbbf;border-radius:5px;background:#fff;font-size:12px;white-space:nowrap}.cash{background:var(--green);color:#fff;border-color:var(--green)}.details-heading{display:flex;justify-content:space-between;padding:12px 12px 8px;font-size:10px;color:#7a877c}.details-heading strong{font-size:12px;color:#41594a}.sheet-scroll{flex:1;min-height:0;margin:0 10px;border:1px solid var(--line);overflow:auto}table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:12px;font-variant-numeric:tabular-nums}col:nth-child(1){width:27%}col:nth-child(2){width:22%}col:nth-child(3){width:11%}col:nth-child(4){width:18%}col:nth-child(5){width:22%}th{background:#e7eee7;color:#4b6051;height:32px;font-weight:600;font-size:11px;position:sticky;top:0}td{height:48px;padding:4px 6px;border-top:1px solid #d7dfd6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}td,th{border-right:1px solid #d3ddd2}td:last-child,th:last-child{border-right:0}td:nth-child(n+3){text-align:right}td:last-child{background:#f4f7f2;font-weight:600}td label{cursor:pointer;display:block;overflow:hidden;text-overflow:ellipsis;line-height:38px}td .row-no{font-size:9px;color:#8a968e;margin-right:5px}.excluded td{background:#eee;color:#929a94;text-decoration:line-through}.excluded .row-no{text-decoration:none}.blank td{color:#a5afa7}.blank td:empty:after{content:"　"}.table-note{padding:8px 12px 2px;font-size:10px;line-height:1.7;color:#7e8a80}.actions{padding:10px 12px 12px}.add-line{width:100%;margin-bottom:10px;background:var(--soft);height:42px}.navigation{display:flex;gap:8px}.navigation .next{background:var(--green);border-color:var(--green);color:#fff}.navigation .prev{margin-left:auto}.footer-note{padding:9px 12px;border-top:1px solid #dbe2d8;background:#f7f9f5;font-size:10px;color:#7b897e;display:flex;justify-content:space-between}.caption{margin:12px 0}.scrim{display:none;position:absolute;inset:0;background:#17332240;cursor:pointer}.bottom-sheet{display:none;position:absolute;bottom:0;left:0;right:0;background:#fff;max-height:78%;border-radius:13px 13px 0 0;box-shadow:0 -8px 28px #263b321c;border-top:1px solid #b7c7bb;overflow:hidden;flex-direction:column}.handle{height:3px;width:32px;background:#cbd5cc;border-radius:4px;margin:9px auto 8px;flex-shrink:0}.panel-header{position:relative;padding:0 52px 10px 14px;border-bottom:1px solid #dae2d7;flex-shrink:0}.panel-header h3{font-size:16px;margin:0 0 5px}.context{font-size:11px;line-height:1.7;color:#67796c}.context strong{color:#324b3a}.close{position:absolute;right:12px;top:0;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:25px;border:1px solid #c5d0c4;border-radius:4px;cursor:pointer;background:white}.panel-content{padding:0 14px 14px;overflow:auto;min-height:0;overscroll-behavior:contain;touch-action:pan-y}.section-label{font-size:11px;color:#6c7f70;margin:11px 0 6px;display:flex;align-items:center;justify-content:space-between}.choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.choice{height:39px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid #bdcdbf;border-radius:4px;font-size:15px;font-variant-numeric:tabular-nums;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.choice.word{display:block;text-align:center;line-height:37px;padding:0 5px;font-size:11px}.categories{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;margin:12px 0 8px}.category{height:35px;border:1px solid #c6d1c4;border-radius:4px;background:#f8faf6;display:flex;align-items:center;justify-content:center;font-size:11px;white-space:nowrap}.category.active{background:var(--green);color:white;border-color:var(--green)}.product-panel{height:656px;max-height:80%}.product-panel .panel-content{display:flex;flex-direction:column;padding-bottom:0;overflow:hidden}.recent,.categories,.section-label,.jumps{flex-shrink:0}.jumps{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:3px;margin:2px 0 7px}.jumps a{height:31px;display:flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid #c6d3c6;border-radius:3px;font-size:12px;background:#f6f9f4}.product-list{overflow-y:auto;min-height:100px;flex:1;border:1px solid var(--line);overscroll-behavior:contain;touch-action:pan-y;scroll-behavior:auto}.kana-group{scroll-margin-top:0}.kana-group h4{margin:0;background:#eef3ec;padding:6px 10px;font-size:10px;color:#6b7e6f}.product-item{display:flex;flex-direction:column;padding:7px 10px;min-height:47px;border-top:1px solid #e0e7dc}.product-item span{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.product-item small{font-size:9px;color:#839084;margin-top:2px}.panel-footer{padding:10px 14px 14px;display:flex;gap:8px;flex-shrink:0;background:#fff;border-top:1px solid #d5dfd1}.panel-footer .direct{margin:0;flex:1}.direct{display:flex;align-items:center;justify-content:center;border:1px solid #bacbbe;border-radius:4px;background:#f7faf5;height:40px;width:100%;font-size:12px;margin-top:12px}.panel-note{font-size:10px;color:#7e8b7e;line-height:1.8;margin:10px 0 0}.pay-amount,.pay-qty,.pay-body{display:none}
+#product:checked~.workspace .scrim,#quantity:checked~.workspace .scrim,#price:checked~.workspace .scrim{display:block}
+#product:checked~.workspace .product-panel,#quantity:checked~.workspace .quantity-panel,#price:checked~.workspace .price-panel{display:flex}
+#main:checked~.workspace label[for=main].menu,#product:checked~.workspace label[for=product].menu,#quantity:checked~.workspace label[for=quantity].menu,#price:checked~.workspace label[for=price].menu,body.demo-paypay .workspace label[for=paypay].menu{background:var(--green);border-color:var(--green);color:white}
+body.demo-paypay .workspace .cash-amount,body.demo-paypay .workspace .cash-qty,body.demo-paypay .workspace .cash-body,body.demo-paypay .workspace .unpaid-status{display:none}
+body.demo-paypay .workspace .pay-amount,body.demo-paypay .workspace .pay-qty{display:inline}
+body.demo-paypay .workspace .pay-body{display:table-row-group}
+body.demo-paypay .workspace .paid-status{display:inline-flex}
+body.demo-paypay .workspace .cash{background:white;color:#293c33;border-color:#bccbbf}
+body.demo-paypay .workspace .paypay{background:var(--green);color:white;border-color:var(--green)}
+@media(max-width:800px){.workspace{display:flex;flex-direction:column;padding:18px 10px;gap:18px}.guide{align-self:center;width:430px;max-width:100%;padding:0}.guide h1{font-size:18px;margin:5px 0}.guide h1 br{display:none}.guide>p,.guide .rule,.guide ul{display:none}.preview-menu{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}.preview-menu label{padding:8px;font-size:11px}.preview-menu small{display:none}}
+@media(max-width:410px){.title-row h2{font-size:13px}.app-header{padding:12px 9px}.date{font-size:10px;padding:8px 5px}.account{gap:5px;padding:10px 8px}.sum{gap:5px}.serial strong{font-size:14px}.add-account{font-size:9px}.amount{font-size:21px}.total-label,.total-qty{font-size:10px}.payment{padding:10px 8px}.btn{padding:0 9px}.payment-method>span{font-size:10px}.sheet-scroll{margin:0 7px}td{padding:3px 4px}.category{font-size:10px}.phone{height:850px}.choice.word{font-size:10px}}
+
+/* Version 05: fixed state previews; no sales data or persistent storage. */
+.account{display:block}.serial{margin-bottom:8px}.sum{justify-content:flex-end;gap:7px;flex-wrap:nowrap}.total-qty b,.amount{font-size:23px;font-weight:650;letter-spacing:0;font-variant-numeric:tabular-nums}.total-label,.total-qty{font-size:11px}.payment{display:grid;grid-template-columns:1fr auto 1fr;gap:6px;padding:10px}.payment>.btn{justify-self:start}.payment>.status{height:39px;font-size:12px;padding:0 10px}.payment-method{justify-self:end;gap:4px}.payment-method .btn{padding:0 9px}.payment .paid-status{display:none}.payment .unpaid-status{display:inline-flex;align-items:center;justify-content:center}
+col:nth-child(1){width:auto}col:nth-child(2){width:29%}col:nth-child(3){width:calc(2ch + 10px)}col:nth-child(4){width:calc(3ch + 10px)}col:nth-child(5){width:calc(5ch + 10px)}td{padding:4px}th:nth-child(3){font-size:10px}td:nth-child(n+3){text-overflow:clip}.number{display:block;white-space:nowrap}.over-number{font-size:9px}.over-total{font-size:9px}.overflow-body{display:none}
+.navigation{position:relative;display:flex;justify-content:center;min-height:39px}.navigation .list-button{width:104px}.nav-pair{position:absolute;right:0;display:none;gap:5px}.nav-pair .btn{padding:0 9px;min-width:49px}.btn:disabled{color:#a6afa8;background:#f0f2ef;border-color:#dbe0d9;cursor:default}.no-first,.no-middle,.no-last,.no-new,.no-over,.new-value,.over-value{display:none}
+#a-first:checked~.workspace .no-first,#a-middle:checked~.workspace .no-middle,#a-last:checked~.workspace .no-last,#a-new:checked~.workspace .no-new,#a-over:checked~.workspace .no-over{display:inline}
+#a-first:checked~.workspace .nav-first,#a-middle:checked~.workspace .nav-middle,#a-last:checked~.workspace .nav-last,#a-new:checked~.workspace .nav-new,#a-over:checked~.workspace .nav-over{display:flex}
+#a-new:checked~.workspace .cash-body,#a-new:checked~.workspace .pay-body,#a-over:checked~.workspace .cash-body,#a-over:checked~.workspace .pay-body,#a-new:checked~.workspace .normal-value,#a-over:checked~.workspace .normal-value{display:none}
+#a-new:checked~.workspace .new-value,#a-over:checked~.workspace .over-value{display:inline}#a-over:checked~.workspace .overflow-body{display:table-row-group}
+#a-new:checked~.workspace .table-note{visibility:hidden}#a-over:checked~.workspace .table-note{visibility:hidden}
+#paid-preview:checked~.workspace .unpaid-status{display:none}#paid-preview:checked~.workspace .paid-status{display:inline-flex;align-items:center;justify-content:center}
+#a-new:checked~.workspace .pay-qty,#a-new:checked~.workspace .pay-amount,#a-over:checked~.workspace .pay-qty,#a-over:checked~.workspace .pay-amount{display:none}
+#a-new:checked~.workspace .cash-qty,#a-new:checked~.workspace .cash-amount,#a-over:checked~.workspace .cash-qty,#a-over:checked~.workspace .cash-amount{display:inline}
+#a-new:checked~.workspace .paid-status{display:none}#a-new:checked~.workspace .unpaid-status{display:inline-flex}
+#a-new:checked~.workspace .cash{background:var(--green);color:white}#a-new:checked~.workspace .paypay{background:white;color:#293c33}
+.recent-switch{flex-shrink:0}.recent-state{position:absolute;left:-9999px}.recent-tabs{display:flex;align-items:center;gap:5px;margin-bottom:6px}.recent-tabs label{border:1px solid #bccbbf;border-radius:4px;padding:5px 18px;font-size:11px;cursor:pointer}.recent-tabs small{font-size:9px;margin-left:auto;color:#748174}.recent{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:6px;padding-bottom:7px;touch-action:pan-x;overscroll-behavior-x:contain}.recent .word{flex:0 0 104px}.recent-materials{display:none}#recent-flowers:checked~.recent-tabs label[for=recent-flowers],#recent-materials:checked~.recent-tabs label[for=recent-materials]{background:var(--green);color:white}#recent-materials:checked~.recent-flowers{display:none}#recent-materials:checked~.recent-materials{display:flex}
+.categories{grid-template-columns:4fr 1fr 1.25fr;gap:6px;align-items:center}.seasons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;padding:4px;background:#e8eee4;border:1px solid #bfcdb9;border-radius:6px}.seasons .category{background:#fff}.seasons .active{background:var(--green)}.product-list{position:relative}.product-list:after{content:"";display:block;height:calc(100% - 48px);min-height:180px;pointer-events:none}.product-item:first-child{border-top:0}.account-previews{margin-top:12px}.account-previews label{padding:7px 12px;font-size:11px}.guide details{font-size:11px;color:#607064;line-height:1.8;margin-top:15px}.old-recent{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}.old-recent span{border:1px solid #cbd5cb;padding:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:410px){.total-qty b,.amount{font-size:23px}.payment{padding:9px 7px;gap:4px}.payment-method .btn{padding:0 7px}.payment>.btn{padding:0 8px}.navigation .list-button{width:88px}.nav-pair{gap:3px}.nav-pair .btn{padding:0 6px;min-width:43px}.sum{gap:6px}.categories{gap:4px}.panel-content{padding-left:10px;padding-right:10px}.account-previews{display:flex}.account-previews label{font-size:10px;padding:6px}}
+
+/* 第6版。数値だけを値ごとに縮小し、売上処理は行いません。 */
+.account{display:flex;flex-wrap:nowrap;gap:6px;padding:10px 8px;white-space:nowrap;min-height:56px}
+.serial{margin:0;gap:5px;flex:none}.serial strong{font-size:14px}.add-account{font-size:10px;height:36px;padding:0 5px}
+.sum{display:flex;flex:1;min-width:0;gap:4px;margin-left:auto;flex-wrap:nowrap;justify-content:flex-end}
+.total-qty{display:flex;align-items:center;gap:3px;font-size:10px}.total-qty b{display:inline-block;min-width:1.25em;text-align:right}
+.total-label{font-size:10px}.total-qty b,.amount{font-size:23px;font-weight:650;letter-spacing:0;line-height:1.1}.amount{display:inline-flex;align-items:baseline;gap:1px}.amount small{margin:0;font-size:10px}
+.fit-value{white-space:nowrap;font-variant-numeric:tabular-nums}.amount .fit-value{max-width:72px}.total-qty .fit-value{max-width:30px}
+col:nth-child(1){width:auto}col:nth-child(2){width:22%}col:nth-child(3){width:44px}col:nth-child(4){width:52px}col:nth-child(5){width:58px}
+td{height:48px;font-size:14px;padding:4px}td:nth-child(-n+2){font-size:12px}td label{line-height:40px;min-height:40px}td:nth-child(n+3){white-space:nowrap;text-overflow:clip}.over-number,.over-total{font-size:inherit}
+.recent-switch{display:grid;grid-template-columns:44px minmax(0,1fr);gap:7px;align-items:center;padding:7px 0;border-bottom:1px solid #d9e1d6}
+.recent-toggle{width:44px;height:44px;border:0;border-radius:50%;background:#315e49;color:#fff;font-size:17px;font-weight:650;cursor:pointer}.recent-toggle.material{background:#8b653d}
+.recent{padding:0;min-width:0;gap:6px;scrollbar-width:none}.recent::-webkit-scrollbar{display:none}.recent .word{flex:0 0 auto;width:auto;min-width:48px;height:44px;line-height:42px;font-size:13px;padding:0 12px;overflow:visible;text-overflow:clip}
+.recent-switch .recent-materials{display:none}.recent-switch.is-material .recent-flowers{display:none}.recent-switch.is-material .recent-materials{display:flex}
+.product-panel{height:calc(100% - 52px);max-height:none}.product-panel .panel-content{flex:1;min-height:0;padding-top:0;touch-action:auto}.product-panel .handle{margin:6px auto}.product-panel .panel-header{padding-bottom:7px}.product-panel .panel-header h3{margin-bottom:3px}.product-panel .context{line-height:1.45}
+.categories{margin:7px 0;flex:none}.catalog{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:7px;flex:1;min-height:0;margin-bottom:6px;overflow:hidden}
+.product-list{min-height:0;max-height:100%;height:100%;scrollbar-width:thin}.jumps{display:grid;grid-template-columns:1fr;grid-template-rows:repeat(10,minmax(0,1fr));gap:0;margin:0;min-height:0;align-self:stretch}.jumps a{width:44px;height:100%;min-height:0;border-radius:0;border-bottom:0;font-size:13px}.jumps a:first-child{border-radius:4px 4px 0 0}.jumps a:last-child{border-bottom:1px solid #c6d3c6;border-radius:0 0 4px 4px}
+.product-item{min-height:47px;justify-content:center;flex-shrink:0}.product-item span{font-size:14px}.product-list:after{min-height:0;height:calc(100% - 47px)}.product-panel .panel-footer{padding-bottom:max(12px,env(safe-area-inset-bottom));padding-top:8px}.category{cursor:pointer}.category:focus-visible,.recent-toggle:focus-visible{outline:3px solid #ba7e30}
+.preview-tools{display:flex;gap:5px;margin-bottom:10px}.preview-tools button{border:1px solid #bccbbf;border-radius:5px;padding:8px;background:#fff;font-size:12px;cursor:pointer}#show-guide{display:none}
+body.focus-view .workspace{display:block;padding:0;max-width:none}body.focus-view .guide{position:fixed;top:4px;right:4px;width:auto;z-index:20;padding:0}body.focus-view .guide>:not(.preview-tools){display:none}body.focus-view .preview-tools{margin:0}body.focus-view #focus-view{display:none}body.focus-view #show-guide{display:block;opacity:.65;font-size:9px;padding:4px}body.focus-view .stage-caption,body.focus-view .caption{display:none}body.focus-view .phone{width:100%;max-width:430px;height:100svh;min-height:620px;border-radius:0;border:0}
+.account-previews label{cursor:pointer}.account-previews label.selected{background:var(--green);color:white}.guide details{margin-top:10px}
+@media(max-width:800px){.workspace{padding:8px 0;gap:8px}.guide{padding:0 8px}.guide h1{font-size:15px}.eyebrow{font-size:9px}.stage{width:100%}.stage-caption{padding:0 8px;margin-bottom:4px}.phone{border-radius:0;width:430px;height:850px}.caption{padding:0 8px}.preview-menu label{min-height:34px}.guide .small{display:block}.guide .preview-tools{margin-bottom:4px}}
+@media(max-width:374px){.account{gap:4px;padding-left:6px;padding-right:6px}.serial{gap:3px}.serial strong{font-size:12px}.add-account{font-size:9px;padding:0 4px}.sum{gap:3px}.total-qty b,.amount{font-size:22px}.total-label,.total-qty{font-size:9px}.amount .fit-value{max-width:68px}.sheet-scroll{margin:0 5px}col:nth-child(2){width:20%}col:nth-child(4){width:48px}col:nth-child(5){width:52px}.title-row h2{font-size:12px}}
+
+
+/* 第6版バグ修正：各項目の幅を確保し、通常数値を縮めずに横1行に収めます。 */
+.account{gap:6px;padding:10px 8px}
+.serial{flex:0 0 auto;gap:5px}.serial strong{font-size:14px}
+.add-account{font-size:11px;padding:0 5px}
+.sum{display:grid;grid-template-columns:auto auto auto;flex:0 0 auto;gap:6px;margin-left:auto}
+.total-qty{gap:4px;font-size:11px}
+.total-label{font-size:11px}
+.total-qty b{min-width:0;width:2ch;text-align:right}
+.total-qty b,.amount{font-size:23px;letter-spacing:0}
+.amount{gap:2px}.amount small{flex:none;font-size:11px}
+.account .pay-qty,.account .pay-amount{display:none}
+.cash-amount,.pay-amount{width:4.5ch;text-align:right}
+.total-qty .fit-value,.amount .fit-value{max-width:none}
+.product-item{height:44px;min-height:44px;padding:0 10px;flex-direction:row;align-items:center;justify-content:flex-start}
+.product-item span{min-width:0;line-height:1.4}
+.product-list:after{height:calc(100% - 44px)}
+@media(max-width:374px){
+ .account{gap:4px;padding-left:6px;padding-right:6px}
+ .serial{gap:4px}.serial strong{font-size:13px}
+ .add-account{font-size:11px;padding:0 4px}
+ .sum{gap:4px}.total-qty{gap:3px}
+ .total-qty b,.amount{font-size:22px}
+}
+
+
+/* iPhone用の独立コピーです。第6版PC原本には変更を加えません。 */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body.iphone-demo{background:#eff2ed}
+body.iphone-demo .workspace{display:block;padding:0;max-width:none}
+body.iphone-demo .stage-caption,body.iphone-demo .caption{display:none}
+body.iphone-demo .phone{width:100%;max-width:430px;height:100vh;height:100svh;height:100dvh;min-height:620px;border:0;border-radius:0;box-shadow:none;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+.phone>header,.phone>.account,.phone>.payment,.phone>.details-heading,.phone>.table-note,.phone>.actions,.phone>.footer-note,.demo-bar{flex-shrink:0}
+.demo-bar{min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:6px;padding:2px 8px;background:#fff6df;border-bottom:1px solid #e0c899;font-size:11px;color:#654a20}
+.demo-bar button{height:40px;border:1px solid #a89673;border-radius:5px;background:white;padding:0 10px;font-size:12px;cursor:pointer}
+.demo-bar span{line-height:1.5}.demo-bar small{display:block;font-size:10px}
+body.iphone-demo .guide{display:block;position:fixed;inset:0;z-index:50;width:auto;max-width:none;height:100vh;height:100dvh;min-height:0;align-self:auto;background:#f5f8f2;padding:calc(12px + env(safe-area-inset-top,0px)) max(14px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));overflow-y:auto;overscroll-behavior:contain}
+body.iphone-demo.focus-view .guide{display:none}
+body.iphone-demo .guide>*{max-width:600px;margin-left:auto;margin-right:auto}
+body.iphone-demo .guide .small,body.iphone-demo .guide>p,body.iphone-demo .guide ul{display:block;font-size:13px;line-height:1.8}
+body.iphone-demo .guide h1{font-size:20px;line-height:1.5;margin-top:12px}
+body.iphone-demo .preview-tools{display:flex;position:sticky;top:-1px;background:#f5f8f2;padding-bottom:6px;z-index:1}
+body.iphone-demo #focus-view{display:block;min-height:44px;font-size:14px}
+body.iphone-demo #show-guide{display:block;opacity:1}
+body.iphone-demo .preview-menu{display:flex;flex-wrap:wrap;gap:6px}
+body.iphone-demo .preview-menu label{min-height:44px;align-items:center;font-size:13px;padding:8px 12px}
+body.iphone-demo .preview-menu small{display:none}
+body.iphone-demo .scrim{top:calc(44px + env(safe-area-inset-top,0px))}
+body.iphone-demo .bottom-sheet{left:env(safe-area-inset-left,0px);right:env(safe-area-inset-right,0px);bottom:env(safe-area-inset-bottom,0px)}
+body.iphone-demo .product-panel{height:calc(100% - 52px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}
+body.iphone-demo .product-panel .panel-footer{padding-bottom:12px}
+.product-item{height:44px;min-height:44px;cursor:pointer}
+.tap-target{cursor:pointer}.tap-target:focus-visible{outline:3px solid #ba7e30;outline-offset:-3px}
+.demo-toast{position:fixed;z-index:60;bottom:calc(12px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);width:calc(100% - 24px);max-width:406px;padding:12px;background:#243e31;color:white;border-radius:8px;box-shadow:0 2px 12px #0003;font-size:13px;line-height:1.6;pointer-events:none}
+.demo-toast:empty{display:none}
+.demo-check{padding:10px;border:1px solid #cbd5cb;border-radius:5px;background:white;font-size:13px;line-height:1.8}
+@media(max-height:619px){body.iphone-demo .phone{min-height:620px}}
+
+
+/* 第6版・視認性比較：文字色とウェイトのみ変更。寸法・背景・動作は元のままです。 */
+:root{color:#111111}
+.title-row h2,.date,.serial,.add-account,.total-qty,.total-label,.amount,
+.details-heading strong,th,.context strong,.panel-header h3,.close,
+.section-label,.choice,.product-item span,.direct,.jumps a,.demo-bar button{color:#111111}
+tbody tr:not(.excluded):not(.blank) td{color:#111111}
+tbody tr:not(.excluded):not(.blank) td:nth-child(-n+2),.product-item span,.recent .word{font-weight:600}
+tbody tr:not(.excluded):not(.blank) td:nth-child(3),
+tbody tr:not(.excluded):not(.blank) td:nth-child(4){font-weight:500}
+.btn,.date,.add-account,.direct,.choice,.category,.jumps a,.demo-bar button{font-weight:500}
+.btn:not(.cash):not(.next):not(:disabled),.category:not(.active){color:#111111}
+body.demo-paypay .workspace .cash,#a-new:checked~.workspace .paypay{color:#111111}
+body.demo-paypay .workspace .paypay,#a-new:checked~.workspace .cash{color:white}
+/* 状態色・補足文字・無効表示・白抜き文字は既存の指定を維持します。 */
+
+/* 第6版・ボタン文字の拡大。商品一覧・五十音・明細・金額の指定は維持します。 */
+.btn,.payment>.status,.direct,.category,.choice,.date,.add-account,
+.recent-toggle,.close,.demo-bar button,.preview-tools button,
+body.iphone-demo .preview-menu label{font-weight:600}
+.btn,.payment>.status,.direct{font-size:15px}
+.recent .word{font-size:16px;font-weight:600}
+.category{font-size:15px}
+.categories>.category:last-child{font-size:13px}
+.choice:not(.word){font-size:17px}
+.recent-toggle{font-size:19px}
+.add-account{font-size:13px}
+.date{font-size:12px}
+body.iphone-demo .demo-bar button{font-size:13px}
+body.iphone-demo #focus-view,body.iphone-demo .preview-menu label{font-size:15px}
+@media(max-width:374px){
+ .add-account{font-size:12px}
+ .payment>.btn{font-size:14px}
+ .categories>.category:last-child{font-size:12px}
+ .nav-pair .btn{font-size:14px}
+}
+
+/* 拡大でボタンの位置が動かないよう、従来の外寸を維持します。 */
+@media(min-width:411px){
+.date{width:70.63px;height:35px;padding:0 1px;flex-shrink:0}
+.add-account{width:56px;height:36px;padding:0 1px;flex-shrink:0}
+.payment>button{width:74.95px;height:39px;padding:0 1px;flex-shrink:0}
+.payment>.status{width:58px;height:39px;padding:0 1px;flex-shrink:0}
+.payment-method .cash{width:44px;height:39px;padding:0 1px;flex-shrink:0}
+.payment-method .paypay{width:58.28px;height:39px;padding:0 1px;flex-shrink:0}
+}
+@media(min-width:375px) and (max-width:410px){
+.date{width:61.67px;height:32px;padding:0 1px;flex-shrink:0}
+.add-account{width:56px;height:36px;padding:0 1px;flex-shrink:0}
+.payment>button{width:66.95px;height:39px;padding:0 1px;flex-shrink:0}
+.payment>.status{width:58px;height:39px;padding:0 1px;flex-shrink:0}
+.payment-method .cash{width:40px;height:39px;padding:0 1px;flex-shrink:0}
+.payment-method .paypay{width:54.28px;height:39px;padding:0 1px;flex-shrink:0}
+}
+@media(max-width:374px){
+.date{width:61.67px;height:32px;padding:0 1px;flex-shrink:0}
+.add-account{width:54px;height:36px;padding:0 1px;flex-shrink:0}
+.payment>button{width:66.95px;height:39px;padding:0 1px;flex-shrink:0}
+.payment>.status{width:58px;height:39px;padding:0 1px;flex-shrink:0}
+.payment-method .cash{width:40px;height:39px;padding:0 1px;flex-shrink:0}
+.payment-method .paypay{width:54.28px;height:39px;padding:0 1px;flex-shrink:0}
+}
+.recent-flowers .word:nth-child(1){width:54.83px;padding:0 2px}
+.recent-flowers .word:nth-child(2){width:66.11px;padding:0 2px}
+.recent-flowers .word:nth-child(3){width:75.33px;padding:0 2px}
+.recent-flowers .word:nth-child(4){width:114.27px;padding:0 2px}
+.recent-flowers .word:nth-child(5){width:48px;padding:0 2px}
+.recent-flowers .word:nth-child(6){width:65.5px;padding:0 2px}
+.recent-flowers .word:nth-child(7){width:67.53px;padding:0 2px}
+.recent-flowers .word:nth-child(8){width:64.5px;padding:0 2px}
+.recent-materials .word:nth-child(1){width:65px;padding:0 2px}
+.recent-materials .word:nth-child(2){width:48px;padding:0 2px}
+.recent-materials .word:nth-child(3){width:52px;padding:0 2px}
+.recent-materials .word:nth-child(4){width:52px;padding:0 2px}
+.recent-materials .word:nth-child(5){width:65px;padding:0 2px}
+.recent-materials .word:nth-child(6){width:73.88px;padding:0 2px}
+body.iphone-demo #focus-view{width:74.95px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .preview-menu:not(.account-previews) label:nth-child(1){width:78px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .preview-menu:not(.account-previews) label:nth-child(2){width:84.05px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .preview-menu:not(.account-previews) label:nth-child(3){width:84.05px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .preview-menu:not(.account-previews) label:nth-child(4){width:84.05px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .preview-menu:not(.account-previews) label:nth-child(5){width:104.86px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .account-previews label:nth-child(1){width:88.61px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .account-previews label:nth-child(2){width:88.61px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .account-previews label:nth-child(3){width:114.61px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .account-previews label:nth-child(4){width:114.61px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .account-previews label:nth-child(5){width:157.72px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .account-previews label:nth-child(6){width:98.39px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .account-previews label:nth-child(7){width:98.39px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .account-previews label:nth-child(8){width:127.61px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .demo-bar button{width:76px;padding:0 1px}
+body.iphone-demo #show-guide{font-size:13px;font-weight:600}.date{padding:0}.payment>button.btn{padding:0 1px}
+body.iphone-demo.focus-view #show-guide{width:50.5px;font-size:10.5px;padding:0}.nav-last .next{width:50px;padding:0 1px}@media(max-width:410px){.nav-last .next{width:44px}}
+/* 比較試作値です。第6版の正式仕様は変更しません。 */
+col:nth-child(1){width:auto}col:nth-child(2){width:27%}col:nth-child(3){width:34px}col:nth-child(4){width:44px}
+td:nth-child(-n+2){font-size:17px}
+td:nth-child(-n+2) .cell-text{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+td.pair-cell{padding:0;cursor:pointer}
+td.pair-cell .pair-value{display:flex;align-items:center;justify-content:flex-end;min-height:48px;padding:4px}
+.quantity-panel .context,.price-panel .context{overflow-wrap:anywhere}
+body #a-over:checked~.workspace .cash-qty,body #a-over:checked~.workspace .cash-amount{display:inline-block}
+@media(max-width:374px){col:nth-child(3){width:32px}col:nth-child(4){width:42px}}
+</style></head><body class="iphone-demo focus-view">
+<input class="state" type="radio" name="preview" id="main" checked aria-label="会計入力の見本"><input class="state" type="radio" name="preview" id="product" aria-label="品名パネルの見本"><input class="state" type="radio" name="preview" id="quantity" aria-label="数量パネルの見本"><input class="state" type="radio" name="preview" id="price" aria-label="単価パネルの見本"><input class="state" type="radio" name="preview" id="paypay" aria-label="別会計の見本">
+<input class="state" type="radio" name="account-preview" id="a-first"  aria-label="先頭会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-middle" checked aria-label="途中会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-last"  aria-label="最後の既存会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-new"  aria-label="新しい来客の空白会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-over"  aria-label="桁超過の固定見本"><input class="state" type="radio" name="account-preview" id="a-qty-only"><input class="state" type="radio" name="account-preview" id="a-money-only"><input class="state" type="radio" name="account-preview" id="a-boundary"><input class="state" type="checkbox" id="paid-preview" aria-label="現金の決済状態の表示切替"><main class="workspace"><aside class="guide"><div class="preview-tools"><button type="button" id="focus-view">デモへ戻る</button></div><div class="eyebrow">第6版から分けた比較試作</div><h1>実寸と押しやすさを試します</h1><p>花のこみち売上入力システム<br>数量・単価の3タップ連続入力を試します。</p><div class="rule"></div>
+<p class="small"><strong>数量・単価の編集と再計算が動きます。保存機能はありません。</strong>すべて仮データです。iPhone Safari実機は未検証です。以下の見本を選び、「デモへ戻る」を押してください。</p>
+<div class="demo-check"><strong id="js-health">操作用JavaScript：未確認です</strong><br><span id="demo-metrics">寸法はJavaScriptが動作した場合に表示します。</span><br>商品行44pxは試作値です。基準書の47pxからの確定変更ではありません。</div>
+<p class="small">できる操作：見本の切替、1行目の品名・数量・単価パネルの開閉、花／資、最近使用の左右スクロール、商品一覧の上下スクロール、右側10ジャンプ、分類の選択色、タップの反応確認です。分類を変えても商品集合は共通です。数量・単価は両方を選んでから同時反映します。品名候補は反応確認のみです。</p>
+<details><summary>iCloud Driveから開く手順・不完全な場合</summary><p>PCでこのindex.htmlをiCloud Driveへコピーし、同期後、iPhoneの「ファイル」→「iCloud Drive」から開きます。プレビューはSafariとは異なる場合があります。「JavaScript：動作中」が出るか、花／資が切り替わるか、最近使用が左右に動くかを確認してください。表示されない・操作できない場合はファイル表示側の制限の可能性もあるため、SafariでHTTPS公開URLを開いて再確認します。</p><p>GitHub Pagesの場合は、デモ専用リポジトリの直下にこのindex.htmlだけをアップロードし、Settings → Pages → Deploy from a branch → main / (root) → Saveです。表示されたHTTPSの公開URLをSafariで開きます。既存サイトを上書きしないでください。公開は今回は行っていません。</p></details>
+<details><summary>実機での確認順序</summary><ol><li>Safariのページ拡大率を100%にし、縦向きで開きます。</li><li>基本見本の1行目の品名・数・単価を押し、×とパネル外で閉じます。</li><li>品名パネルで最近使用を左右、一覧を上下へ動かします。右側ジャンプ・下部2ボタンが一緒に動かないか確認します。</li><li>ア〜ワを押して目的の商品へ移るか、隣を誤って押さないか、44pxの商品行を押しやすいか確認します。</li><li>各桁の見本、PayPay別会計、前後・新規の固定見本を試します。数量・単価の確定時に計算します。決済は表示切替のみです。</li><li>横向きとSafariのバー表示／非表示も試します。短い画面はページ全体を上下に動かして下部へ進みます。</li></ol></details>
+<nav class="preview-menu" aria-label="表示見本の切替"><label class="menu" for="main">会計入力<small>基本画面</small></label><label class="menu" for="product">品名パネル<small>行No.1</small></label><label class="menu" for="quantity">数量パネル<small>行No.1</small></label><label class="menu" for="price">単価パネル<small>行No.1</small></label><label class="menu" for="paypay">PayPay別会計<small>同じ来客No.</small></label></nav>
+<div class="preview-menu account-previews"><label for="a-first">先頭の会計</label><label for="a-middle">途中の会計</label><label for="a-last">最後の既存会計</label><label for="a-new">新規空白の見本</label><label for="a-over">長い品名・桁超過の見本</label><label for="a-qty-only">数量だけ超過</label><label for="a-money-only">金額だけ超過</label><label for="a-boundary">通常桁の上限見本</label></div><p class="small">表示を切り替えて配置を確認できます。品名・数量・単価の欄からもパネルを表示できます。×またはパネル外で閉じます。品名一覧はスクロールと五十音ジャンプを確認できます。</p><div class="rule"></div>
+<p class="small">商品名・読み・日付・金額は仮データです。数量または単価→数量→単価の3タップで編集し、明細金額・総数量・会計合計を再計算します。途中の×・外側・Escapeは両値とも取消です。再読み込み・会計の見本切替では初期値に戻ります。品名編集・直接入力・永続保存・実会計作成・CSV出力・Access連携は未実装です。前後ボタンは固定見本を切り替えます。</p>
+<ul><li>最近使用は丸い花／資切替と可変幅の横1行です。</li><li>寸法・配色・一覧の表示件数は検討用です。</li><li>「追加会計」は仮の入口です。</li><li>取り置き・一覧は配置のみです。</li></ul>
+<p class="small">総数量6・1,550円は現在の会計の有効3行の例です。グレーの除外行と、同じNo.の別会計は含めません。</p><details><summary>比較用旧案：最近使用3列×3行</summary><p>第4版の旧案です。今回の第一試作案は花・資材切替＋横1行です。</p><div class="old-recent"><span>ビオラ</span><span>パンジー</span><span>アリッサム</span><span>ガーデンシクラメン</span><span>キク</span><span>カルーナ</span><span>ハボタン</span><span>プリムラ</span><span>培養土</span></div></details></aside>
+<section class="stage" aria-label="スマートフォン用の配置見本"><div class="stage-caption"><span>会計入力・選択パネル</span><span>第6版 / 2026.10.31</span></div>
+<div class="phone"><div class="demo-bar"><span>連続入力・比較デモ／保存なし<small id="js-status">JavaScript：未確認です</small></span><button type="button" id="show-guide">見本・手順</button></div><header class="app-header"><div class="title-row"><h2>花のこみち売上入力システム</h2><button class="date" type="button" title="日付変更は未実装です">2026/10/31</button></div></header>
+<div class="account"><div class="serial"><strong class="visitor-no"><span class="no-first">No.1</span><span class="no-middle">No.5</span><span class="no-last">No.6</span><span class="no-new">No.7</span><span class="no-over">No.8</span></strong><button class="add-account" type="button" title="名称・操作は仮案です">追加会計</button></div><div class="sum"><span class="total-qty">総数量 <b class="cash-qty"><span class="normal-value">6</span><span class="new-value">0</span><span class="over-value">123</span></b><b class="pay-qty">2</b></span><span class="total-label">会計合計</span><span class="amount"><span class="cash-amount"><span class="normal-value">1,550</span><span class="new-value">0</span><span class="over-value">153,750</span></span><span class="pay-amount">600</span><small>円</small></span></div></div>
+<div class="payment"><button class="btn" type="button" title="取り置き詳細は未実装です">取り置き ›</button><label class="status unpaid-status" for="paid-preview">未決済</label><label class="status paid-status" for="paid-preview">決済済</label><div class="payment-method"><label class="btn cash" for="main">現金</label><label class="btn paypay" for="paypay">PayPay</label></div></div>
+<div class="details-heading"><strong>購入明細</strong><span>金額単位：円</span></div><div class="sheet-scroll"><table aria-label="5列の購入明細見本"><colgroup><col><col><col><col><col></colgroup><thead><tr><th>品名</th><th>名称2</th><th aria-label="数量">数</th><th>単価</th><th>計</th></tr></thead>
+<tbody class="cash-body"><tr><td title="ビオラ"><label for="product"><span class="row-no">1</span>ビオラ</label></td><td title="フリル紫">フリル紫</td><td><label for="quantity">3</label></td><td><label for="price">150</label></td><td>450</td></tr><tr><td><span class="row-no">2</span>パンジー</td><td>黄</td><td>2</td><td>200</td><td>400</td></tr><tr><td><span class="row-no">3</span>培養土</td><td>14L</td><td>1</td><td>700</td><td>700</td></tr><tr class="excluded" title="除外行：総数量・会計合計の対象外です"><td><span class="row-no">4</span>ビオラ</td><td>白</td><td>4</td><td>150</td><td>600</td></tr></tbody>
+<tbody class="overflow-body"><tr><td title="ガーデンシクラメン・冬の限定品種"><span class="row-no">1</span>ガーデンシクラメン・冬の限定品種</td><td title="フリル咲きピンク・仕入番号12345">フリル咲きピンク・仕入番号12345</td><td><span class="number over-number">123</span></td><td><span class="number over-number">1,250</span></td><td><span class="number over-total">153,750</span></td></tr></tbody><tbody class="pay-body"><tr><td title="ガーデンシクラメン"><span class="row-no">1</span>ガーデンシクラメン</td><td>白</td><td>2</td><td>300</td><td>600</td></tr></tbody><tbody><tr class="blank"><td><label for="product">品名を選択</label></td><td></td><td></td><td></td><td></td></tr><tr class="blank"><td></td><td></td><td></td><td></td><td></td></tr><tr class="blank"><td></td><td></td><td></td><td></td><td></td></tr><tr class="blank"><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+<div class="table-note">グレーの行は除外中です。<br>行の左スワイプ → 除外／戻すの操作は今後実装します。</div><div class="actions"><button class="btn add-line" type="button">＋ 行追加</button><nav class="navigation" aria-label="会計移動の静的見本"><button class="btn list-button" type="button" title="一覧の詳細は未実装です">一覧</button><div class="nav-pair nav-first"><button class="btn" disabled>〈前</button><label class="btn next" for="a-middle">次〉</label></div><div class="nav-pair nav-middle"><label class="btn" for="a-first">〈前</label><label class="btn next" for="a-last">次〉</label></div><div class="nav-pair nav-last"><label class="btn" for="a-middle">〈前</label><label class="btn next" for="a-new">新規〉</label></div><div class="nav-pair nav-new"><label class="btn" for="a-last">〈前</label><button class="btn" disabled title="空白会計からの次操作は詳細未確定です">次〉</button></div><div class="nav-pair nav-over"><label class="btn" for="a-middle">〈前</label><label class="btn next" for="a-last">次〉</label></div></nav></div><div class="footer-note"><span>数量・単価の比較試作</span><span>数量×単価を計算／保存なし</span></div>
+<label class="scrim" for="main" aria-label="取消してパネルを閉じます"></label>
+<section class="bottom-sheet product-panel" aria-label="品名選択の表示見本"><div class="handle"></div><header class="panel-header"><h3>品名を選択</h3><div class="context"><strong>明細行No.1 ｜ ビオラ</strong><br>現在の品名：ビオラ ／ 名称2：フリル紫</div><label class="close" for="main" aria-label="取消して閉じます">×</label></header><div class="panel-content"><div class="recent-switch"><input class="recent-state" type="radio" name="recent" id="recent-flowers" checked><input class="recent-state" type="radio" name="recent" id="recent-materials"><button class="recent-toggle" type="button" aria-label="最近使用：花。タップして資材へ切替" aria-pressed="false">花</button><div class="recent recent-flowers"><div class="choice word" title="ビオラ">ビオラ</div><div class="choice word" title="パンジー">パンジー</div><div class="choice word" title="アリッサム">アリッサム</div><div class="choice word" title="ガーデンシクラメン">ガーデンシクラメン</div><div class="choice word" title="キク">キク</div><div class="choice word" title="カルーナ">カルーナ</div><div class="choice word" title="ハボタン">ハボタン</div><div class="choice word" title="プリムラ">プリムラ</div></div><div class="recent recent-materials"><div class="choice word" title="培養土">培養土</div><div class="choice word" title="鉢">鉢</div><div class="choice word" title="肥料">肥料</div><div class="choice word" title="支柱">支柱</div><div class="choice word" title="鉢底石">鉢底石</div><div class="choice word" title="プランター">プランター</div></div></div><div class="categories"><div class="seasons"><span class="category">春</span><span class="category">夏</span><span class="category active">秋</span><span class="category">冬</span></div><span class="category">資材 ›</span><span class="category">イベント</span></div><div class="catalog"><div class="product-list" aria-label="縦1列の品名一覧"><section id="kana-a" class="kana-group"><div class="product-item" data-kana="ありっさむ"><span>アリッサム</span></div><div class="product-item" data-kana="うぃんたーこすもす"><span>ウィンターコスモス</span></div></section><section id="kana-ka" class="kana-group"><div class="product-item" data-kana="がーでんしくらめん"><span>ガーデンシクラメン</span></div><div class="product-item" data-kana="かるーな"><span>カルーナ</span></div><div class="product-item" data-kana="きく"><span>キク</span></div></section><section id="kana-sa" class="kana-group"><div class="product-item" data-kana="しくらめん"><span>シクラメン</span></div><div class="product-item" data-kana="すいーとありっさむ"><span>スイートアリッサム</span></div></section><section id="kana-ta" class="kana-group"><div class="product-item" data-kana="だいあんさす"><span>ダイアンサス</span></div></section><section id="kana-na" class="kana-group"><div class="product-item" data-kana="なでしこ"><span>ナデシコ</span></div></section><section id="kana-ha" class="kana-group"><div class="product-item" data-kana="はぼたん"><span>ハボタン</span></div><div class="product-item" data-kana="ぱんじー"><span>パンジー</span></div><div class="product-item" data-kana="びおら"><span>ビオラ</span></div><div class="product-item" data-kana="ぷりむら"><span>プリムラ</span></div></section><section id="kana-ma" class="kana-group"><div class="product-item" data-kana="まーがれっと"><span>マーガレット</span></div></section><section id="kana-ya" class="kana-group"><div class="product-item" data-kana="ゆりおぷすでーじー"><span>ユリオプスデージー</span></div></section><section id="kana-ra" class="kana-group"><div class="product-item" data-kana="らべんだー"><span>ラベンダー</span></div></section><section id="kana-wa" class="kana-group"><div class="product-item" data-kana="わすれなぐさ"><span>ワスレナグサ</span></div></section></div><nav class="jumps" aria-label="五十音行ジャンプ"><a href="#kana-a" aria-label="あ行へ">ア</a><a href="#kana-ka" aria-label="か行へ">カ</a><a href="#kana-sa" aria-label="さ行へ">サ</a><a href="#kana-ta" aria-label="た行へ">タ</a><a href="#kana-na" aria-label="な行へ">ナ</a><a href="#kana-ha" aria-label="は行へ">ハ</a><a href="#kana-ma" aria-label="ま行へ">マ</a><a href="#kana-ya" aria-label="や行へ">ヤ</a><a href="#kana-ra" aria-label="ら行へ">ラ</a><a href="#kana-wa" aria-label="わ行へ">ワ</a></nav></div></div><footer class="panel-footer"><button class="direct" type="button">品名を直接入力</button><button class="direct" type="button">差額</button></footer></section>
+<section class="bottom-sheet quantity-panel" aria-label="数量選択の表示見本"><div class="handle"></div><header class="panel-header"><h3>数量を選択</h3><div class="context"><strong>明細行No.1 ｜ ビオラ</strong><br>現在の数量：3 ／ 単価：150円 ／ 計：450円</div><label class="close" for="main" aria-label="取消して閉じます">×</label></header><div class="panel-content"><div class="section-label">数量</div><div class="choices"><div class="choice">1</div><div class="choice">2</div><div class="choice">3</div><div class="choice">4</div><div class="choice">5</div><div class="choice">6</div><div class="choice">7</div><div class="choice">8</div><div class="choice">9</div><div class="choice">10</div><div class="choice">11</div><div class="choice">12</div></div><button class="direct" type="button">数量を直接入力</button><p class="panel-note">すべて同じ色・同じサイズの表示見本です。</p></div></section>
+<section class="bottom-sheet price-panel" aria-label="単価選択の表示見本"><div class="handle"></div><header class="panel-header"><h3>単価を選択</h3><div class="context"><strong>明細行No.1 ｜ ビオラ</strong><br>現在の単価：150円 ／ 数量：3 ／ 計：450円</div><label class="close" for="main" aria-label="取消して閉じます">×</label></header><div class="panel-content"><div class="section-label">単価（円）</div><div class="choices"><div class="choice">150</div><div class="choice">200</div><div class="choice">250</div><div class="choice">300</div><div class="choice">350</div><div class="choice">400</div><div class="choice">100</div><div class="choice">450</div><div class="choice">500</div><div class="choice">550</div><div class="choice">600</div><div class="choice">650</div><div class="choice">700</div><div class="choice">750</div><div class="choice">800</div><div class="choice">850</div><div class="choice">900</div><div class="choice">950</div></div><button class="direct" type="button">単価を直接入力</button><p class="panel-note">頻度・直前使用による色や大きさの強調はありません。</p></div></section>
+</div><p class="caption">第6版の静的表示見本です。列幅・文字サイズ・タップ領域は実機で確認します。<br>別会計は同じ日付・No.の例で、数量・金額とも個別に表示します。</p></section></main><div class="demo-toast" role="status" aria-live="polite"></div><script>
+// 表示見本の切替と文字の収まりのみです。売上入力・計算・保存は行いません。
+const $ = s => document.querySelector(s);
+const all = s => [...document.querySelectorAll(s)];
+const extraStates=['a-qty-only','a-money-only','a-boundary'];
+const samples={
+ 'a-qty-only':{qty:'123',money:'1,550',row:['122','10','1,220'],row2:['1','330','330']},
+ 'a-money-only':{qty:'6',money:'15,500',row:['3','1,500','4,500'],row2:['2','2,000','4,000'],row3:['1','7,000','7,000']},
+ 'a-boundary':{qty:'99',money:'9,999',row:['98','100','9,800'],row2:['1','199','199']}
+};
+const original=$('.overflow-body').innerHTML;
+function fitNumbers(){
+ all('.fit-value').forEach(el=>{
+  el.style.fontSize='';
+  if(!el.getClientRects().length)return;
+  const digits=el.textContent.replace(/[^0-9]/g,'').length;
+  if(digits<=Number(el.dataset.normal))return;
+  const header=el.closest('.account');
+  const cell=el.closest('td');
+  const slot=el.closest('.total-qty') ? el.parentElement : el.closest('.cash-amount,.pay-amount');
+  const limit=header ? slot.getBoundingClientRect().width : cell.clientWidth-8;
+  // 実際の文字幅で計測し、超過した数値だけを必要量だけ縮めます。
+  const range=document.createRange();range.selectNodeContents(el);
+  const width=range.getBoundingClientRect().width;
+  const base=parseFloat(getComputedStyle(el).fontSize);
+  if(width>limit)el.style.fontSize=(Math.floor(base*limit/width*100)/100)+'px';
+ });
+}
+function wrapNumbers(){
+ all('td:nth-child(n+3)').forEach(td=>{
+  const target=td.querySelector('label,.number')||td;
+  if(!target.textContent.trim()||target.querySelector('.fit-value'))return;
+  const el=document.createElement('span');el.className='fit-value';el.dataset.normal=td.cellIndex===2?'2':td.cellIndex===3?'3':'4';
+  el.textContent=target.textContent;target.textContent='';target.append(el);
+ });
+ all('.cash-qty>span,.pay-qty,.cash-amount>span,.pay-amount').forEach(el=>{
+  el.classList.add('fit-value');el.dataset.normal=el.closest('.total-qty')?'2':'4';
+ });
+}
+function sampleState(){
+ const id=$('input[name="account-preview"]:checked').id;
+ const sample=samples[id];
+ $('.overflow-body').innerHTML=original;
+ if(sample){
+  $('.over-value').textContent=sample.qty;
+  $('.cash-amount .over-value').textContent=sample.money;
+  $('.overflow-body').innerHTML=[sample.row,sample.row2,sample.row3].filter(Boolean).map((r,i)=>'<tr><td title="'+(i?'パンジー':'ビオラ')+'"><span class="row-no">'+(i+1)+'</span>'+(i?'パンジー':'ビオラ')+'</td><td>'+(i?'黄':'フリル紫')+'</td>'+r.map(v=>'<td>'+v+'</td>').join('')+'</tr>').join('');
+ }else{$('.over-value').textContent='123';$('.cash-amount .over-value').textContent='153,750';}
+ all('.extra-state-style').forEach(el=>el.remove());
+ if(extraStates.includes(id)){
+  const style=document.createElement('style');style.className='extra-state-style';style.textContent='.cash-body,.pay-body,.normal-value,.pay-qty,.pay-amount{display:none!important}.overflow-body{display:table-row-group!important}.over-value{display:inline!important}.cash-qty,.cash-amount{display:inline-block!important}.no-over{display:inline}.nav-over{display:flex}';document.head.append(style);
+ }
+ all('.account-previews label').forEach(el=>el.classList.toggle('selected',el.htmlFor===id));
+ wrapNumbers();requestAnimationFrame(fitNumbers);
+}
+$('.recent-toggle').addEventListener('click',e=>{
+ const active=$('.recent-switch').classList.toggle('is-material');e.currentTarget.classList.toggle('material',active);e.currentTarget.textContent=active?'資':'花';e.currentTarget.setAttribute('aria-pressed',String(active));e.currentTarget.setAttribute('aria-label',active?'最近使用：資材。タップして花へ切替':'最近使用：花。タップして資材へ切替');
+});
+// ハッシュ遷移で外側ページが動くのを防ぎ、商品一覧だけを移動します。
+all('.jumps a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const list=$('.product-list'),target=$(a.getAttribute('href'));list.scrollTop+=target.getBoundingClientRect().top-list.getBoundingClientRect().top-1;}));
+all('.category').forEach(el=>{el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-pressed',String(el.classList.contains('active')));const activate=()=>{all('.category').forEach(c=>{c.classList.toggle('active',c===el);c.setAttribute('aria-pressed',String(c===el));});};el.addEventListener('click',activate);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();activate();}});});
+$('#focus-view').addEventListener('click',()=>{document.body.classList.add('focus-view');window.scrollTo(0,0);requestAnimationFrame(fitNumbers);});
+$('#show-guide').addEventListener('click',()=>document.body.classList.remove('focus-view'));
+document.addEventListener('change',e=>{if(e.target.name==='account-preview')sampleState();});window.addEventListener('resize',fitNumbers);
+if(new URLSearchParams(location.search).get('focus')==='1')document.body.classList.add('focus-view');
+sampleState();document.fonts.ready.then(fitNumbers);
+
+let toastTimer;
+function tell(message){$('.demo-toast').textContent=message;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('.demo-toast').textContent='',2300);}
+function metrics(){
+ const p=$('.phone'),was=$('#product').checked,current=$('input[name="preview"]:checked');
+ // Measure the retained product layout without changing the selected sample.
+ $('#product').checked=true;
+ const row=$('.product-item').getBoundingClientRect(),jump=$('.jumps a').getBoundingClientRect();
+ $('#demo-metrics').textContent='画面 '+innerWidth+' × '+innerHeight+' CSS px ／ 商品行 '+Math.round(row.height)+'px ／ ジャンプ '+Math.round(jump.width)+' × '+Math.round(jump.height)+'pxです。'+(jump.height<44?' ジャンプの高さは44px未満です。押し間違いを重点確認してください。':'');
+ if(current)current.checked=true;
+ requestAnimationFrame(fitNumbers);
+}
+$('#js-status').textContent='JavaScript：動作中です';
+$('#js-health').textContent='操作用JavaScriptが動作しています';
+$('#show-guide').addEventListener('click',()=>{metrics();$('#focus-view').focus();});
+$('#focus-view').addEventListener('click',()=>{$('#show-guide').focus();});
+// A dragged/swiped candidate must not produce tap feedback.
+let down=null,dragged=false;
+document.addEventListener('pointerdown',e=>{down={x:e.clientX,y:e.clientY};dragged=false;},{passive:true});
+document.addEventListener('pointermove',e=>{if(down&&Math.hypot(e.clientX-down.x,e.clientY-down.y)>10)dragged=true;},{passive:true});
+document.addEventListener('pointercancel',()=>{dragged=true;down=null;},{passive:true});
+function feedbackTarget(el,message){
+ el.classList.add('tap-target');
+ if(!el.matches('button')){el.tabIndex=0;el.setAttribute('role','button');}
+ el.addEventListener('click',e=>{if(dragged&&e.detail!==0)return;tell(typeof message==='function'?message(el):message);});
+ if(!el.matches('button'))el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();dragged=false;el.click();}});
+}
+all('.product-item,.product-panel .choice').forEach(el=>feedbackTarget(el,el=>'「'+el.textContent.trim()+'」のタップを確認しました。値は変更しません。'));
+all('.direct,.add-line,.list-button,.add-account,.date,.payment>button').forEach(el=>feedbackTarget(el,'配置・タップ確認用です。この機能は未実装です。'));
+all('.category').forEach(el=>el.addEventListener('click',()=>tell('分類の選択色だけを切り替えました。商品集合は共通です。')));
+
+window.addEventListener('resize',metrics);if(window.visualViewport)visualViewport.addEventListener('resize',()=>requestAnimationFrame(fitNumbers));
+metrics();
+
+
+// Comparison only: pending quantity never writes through until price commits.
+let pendingPair=null;
+const initialCash=$('.cash-body').innerHTML,initialPay=$('.pay-body').innerHTML;
+function visibleBody(){return all('.sheet-scroll tbody').find(b=>b.matches('.cash-body,.pay-body,.overflow-body')&&getComputedStyle(b).display!=='none');}
+function numeric(cell){return Number(cell.textContent.replace(/,/g,'').trim());}
+function prepareRows(){
+ all('.sheet-scroll tbody tr:not(.blank)').forEach(row=>{
+  [...row.cells].slice(0,2).forEach(cell=>{
+   if(cell.querySelector('.cell-text'))return;
+   cell.title=cell.title||cell.textContent.trim();
+   const wrapper=document.createElement('span');wrapper.className='cell-text';
+   while(cell.firstChild)wrapper.append(cell.firstChild);cell.append(wrapper);
+  });
+  if(row.classList.contains('excluded'))return;
+  [2,3].forEach(i=>{
+   const cell=row.cells[i],value=cell.textContent.trim();
+   cell.classList.add('pair-cell');cell.tabIndex=i===2?0:-1;
+   cell.setAttribute('role','button');cell.setAttribute('aria-label','数量と単価を連続入力：'+row.cells[0].textContent.trim());
+   cell.innerHTML='';const label=document.createElement('span');label.className='pair-value';label.textContent=value;cell.append(label);
+  });
+ });wrapNumbers();requestAnimationFrame(fitNumbers);
+}
+function cancelPair(){pendingPair=null;$('#main').checked=true;requestAnimationFrame(fitNumbers);}
+function panelContext(panel,step){
+ const {row,qty,price}=pendingPair;
+ const context=panel.querySelector('.context');context.replaceChildren();
+ const strong=document.createElement('strong');strong.textContent='明細行 '+row.cells[0].textContent.trim();context.append(strong,document.createElement('br'));
+ context.append(step==='quantity'?'現在：数量 '+qty+' ／ 単価 '+price.toLocaleString('ja-JP')+'円':'選択中の数量：'+pendingPair.nextQty+' ／ 元の単価：'+price.toLocaleString('ja-JP')+'円');
+ context.append(document.createElement('br'),step==='quantity'?'1/2 数量を選ぶと単価へ進みます。':'2/2 単価を選ぶと両方を確定します。');
+}
+function startPair(row){
+ pendingPair={row,body:row.parentElement,qty:numeric(row.cells[2]),price:numeric(row.cells[3]),nextQty:null};
+ panelContext($('.quantity-panel'),'quantity');$('#quantity').checked=true;
+}
+function updateTotals(body){
+ let qty=0,money=0;
+ [...body.rows].filter(r=>!r.classList.contains('excluded')).forEach(r=>{qty+=numeric(r.cells[2]);money+=numeric(r.cells[4]);});
+ let q,m;
+ if(body.matches('.pay-body')){q=$('.pay-qty');m=$('.pay-amount');}
+ else if(body.matches('.overflow-body')){q=$('.cash-qty .over-value');m=$('.cash-amount .over-value');}
+ else{q=$('.cash-qty .normal-value');m=$('.cash-amount .normal-value');}
+ q.textContent=qty.toLocaleString('ja-JP');m.textContent=money.toLocaleString('ja-JP');
+ wrapNumbers();requestAnimationFrame(fitNumbers);
+}
+document.addEventListener('click',e=>{
+ const cell=e.target.closest('td.pair-cell');
+ if(cell){e.preventDefault();if(!dragged)startPair(cell.parentElement);return;}
+ const choice=e.target.closest('.quantity-panel .choice,.price-panel .choice');
+ if(choice){
+  e.preventDefault();if(dragged&&e.detail!==0)return;if(!pendingPair)return;
+  if(choice.closest('.quantity-panel')){
+   pendingPair.nextQty=Number(choice.textContent);panelContext($('.price-panel'),'price');$('#price').checked=true;
+  }else if(pendingPair.nextQty!==null){
+   const {row,body,nextQty}=pendingPair,price=Number(choice.textContent);
+   [nextQty,price,nextQty*price].forEach((v,i)=>{const cell=row.cells[i+2];cell.textContent=v.toLocaleString('ja-JP');});
+   cancelPair();prepareRows();updateTotals(body);
+  }return;
+ }
+ const control=e.target.closest('label,button');
+ if(!control)return;
+ if(control.matches('.close,.scrim')||control.htmlFor==='main'){e.preventDefault();cancelPair();return;}
+ if(control.htmlFor==='quantity'||control.htmlFor==='price'){
+  e.preventDefault();const row=visibleBody()?.querySelector('tr:not(.excluded)');if(row)startPair(row);return;
+ }
+ if(control.htmlFor==='paypay'){pendingPair=null;document.body.classList.add('demo-paypay');}
+ if(control.htmlFor==='product'){pendingPair=null;}
+ if(control.id==='show-guide'){cancelPair();}
+});
+// Clicking Cash is a context switch; cancelling a panel preserves the active account.
+$('.cash').addEventListener('click',()=>{document.body.classList.remove('demo-paypay');cancelPair();});
+document.addEventListener('change',e=>{
+ if(e.target.name!=='account-preview')return;
+ pendingPair=null;document.body.classList.remove('demo-paypay');$('#main').checked=true;
+ $('.cash-body').innerHTML=initialCash;$('.pay-body').innerHTML=initialPay;
+ $('.cash-qty .normal-value').textContent='6';$('.cash-amount .normal-value').textContent='1,550';$('.pay-qty').textContent='2';$('.pay-amount').textContent='600';
+ prepareRows();
+});
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'){cancelPair();return;}
+ if((e.key==='Enter'||e.key===' ')&&e.target.matches('td.pair-cell')){e.preventDefault();startPair(e.target.parentElement);}
+});
+all('.quantity-panel .choice,.price-panel .choice').forEach(el=>{
+ el.tabIndex=0;el.setAttribute('role','button');el.classList.add('tap-target');
+ el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();dragged=false;el.click();}});
+});
+$('.quantity-panel .panel-note').textContent='単価を選ぶまでは元の2値を保持します。×・外側で両方取消です。';
+$('.price-panel .panel-note').textContent='単価の選択で数量・単価を同時確定します。×・外側で両方取消です。';
+prepareRows();
+
+</script></body></html>
