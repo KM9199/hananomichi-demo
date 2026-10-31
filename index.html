@@ -114,6 +114,21 @@ body.iphone-demo .product-panel .panel-footer{padding-bottom:12px}
 .demo-check{padding:10px;border:1px solid #cbd5cb;border-radius:5px;background:white;font-size:13px;line-height:1.8}
 @media(max-height:619px){body.iphone-demo .phone{min-height:620px}}
 
+
+/* 第6版・視認性比較：文字色とウェイトのみ変更。寸法・背景・動作は元のままです。 */
+:root{color:#111111}
+.title-row h2,.date,.serial,.add-account,.total-qty,.total-label,.amount,
+.details-heading strong,th,.context strong,.panel-header h3,.close,
+.section-label,.choice,.product-item span,.direct,.jumps a,.demo-bar button{color:#111111}
+tbody tr:not(.excluded):not(.blank) td{color:#111111}
+tbody tr:not(.excluded):not(.blank) td:nth-child(-n+2),.product-item span,.recent .word{font-weight:600}
+tbody tr:not(.excluded):not(.blank) td:nth-child(3),
+tbody tr:not(.excluded):not(.blank) td:nth-child(4){font-weight:500}
+.btn,.date,.add-account,.direct,.choice,.category,.jumps a,.demo-bar button{font-weight:500}
+.btn:not(.cash):not(.next):not(:disabled),.category:not(.active){color:#111111}
+#paypay:checked~.workspace .cash,#a-new:checked~.workspace .paypay{color:#111111}
+#paypay:checked~.workspace .paypay,#a-new:checked~.workspace .cash{color:white}
+/* 状態色・補足文字・無効表示・白抜き文字は既存の指定を維持します。 */
 </style></head><body class="iphone-demo focus-view">
 <input class="state" type="radio" name="preview" id="main" checked aria-label="会計入力の見本"><input class="state" type="radio" name="preview" id="product" aria-label="品名パネルの見本"><input class="state" type="radio" name="preview" id="quantity" aria-label="数量パネルの見本"><input class="state" type="radio" name="preview" id="price" aria-label="単価パネルの見本"><input class="state" type="radio" name="preview" id="paypay" aria-label="別会計の見本">
 <input class="state" type="radio" name="account-preview" id="a-first"  aria-label="先頭会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-middle" checked aria-label="途中会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-last"  aria-label="最後の既存会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-new"  aria-label="新しい来客の空白会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-over"  aria-label="桁超過の固定見本"><input class="state" type="radio" name="account-preview" id="a-qty-only"><input class="state" type="radio" name="account-preview" id="a-money-only"><input class="state" type="radio" name="account-preview" id="a-boundary"><input class="state" type="checkbox" id="paid-preview" aria-label="現金の決済状態の表示切替"><main class="workspace"><aside class="guide"><div class="preview-tools"><button type="button" id="focus-view">デモへ戻る</button></div><div class="eyebrow">第6版を使ったiPhone操作デモ</div><h1>実寸と押しやすさを試します</h1><p>花のこみち売上入力システム<br>第6版に沿った静的デザイン試作です。</p><div class="rule"></div>
