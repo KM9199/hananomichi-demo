@@ -129,6 +129,84 @@ tbody tr:not(.excluded):not(.blank) td:nth-child(4){font-weight:500}
 #paypay:checked~.workspace .cash,#a-new:checked~.workspace .paypay{color:#111111}
 #paypay:checked~.workspace .paypay,#a-new:checked~.workspace .cash{color:white}
 /* 状態色・補足文字・無効表示・白抜き文字は既存の指定を維持します。 */
+
+/* 第6版・ボタン文字の拡大。商品一覧・五十音・明細・金額の指定は維持します。 */
+.btn,.payment>.status,.direct,.category,.choice,.date,.add-account,
+.recent-toggle,.close,.demo-bar button,.preview-tools button,
+body.iphone-demo .preview-menu label{font-weight:600}
+.btn,.payment>.status,.direct{font-size:15px}
+.recent .word{font-size:16px;font-weight:600}
+.category{font-size:15px}
+.categories>.category:last-child{font-size:13px}
+.choice:not(.word){font-size:17px}
+.recent-toggle{font-size:19px}
+.add-account{font-size:13px}
+.date{font-size:12px}
+body.iphone-demo .demo-bar button{font-size:13px}
+body.iphone-demo #focus-view,body.iphone-demo .preview-menu label{font-size:15px}
+@media(max-width:374px){
+ .add-account{font-size:12px}
+ .payment>.btn{font-size:14px}
+ .categories>.category:last-child{font-size:12px}
+ .nav-pair .btn{font-size:14px}
+}
+
+/* 拡大でボタンの位置が動かないよう、従来の外寸を維持します。 */
+@media(min-width:411px){
+.date{width:70.63px;height:35px;padding:0 1px;flex-shrink:0}
+.add-account{width:56px;height:36px;padding:0 1px;flex-shrink:0}
+.payment>button{width:74.95px;height:39px;padding:0 1px;flex-shrink:0}
+.payment>.status{width:58px;height:39px;padding:0 1px;flex-shrink:0}
+.payment-method .cash{width:44px;height:39px;padding:0 1px;flex-shrink:0}
+.payment-method .paypay{width:58.28px;height:39px;padding:0 1px;flex-shrink:0}
+}
+@media(min-width:375px) and (max-width:410px){
+.date{width:61.67px;height:32px;padding:0 1px;flex-shrink:0}
+.add-account{width:56px;height:36px;padding:0 1px;flex-shrink:0}
+.payment>button{width:66.95px;height:39px;padding:0 1px;flex-shrink:0}
+.payment>.status{width:58px;height:39px;padding:0 1px;flex-shrink:0}
+.payment-method .cash{width:40px;height:39px;padding:0 1px;flex-shrink:0}
+.payment-method .paypay{width:54.28px;height:39px;padding:0 1px;flex-shrink:0}
+}
+@media(max-width:374px){
+.date{width:61.67px;height:32px;padding:0 1px;flex-shrink:0}
+.add-account{width:54px;height:36px;padding:0 1px;flex-shrink:0}
+.payment>button{width:66.95px;height:39px;padding:0 1px;flex-shrink:0}
+.payment>.status{width:58px;height:39px;padding:0 1px;flex-shrink:0}
+.payment-method .cash{width:40px;height:39px;padding:0 1px;flex-shrink:0}
+.payment-method .paypay{width:54.28px;height:39px;padding:0 1px;flex-shrink:0}
+}
+.recent-flowers .word:nth-child(1){width:54.83px;padding:0 2px}
+.recent-flowers .word:nth-child(2){width:66.11px;padding:0 2px}
+.recent-flowers .word:nth-child(3){width:75.33px;padding:0 2px}
+.recent-flowers .word:nth-child(4){width:114.27px;padding:0 2px}
+.recent-flowers .word:nth-child(5){width:48px;padding:0 2px}
+.recent-flowers .word:nth-child(6){width:65.5px;padding:0 2px}
+.recent-flowers .word:nth-child(7){width:67.53px;padding:0 2px}
+.recent-flowers .word:nth-child(8){width:64.5px;padding:0 2px}
+.recent-materials .word:nth-child(1){width:65px;padding:0 2px}
+.recent-materials .word:nth-child(2){width:48px;padding:0 2px}
+.recent-materials .word:nth-child(3){width:52px;padding:0 2px}
+.recent-materials .word:nth-child(4){width:52px;padding:0 2px}
+.recent-materials .word:nth-child(5){width:65px;padding:0 2px}
+.recent-materials .word:nth-child(6){width:73.88px;padding:0 2px}
+body.iphone-demo #focus-view{width:74.95px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .preview-menu:not(.account-previews) label:nth-child(1){width:78px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .preview-menu:not(.account-previews) label:nth-child(2){width:84.05px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .preview-menu:not(.account-previews) label:nth-child(3){width:84.05px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .preview-menu:not(.account-previews) label:nth-child(4){width:84.05px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .preview-menu:not(.account-previews) label:nth-child(5){width:104.86px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .account-previews label:nth-child(1){width:88.61px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .account-previews label:nth-child(2){width:88.61px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .account-previews label:nth-child(3){width:114.61px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .account-previews label:nth-child(4){width:114.61px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .account-previews label:nth-child(5){width:157.72px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .account-previews label:nth-child(6){width:98.39px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .account-previews label:nth-child(7){width:98.39px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .account-previews label:nth-child(8){width:127.61px;height:44px;padding:0 1px;flex-shrink:0;justify-content:center}
+body.iphone-demo .demo-bar button{width:76px;padding:0 1px}
+body.iphone-demo #show-guide{font-size:13px;font-weight:600}.date{padding:0}.payment>button.btn{padding:0 1px}
+body.iphone-demo.focus-view #show-guide{width:50.5px;font-size:10.5px;padding:0}.nav-last .next{width:50px;padding:0 1px}@media(max-width:410px){.nav-last .next{width:44px}}
 </style></head><body class="iphone-demo focus-view">
 <input class="state" type="radio" name="preview" id="main" checked aria-label="会計入力の見本"><input class="state" type="radio" name="preview" id="product" aria-label="品名パネルの見本"><input class="state" type="radio" name="preview" id="quantity" aria-label="数量パネルの見本"><input class="state" type="radio" name="preview" id="price" aria-label="単価パネルの見本"><input class="state" type="radio" name="preview" id="paypay" aria-label="別会計の見本">
 <input class="state" type="radio" name="account-preview" id="a-first"  aria-label="先頭会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-middle" checked aria-label="途中会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-last"  aria-label="最後の既存会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-new"  aria-label="新しい来客の空白会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-over"  aria-label="桁超過の固定見本"><input class="state" type="radio" name="account-preview" id="a-qty-only"><input class="state" type="radio" name="account-preview" id="a-money-only"><input class="state" type="radio" name="account-preview" id="a-boundary"><input class="state" type="checkbox" id="paid-preview" aria-label="現金の決済状態の表示切替"><main class="workspace"><aside class="guide"><div class="preview-tools"><button type="button" id="focus-view">デモへ戻る</button></div><div class="eyebrow">第6版を使ったiPhone操作デモ</div><h1>実寸と押しやすさを試します</h1><p>花のこみち売上入力システム<br>第6版に沿った静的デザイン試作です。</p><div class="rule"></div>
