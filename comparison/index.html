@@ -224,9 +224,9 @@ body #a-over:checked~.workspace .cash-qty,body #a-over:checked~.workspace .cash-
 .title-row .date{flex:0 0 auto;width:max-content;min-width:84px;padding:0 6px;text-align:center}
 .payment{grid-template-columns:minmax(72px,1fr) auto minmax(122px,1fr);gap:6px}
 .payment>button.btn{width:auto;min-width:72px;padding:0 6px}
-.payment>.status{position:relative;width:84px;padding:0 4px 0 32px;background:#fff;align-items:center;justify-content:center;text-align:center;gap:0}
+.payment>.status{position:relative;width:84px;padding:0 4px;border-radius:5px;background:#fff;align-items:center;justify-content:center;text-align:center;gap:3px}
 /* 決済状態の装飾です。既存ラベル全体を1つのタップ領域として維持します。 */
-.payment>.status .status-icon{position:absolute;left:4px;top:50%;transform:translateY(-50%);display:block;width:24px;height:28px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;pointer-events:none;user-select:none}
+.payment>.status .status-icon{display:block;flex:0 0 24px;width:24px;height:28px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;pointer-events:none;user-select:none}
 .payment>.status .status-text{flex:0 0 auto;pointer-events:none}
 .payment>.unpaid-status{background:#fff;color:#69726c;border-color:#69726c}
 .payment>.paid-status{background:#fff;color:#a64b4b;border-color:#a64b4b}
