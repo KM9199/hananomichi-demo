@@ -266,6 +266,35 @@ body #a-over:checked~.workspace .cash-qty,body #a-over:checked~.workspace .cash-
 .name-test-tools .test-controls{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
 .name-test-tools button{min-height:32px;min-width:32px;background:white;border:1px solid #a89673;border-radius:4px;font-size:12px}
 .name-test-tools output{display:block;overflow-wrap:anywhere}
+</style><style>
+/* 名称2パネルの比較試作です。数値列・明細文字サイズは維持します。 */
+.product-panel .panel-footer{gap:6px;padding-left:10px;padding-right:10px}
+.product-panel .panel-footer .direct{flex:1 1 auto;min-width:0;font-size:12px;height:44px;white-space:nowrap}
+.product-panel .panel-footer #edit-product{flex-grow:2}
+button:disabled{background:#eceeec!important;color:#909790!important;border-color:#d5dad5!important;cursor:default}
+.name2-panel{z-index:4;max-height:calc(100% - 54px);height:560px}
+.phone.name2-open .name2-panel{display:flex}
+.phone.name2-open .product-panel{display:none!important}
+.phone.name2-open .scrim{display:block}
+.name2-panel .panel-content{padding:12px 14px 18px;flex:1;min-height:0;overflow:auto;scroll-padding:12px}
+.name2-panel .panel-header{padding-bottom:12px}
+.name2-selected{font-size:18px;font-weight:600;color:#254832;overflow-wrap:anywhere;line-height:1.5}
+.name2-panel button{min-height:44px;border-radius:5px;border:1px solid #bacbbe;background:#f7faf5;color:#182e20;font-size:16px;cursor:pointer}
+#name2-blank{width:100%;margin-bottom:16px;background:#fff}
+.name2-panel label{display:block;font-size:13px;margin-bottom:7px}
+.name2-entry{display:flex;gap:8px;margin-bottom:18px}
+.name2-entry input{flex:1;min-width:0;width:0;font:16px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:10px;border:1px solid #93aa98;border-radius:5px}
+.name2-entry button{flex:0 0 64px;background:#3c654a;color:white}
+.name2-panel h4{font-size:14px;margin:0 0 8px}
+#name2-history{display:grid;gap:7px}
+#name2-history button{text-align:left;padding:10px 12px;white-space:normal;overflow-wrap:anywhere}
+.name2-empty{margin:6px 0;color:#68786c;font-size:13px;line-height:1.7}
+.phone.name2-keyboard .name2-panel{position:fixed;left:var(--editor-left,0px);right:auto;width:var(--editor-width,100%);top:var(--editor-top,0px);bottom:auto;height:var(--editor-height,360px);max-height:none}
+.phone.name2-keyboard .name2-panel .handle{display:none}
+.phone.name2-keyboard .name2-panel .panel-header{padding-top:8px;padding-bottom:7px}
+.phone.name2-keyboard .name2-panel .close{top:7px}
+.phone.name2-keyboard .name2-panel .panel-content{padding-top:8px}
+.sheet-scroll tbody tr:not(.excluded) td:first-child{cursor:pointer}
 </style></head><body class="iphone-demo focus-view">
 <input class="state" type="radio" name="preview" id="main" checked aria-label="会計入力の見本"><input class="state" type="radio" name="preview" id="product" aria-label="品名パネルの見本"><input class="state" type="radio" name="preview" id="quantity" aria-label="数量パネルの見本"><input class="state" type="radio" name="preview" id="price" aria-label="単価パネルの見本"><input class="state" type="radio" name="preview" id="paypay" aria-label="別会計の見本">
 <input class="state" type="radio" name="account-preview" id="a-first"  aria-label="先頭会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-middle" checked aria-label="途中会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-last"  aria-label="最後の既存会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-new"  aria-label="新しい来客の空白会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-over"  aria-label="桁超過の固定見本"><input class="state" type="radio" name="account-preview" id="a-qty-only"><input class="state" type="radio" name="account-preview" id="a-money-only"><input class="state" type="radio" name="account-preview" id="a-boundary"><input class="state" type="checkbox" id="paid-preview" aria-label="現金の決済状態の表示切替"><main class="workspace"><aside class="guide"><div class="preview-tools"><button type="button" id="focus-view">デモへ戻る</button></div><div class="eyebrow">第6版から分けた比較試作</div><h1>実寸と押しやすさを試します</h1><p>花のこみち売上入力システム<br>数量・単価の3タップ連続入力を試します。</p><div class="rule"></div>
@@ -288,8 +317,8 @@ body #a-over:checked~.workspace .cash-qty,body #a-over:checked~.workspace .cash-
 <tbody class="overflow-body"><tr><td title="ガーデンシクラメン・冬の限定品種"><span class="row-no">1</span>ガーデンシクラメン・冬の限定品種</td><td title="フリル咲きピンク・仕入番号12345">フリル咲きピンク・仕入番号12345</td><td><span class="number over-number">1,250</span></td><td><span class="number over-number">123</span></td><td><span class="number over-total">153,750</span></td></tr></tbody><tbody class="pay-body"><tr><td title="ガーデンシクラメン"><span class="row-no">1</span>ガーデンシクラメン</td><td>白</td><td>300</td><td>2</td><td>600</td></tr></tbody><tbody><tr class="blank"><td><label for="product">品名を選択</label></td><td></td><td></td><td></td><td></td></tr><tr class="blank"><td></td><td></td><td></td><td></td><td></td></tr><tr class="blank"><td></td><td></td><td></td><td></td><td></td></tr><tr class="blank"><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
 <div class="table-note">グレーの行は除外中です。<br>行の左スワイプ → 除外／戻すの操作は今後実装します。</div><div class="actions"><button class="btn add-line" type="button">＋ 行追加</button><nav class="navigation" aria-label="会計移動の静的見本"><button class="add-account" type="button" title="名称・操作は仮案です"><span class="button-caption">追加会計</span></button><button class="btn list-button" type="button" title="一覧の詳細は未実装です">一覧</button><div class="nav-pair nav-first"><button class="btn" disabled aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></button><label class="btn next" for="a-middle" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div><div class="nav-pair nav-middle"><label class="btn" for="a-first" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><label class="btn next" for="a-last" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div><div class="nav-pair nav-last"><label class="btn" for="a-middle" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><label class="btn next" for="a-new" aria-label="新規〉"><span class="button-caption caption-next"><span class="caption-text">新規</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div><div class="nav-pair nav-new"><label class="btn" for="a-last" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><button class="btn" disabled title="空白会計からの次操作は詳細未確定です" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div><div class="nav-pair nav-over"><label class="btn" for="a-middle" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><label class="btn next" for="a-last" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div></nav></div><div class="footer-note"><span>数量・単価の比較試作</span><span>数量×単価を計算／保存なし</span></div>
 <label class="scrim" for="main" aria-label="取消してパネルを閉じます"></label>
-<section class="bottom-sheet product-panel" aria-label="品名選択の表示見本"><div class="handle"></div><header class="panel-header"><h3>品名を選択</h3><div class="context"><strong>明細行No.1 ｜ ビオラ</strong><br>現在の品名：ビオラ ／ 名称2：フリル紫</div><label class="close" for="main" aria-label="取消して閉じます">×</label></header><div class="panel-content"><div class="recent-switch"><span class="recent-toggle" aria-label="最近使用：花">花</span><div class="recent recent-flowers"><div class="choice word" title="ビオラ">ビオラ</div><div class="choice word" title="パンジー">パンジー</div><div class="choice word" title="アリッサム">アリッサム</div><div class="choice word" title="ガーデンシクラメン">ガーデンシクラメン</div><div class="choice word" title="キク">キク</div><div class="choice word" title="カルーナ">カルーナ</div><div class="choice word" title="ハボタン">ハボタン</div><div class="choice word" title="プリムラ">プリムラ</div></div><div class="recent recent-materials"><div class="choice word" title="培養土">培養土</div><div class="choice word" title="鉢">鉢</div><div class="choice word" title="肥料">肥料</div><div class="choice word" title="支柱">支柱</div><div class="choice word" title="鉢底石">鉢底石</div><div class="choice word" title="プランター">プランター</div></div><div class="recent recent-events"><span class="recent-empty">最近使用したイベントはありません</span></div></div><div class="categories"><div class="seasons"><span class="category">春</span><span class="category">夏</span><span class="category active">秋</span><span class="category">冬</span></div><span class="category">資材</span><span class="category">イベント</span></div><div class="catalog"><div class="product-list" aria-label="縦1列の品名一覧"><section id="kana-a" class="kana-group"><div class="product-item" data-kana="ありっさむ"><span>アリッサム</span></div><div class="product-item" data-kana="うぃんたーこすもす"><span>ウィンターコスモス</span></div></section><section id="kana-ka" class="kana-group"><div class="product-item" data-kana="がーでんしくらめん"><span>ガーデンシクラメン</span></div><div class="product-item" data-kana="かるーな"><span>カルーナ</span></div><div class="product-item" data-kana="きく"><span>キク</span></div></section><section id="kana-sa" class="kana-group"><div class="product-item" data-kana="しくらめん"><span>シクラメン</span></div><div class="product-item" data-kana="すいーとありっさむ"><span>スイートアリッサム</span></div></section><section id="kana-ta" class="kana-group"><div class="product-item" data-kana="だいあんさす"><span>ダイアンサス</span></div></section><section id="kana-na" class="kana-group"><div class="product-item" data-kana="なでしこ"><span>ナデシコ</span></div></section><section id="kana-ha" class="kana-group"><div class="product-item" data-kana="はぼたん"><span>ハボタン</span></div><div class="product-item" data-kana="ぱんじー"><span>パンジー</span></div><div class="product-item" data-kana="びおら"><span>ビオラ</span></div><div class="product-item" data-kana="ぷりむら"><span>プリムラ</span></div></section><section id="kana-ma" class="kana-group"><div class="product-item" data-kana="まーがれっと"><span>マーガレット</span></div></section><section id="kana-ya" class="kana-group"><div class="product-item" data-kana="ゆりおぷすでーじー"><span>ユリオプスデージー</span></div></section><section id="kana-ra" class="kana-group"><div class="product-item" data-kana="らべんだー"><span>ラベンダー</span></div></section><section id="kana-wa" class="kana-group"><div class="product-item" data-kana="わすれなぐさ"><span>ワスレナグサ</span></div></section></div><nav class="jumps" aria-label="五十音行ジャンプ"><a href="#kana-a" aria-label="あ行へ">ア</a><a href="#kana-ka" aria-label="か行へ">カ</a><a href="#kana-sa" aria-label="さ行へ">サ</a><a href="#kana-ta" aria-label="た行へ">タ</a><a href="#kana-na" aria-label="な行へ">ナ</a><a href="#kana-ha" aria-label="は行へ">ハ</a><a href="#kana-ma" aria-label="ま行へ">マ</a><a href="#kana-ya" aria-label="や行へ">ヤ</a><a href="#kana-ra" aria-label="ら行へ">ラ</a><a href="#kana-wa" aria-label="わ行へ">ワ</a></nav></div></div><footer class="panel-footer"><button class="direct" type="button">品名を直接入力</button><button class="direct" type="button">差額</button></footer></section>
-<section class="bottom-sheet quantity-panel" aria-label="数量選択の表示見本"><div class="handle"></div><header class="panel-header"><h3>数量を選択</h3><div class="context"><strong>明細行No.1 ｜ ビオラ</strong><br>現在の数量：3 ／ 単価：150円 ／ 計：450円</div><label class="close" for="main" aria-label="取消して閉じます">×</label></header><div class="panel-content"><div class="section-label">数量</div><div class="choices"><div class="choice">1</div><div class="choice">2</div><div class="choice">3</div><div class="choice">4</div><div class="choice">5</div><div class="choice">6</div><div class="choice">7</div><div class="choice">8</div><div class="choice">9</div><div class="choice">10</div><div class="choice">11</div><div class="choice">12</div></div><button class="direct" type="button">数量を直接入力</button><p class="panel-note">すべて同じ色・同じサイズの表示見本です。</p></div></section>
+<section class="bottom-sheet product-panel" aria-label="品名選択の表示見本"><div class="handle"></div><header class="panel-header"><h3>品名を選択</h3><div class="context"><strong>明細行No.1 ｜ ビオラ</strong><br>現在の品名：ビオラ ／ 名称2：フリル紫</div><label class="close" for="main" aria-label="取消して閉じます">×</label></header><div class="panel-content"><div class="recent-switch"><span class="recent-toggle" aria-label="最近使用：花">花</span><div class="recent recent-flowers"><div class="choice word" title="ビオラ">ビオラ</div><div class="choice word" title="パンジー">パンジー</div><div class="choice word" title="アリッサム">アリッサム</div><div class="choice word" title="ガーデンシクラメン">ガーデンシクラメン</div><div class="choice word" title="キク">キク</div><div class="choice word" title="カルーナ">カルーナ</div><div class="choice word" title="ハボタン">ハボタン</div><div class="choice word" title="プリムラ">プリムラ</div></div><div class="recent recent-materials"><div class="choice word" title="培養土">培養土</div><div class="choice word" title="鉢">鉢</div><div class="choice word" title="肥料">肥料</div><div class="choice word" title="支柱">支柱</div><div class="choice word" title="鉢底石">鉢底石</div><div class="choice word" title="プランター">プランター</div></div><div class="recent recent-events"><span class="recent-empty">最近使用したイベントはありません</span></div></div><div class="categories"><div class="seasons"><span class="category">春</span><span class="category">夏</span><span class="category active">秋</span><span class="category">冬</span></div><span class="category">資材</span><span class="category">イベント</span></div><div class="catalog"><div class="product-list" aria-label="縦1列の品名一覧"><section id="kana-a" class="kana-group"><div class="product-item" data-kana="ありっさむ"><span>アリッサム</span></div><div class="product-item" data-kana="うぃんたーこすもす"><span>ウィンターコスモス</span></div></section><section id="kana-ka" class="kana-group"><div class="product-item" data-kana="がーでんしくらめん"><span>ガーデンシクラメン</span></div><div class="product-item" data-kana="かるーな"><span>カルーナ</span></div><div class="product-item" data-kana="きく"><span>キク</span></div></section><section id="kana-sa" class="kana-group"><div class="product-item" data-kana="しくらめん"><span>シクラメン</span></div><div class="product-item" data-kana="すいーとありっさむ"><span>スイートアリッサム</span></div></section><section id="kana-ta" class="kana-group"><div class="product-item" data-kana="だいあんさす"><span>ダイアンサス</span></div></section><section id="kana-na" class="kana-group"><div class="product-item" data-kana="なでしこ"><span>ナデシコ</span></div></section><section id="kana-ha" class="kana-group"><div class="product-item" data-kana="はぼたん"><span>ハボタン</span></div><div class="product-item" data-kana="ぱんじー"><span>パンジー</span></div><div class="product-item" data-kana="びおら"><span>ビオラ</span></div><div class="product-item" data-kana="ぷりむら"><span>プリムラ</span></div></section><section id="kana-ma" class="kana-group"><div class="product-item" data-kana="まーがれっと"><span>マーガレット</span></div></section><section id="kana-ya" class="kana-group"><div class="product-item" data-kana="ゆりおぷすでーじー"><span>ユリオプスデージー</span></div></section><section id="kana-ra" class="kana-group"><div class="product-item" data-kana="らべんだー"><span>ラベンダー</span></div></section><section id="kana-wa" class="kana-group"><div class="product-item" data-kana="わすれなぐさ"><span>ワスレナグサ</span></div></section></div><nav class="jumps" aria-label="五十音行ジャンプ"><a href="#kana-a" aria-label="あ行へ">ア</a><a href="#kana-ka" aria-label="か行へ">カ</a><a href="#kana-sa" aria-label="さ行へ">サ</a><a href="#kana-ta" aria-label="た行へ">タ</a><a href="#kana-na" aria-label="な行へ">ナ</a><a href="#kana-ha" aria-label="は行へ">ハ</a><a href="#kana-ma" aria-label="ま行へ">マ</a><a href="#kana-ya" aria-label="や行へ">ヤ</a><a href="#kana-ra" aria-label="ら行へ">ラ</a><a href="#kana-wa" aria-label="わ行へ">ワ</a></nav></div></div><footer class="panel-footer"><button class="direct" id="edit-name2" type="button" disabled>名称2変更</button><button class="direct" id="edit-product" type="button">品名を直接入力</button><button class="direct" type="button">差額</button></footer></section>
+<section class="bottom-sheet name2-panel" role="dialog" aria-modal="true" aria-labelledby="name2-heading"><div class="handle"></div><header class="panel-header"><h3 id="name2-heading">名称2を選択</h3><div class="context" id="name2-row"></div><div class="name2-selected" id="name2-product"></div><button type="button" class="close" id="name2-cancel" aria-label="変更を取り消して閉じます">×</button></header><div class="panel-content"><button type="button" id="name2-blank">空欄</button><form id="name2-form"><label for="name2-input">新しい名称2を入力</label><div class="name2-entry"><input id="name2-input" type="text" autocomplete="off" enterkeyhint="done" placeholder="名称2を入力…"><button type="submit" id="name2-register" disabled>登録</button></div></form><div id="name2-list-area"><h4>名称2一覧</h4><div id="name2-history"></div></div></div></section><section class="bottom-sheet quantity-panel" aria-label="数量選択の表示見本"><div class="handle"></div><header class="panel-header"><h3>数量を選択</h3><div class="context"><strong>明細行No.1 ｜ ビオラ</strong><br>現在の数量：3 ／ 単価：150円 ／ 計：450円</div><label class="close" for="main" aria-label="取消して閉じます">×</label></header><div class="panel-content"><div class="section-label">数量</div><div class="choices"><div class="choice">1</div><div class="choice">2</div><div class="choice">3</div><div class="choice">4</div><div class="choice">5</div><div class="choice">6</div><div class="choice">7</div><div class="choice">8</div><div class="choice">9</div><div class="choice">10</div><div class="choice">11</div><div class="choice">12</div></div><button class="direct" type="button">数量を直接入力</button><p class="panel-note">すべて同じ色・同じサイズの表示見本です。</p></div></section>
 <section class="bottom-sheet price-panel" aria-label="単価選択の表示見本"><div class="handle"></div><header class="panel-header"><h3>単価を選択</h3><div class="context"><strong>明細行No.1 ｜ ビオラ</strong><br>現在の単価：150円 ／ 数量：3 ／ 計：450円</div><label class="close" for="main" aria-label="取消して閉じます">×</label></header><div class="panel-content"><div class="section-label">単価（円）</div><div class="choices"><div class="choice">150</div><div class="choice">200</div><div class="choice">250</div><div class="choice">300</div><div class="choice">350</div><div class="choice">400</div><div class="choice">100</div><div class="choice">450</div><div class="choice">500</div><div class="choice">550</div><div class="choice">600</div><div class="choice">650</div><div class="choice">700</div><div class="choice">750</div><div class="choice">800</div><div class="choice">850</div><div class="choice">900</div><div class="choice">950</div></div><button class="direct" type="button">単価を直接入力</button><p class="panel-note">頻度・直前使用による色や大きさの強調はありません。</p></div></section>
 </div><p class="caption">第6版の静的表示見本です。列幅・文字サイズ・タップ領域は実機で確認します。<br>別会計は同じ日付・No.の例で、数量・金額とも個別に表示します。</p></section></main><div class="demo-toast" role="status" aria-live="polite"></div><script>
 // 表示見本の切替と文字の収まりのみです。売上入力・計算・保存は行いません。
@@ -357,7 +386,7 @@ function syncRecent(category){
 }
 syncRecent($('.category.active'));
 // ハッシュ遷移で外側ページが動くのを防ぎ、商品一覧だけを移動します。
-all('.jumps a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const list=$('.product-list'),target=$(a.getAttribute('href'));list.scrollTop+=target.getBoundingClientRect().top-list.getBoundingClientRect().top-1;}));
+all('.jumps a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const list=$('.product-list'),target=$(a.getAttribute('href'));if(!target)return;list.scrollTop+=target.getBoundingClientRect().top-list.getBoundingClientRect().top-1;}));
 all('.category').forEach(el=>{el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-pressed',String(el.classList.contains('active')));const activate=()=>{all('.category').forEach(c=>{c.classList.toggle('active',c===el);c.setAttribute('aria-pressed',String(c===el));});syncRecent(el);};el.addEventListener('click',activate);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();activate();}});});
 $('#focus-view').addEventListener('click',()=>{document.body.classList.add('focus-view');window.scrollTo(0,0);requestAnimationFrame(fitNumbers);});
 $('#show-guide').addEventListener('click',()=>document.body.classList.remove('focus-view'));
@@ -391,8 +420,8 @@ function feedbackTarget(el,message){
  el.addEventListener('click',e=>{if(dragged&&e.detail!==0)return;tell(typeof message==='function'?message(el):message);});
  if(!el.matches('button'))el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();dragged=false;el.click();}});
 }
-all('.product-item,.product-panel .choice').forEach(el=>feedbackTarget(el,el=>'「'+el.textContent.trim()+'」のタップを確認しました。値は変更しません。'));
-all('.direct,.add-line,.list-button,.add-account,.date,.payment>button').forEach(el=>feedbackTarget(el,'配置・タップ確認用です。この機能は未実装です。'));
+
+all('.quantity-panel .direct,.price-panel .direct,.add-line,.list-button,.add-account,.date,.payment>button').forEach(el=>feedbackTarget(el,'配置・タップ確認用です。この機能は未実装です。'));
 all('.category').forEach(el=>el.addEventListener('click',()=>tell('最近使用を分類に合わせて表示しました。商品一覧は共通の見本です。')));
 
 window.addEventListener('resize',metrics);if(window.visualViewport)visualViewport.addEventListener('resize',()=>requestAnimationFrame(fitNumbers));
@@ -491,18 +520,18 @@ prepareRows();
 
 // 表示専用の比較試験です。元データと試験入力は品名・名称2を別々の完全な文字列で保持します。
 const testParams=new URLSearchParams(location.search);
-let nameTestOn=testParams.get('nameTest')!=='0';
+let nameTestOn=testParams.get('nameTest')==='1';
 const testCount=(value,fallback,min)=>value===null?fallback:Math.max(min,Math.min(40,Math.floor(Number(value)||0)));
 let nameTestCount=testCount(testParams.get('chars'),10,1);
 let nameTestSecondCount=testCount(testParams.get('name2chars'),10,0);
 const nameTestOriginal=new WeakMap();
 function shortenName(value,limit){
  const chars=Array.from(value);
- return chars.length<=limit?value:chars.slice(0,limit-1).join('')+'…';
+ return chars.length<=limit?value:chars.slice(0,limit-1).join('')+'...';
 }
 function formatDisplayName(name,name2){
- if(!name2)return shortenName(name,17);
- return shortenName(name,9)+'('+shortenName(name2,16-Math.min(Array.from(name).length,9))+')';
+ if(!name2)return shortenName(name,9);
+ return shortenName(name,9)+'('+shortenName(name2,17-Math.min(Array.from(name).length,9))+')';
 }
 function originalNames(row){
  if(!nameTestOriginal.has(row)){
@@ -544,7 +573,7 @@ function measureNameTest(){
   }
   const available=Math.max(0,right-rect.left),style=getComputedStyle(text);
   const glyphWidth=value=>{const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');ctx.font=style.fontWeight+' '+style.fontSize+' '+style.fontFamily;return ctx.measureText(value).width;};
-  return {name:row.dataset.fullName,name2:row.dataset.fullName2,display:text.textContent,width:rect.width,available,fits:rect.width<=available+0.01,fontSize:style.fontSize,fontFamily:style.fontFamily,fontWeight:style.fontWeight,parenthesesWidth:glyphWidth('()'),ellipsisWidth:glyphWidth('…'),aWidth:glyphWidth('あ')};
+  return {name:row.dataset.fullName,name2:row.dataset.fullName2,display:text.textContent,width:rect.width,available,fits:rect.width<=available+0.01,fontSize:style.fontSize,fontFamily:style.fontFamily,fontWeight:style.fontWeight,parenthesesWidth:glyphWidth('()'),ellipsisWidth:glyphWidth('...'),aWidth:glyphWidth('あ')};
  }).filter(Boolean);
  const first=window.nameTestMeasurements[0];
  $('#test-result').textContent=first?'画面幅 '+innerWidth+'px／文字 '+first.fontSize+'／描画 '+first.width.toFixed(2)+'px・表示枠 '+first.available.toFixed(2)+'px。'+(first.fits?'括弧・省略記号を含め全体が収まります。':'枠を超え、末尾の括弧・省略が欠ける可能性があります。配分・列幅・文字サイズは変更していません。')+' iPhone Safari実機は未検証です。':'表示対象行がありません。';
@@ -559,6 +588,124 @@ document.addEventListener('click',e=>{if(e.target.closest('.cash,.paypay'))reque
 // 数値確定時に既存のラッパーが再利用されても、試験表示と内部の全文を保持します。
 document.fonts.ready.then(measureNameTest);
 renderNameTest();
+
+
+// 比較試作：履歴はこのページを開いている間だけ保持します。永続保存は未実装です。
+const name2History=new Map();
+let editingRow=null,editorMode=null,editorKind='flower';
+const phone=$('.phone'),editor=$('.name2-panel'),entry=$('#name2-input');
+const materialNames=new Set(['培養土','鉢','肥料','支柱','鉢底石','プランター']);
+function rowData(row){
+ if(row.classList.contains('blank'))return {name:'',name2:'',kind:''};
+ const data=originalNames(row);
+ if(!data.kind)data.kind=materialNames.has(data.name)?'material':data.name==='差額'?'adjustment':'flower';
+ return data;
+}
+function rememberName2(name,value){
+ if(!name||!value)return;
+ const values=name2History.get(name)||[];
+ name2History.set(name,[value,...values.filter(v=>v!==value)]);
+}
+// 見本に実際に入力されている花の名称2だけを初期履歴にします。
+all('.sheet-scroll tbody tr:not(.blank)').forEach(row=>{const d=rowData(row);if(d.kind==='flower')rememberName2(d.name,d.name2);});
+function currentRow(){return editingRow?.isConnected?editingRow:visibleBody()?.querySelector('tr:not(.excluded)');}
+function syncProductContext(){
+ const row=currentRow();if(!row)return;editingRow=row;
+ const d=rowData(row),ctx=$('.product-panel .context');
+ ctx.textContent='明細行No.'+(row.rowIndex)+' ｜ 現在の品名：'+(d.name||'未入力')+' ／ 名称2：'+(d.name2||'空欄');
+ $('#edit-name2').disabled=!(d.name&&d.kind==='flower');
+}
+function renderEditedRow(row){
+ const d=rowData(row);row.dataset.fullName=d.name;row.dataset.fullName2=d.name2;
+ const cell=row.cells[0];let wrapper=cell.querySelector('.cell-text');
+ if(!wrapper){cell.textContent='';wrapper=document.createElement('span');wrapper.className='cell-text';cell.append(wrapper);}
+ const target=wrapper.querySelector('label')||wrapper,number=target.querySelector('.row-no');
+ target.replaceChildren();if(number)target.append(number);
+ const text=document.createElement('span');text.className='name-test-string';text.textContent=formatDisplayName(d.name,d.name2);target.append(text);
+ cell.title=d.name+(d.name2?'('+d.name2+')':'');row.cells[1].textContent=d.name2;
+ requestAnimationFrame(measureNameTest);
+}
+function closeNameEditor(){
+ editorMode=null;entry.blur();phone.classList.remove('name2-open','name2-keyboard');$('#main').checked=true;
+ requestAnimationFrame(()=>{editingRow?.cells[0].focus({preventScroll:true});fitNumbers();});
+}
+function editorViewport(){
+ if(!editorMode)return;
+ const vv=window.visualViewport,focused=document.activeElement===entry;
+ const compact=focused&&vv&&vv.height<600;
+ phone.classList.toggle('name2-keyboard',!!compact);
+ if(compact){const box=phone.getBoundingClientRect();phone.style.setProperty('--editor-left',box.left+'px');phone.style.setProperty('--editor-width',box.width+'px');phone.style.setProperty('--editor-top',vv.offsetTop+'px');phone.style.setProperty('--editor-height',vv.height+'px');}
+}
+function openNameEditor(mode='name2'){
+ const row=currentRow();if(!row)return;editingRow=row;const d=rowData(row);
+ if(mode==='name2'&&(!d.name||d.kind!=='flower'))return;
+ editorMode=mode;pendingPair=null;$('#main').checked=true;phone.classList.add('name2-open');
+ $('#name2-heading').textContent=mode==='name2'?'名称2を選択':'品名を直接入力';
+ $('#name2-row').textContent='明細行No.'+row.rowIndex+' ｜ 選択中の品名';
+ $('#name2-product').textContent=d.name||'未入力';
+ $('#name2-form label').textContent=mode==='name2'?'新しい名称2を入力':'品名を入力';
+ entry.placeholder=mode==='name2'?'名称2を入力…':'品名を入力…';entry.value=mode==='name2'?d.name2:d.name;
+ $('#name2-blank').hidden=mode!=='name2';$('#name2-list-area').hidden=mode!=='name2';
+ $('#name2-register').disabled=!entry.value.trim();
+ const list=$('#name2-history');list.replaceChildren();
+ const values=name2History.get(d.name)||[];
+ if(!values.length){const p=document.createElement('p');p.className='name2-empty';p.textContent='この品名の名称2はまだありません';list.append(p);}
+ values.forEach(value=>{const b=document.createElement('button');b.type='button';b.textContent=value;b.addEventListener('click',e=>{if(dragged&&e.detail!==0)return;commitName2(value);});list.append(b);});
+ editor.querySelector('.panel-content').scrollTop=0;$('#name2-cancel').focus({preventScroll:true});editorViewport();
+}
+function selectProduct(name,kind){
+ const row=currentRow();if(!row)return;editingRow=row;nameTestOn=false;
+ const previous=rowData(row),different=previous.name!==name||previous.kind!==kind;
+ const data={name,name2:different?'':previous.name2,kind};
+ if(kind!=='flower')data.name2='';
+ if(row.classList.contains('blank')){row.classList.remove('blank');row.cells[2].textContent='0';row.cells[3].textContent='0';row.cells[4].textContent='0';}
+ nameTestOriginal.set(row,data);prepareRows();renderNameTest();syncProductContext();
+ if(kind==='flower')openNameEditor();else{$('#main').checked=true;}
+}
+function commitName2(value){
+ if(!editorMode||editorMode!=='name2')return;
+ const d=rowData(editingRow);d.name2=value;rememberName2(d.name,value);nameTestOn=false;renderNameTest();closeNameEditor();
+}
+$('#name2-form').addEventListener('submit',e=>{
+ e.preventDefault();if(!entry.value.trim()||e.isComposing)return;
+ const value=entry.value.trim();
+ if(editorMode==='product'){const kind=editorKind;closeNameEditor();selectProduct(value,kind);}else commitName2(value);
+});
+entry.addEventListener('input',()=>$('#name2-register').disabled=!entry.value.trim());
+entry.addEventListener('focus',()=>requestAnimationFrame(editorViewport));entry.addEventListener('blur',()=>phone.classList.remove('name2-keyboard'));
+window.visualViewport?.addEventListener('resize',editorViewport);window.visualViewport?.addEventListener('scroll',editorViewport);
+$('#name2-blank').addEventListener('click',()=>commitName2(''));
+$('#name2-cancel').addEventListener('click',closeNameEditor);
+$('#edit-name2').addEventListener('click',()=>openNameEditor());
+$('#edit-product').addEventListener('click',()=>{editorKind=selectedKind();openNameEditor('product');});
+function selectedKind(){const t=$('.category.active').textContent.trim();return t==='資材'?'material':t==='イベント'?'event':'flower';}
+// 既存の数値一括入力の処理には触れず、品名入口と名称2取消をここで扱います。
+document.addEventListener('click',e=>{
+ if(editorMode&&e.target.closest('.scrim')){e.preventDefault();e.stopImmediatePropagation();closeNameEditor();return;}
+ const cell=e.target.closest('.sheet-scroll td:first-child');
+ if(cell&&!cell.parentElement.classList.contains('excluded')){
+  e.preventDefault();e.stopImmediatePropagation();if(dragged&&e.detail!==0)return;
+  editingRow=cell.parentElement;pendingPair=null;syncProductContext();$('#product').checked=true;return;
+ }
+ const choice=e.target.closest('.product-item,.product-panel .choice');
+ if(choice){e.preventDefault();e.stopImmediatePropagation();if(dragged&&e.detail!==0)return;selectProduct(choice.textContent.trim(),choice.dataset.kind||(choice.closest('.recent-materials')?'material':selectedKind()));return;}
+ if(e.target.closest('label[for="product"]')){editingRow=visibleBody()?.querySelector('tr:not(.excluded)');syncProductContext();}
+},true);
+document.addEventListener('keydown',e=>{
+ if(editorMode&&e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();closeNameEditor();}
+ if((e.key==='Enter'||e.key===' ')&&e.target.matches('.sheet-scroll td:first-child,.product-item,.product-panel .choice')){e.preventDefault();dragged=false;e.target.click();}
+},true);
+const flowerCatalog=$('.product-list').innerHTML;
+function prepareProductTargets(){all('.product-item,.product-panel .choice').forEach(el=>{el.tabIndex=0;el.setAttribute('role','button');});all('.sheet-scroll tbody tr:not(.excluded) td:first-child').forEach(el=>{el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label','品名を選択');});}
+all('.category').forEach(el=>el.addEventListener('click',()=>{
+ const kind=selectedKind(),list=$('.product-list');
+ if(kind==='flower')list.innerHTML=flowerCatalog;
+ else{list.replaceChildren();const names=kind==='material'?[...materialNames]:['寄せ植え体験（試作）'];names.forEach(name=>{const item=document.createElement('div');item.className='product-item';item.dataset.kind=kind;const text=document.createElement('span');text.textContent=name;item.append(text);list.append(item);});}
+ list.scrollTop=0;$('.jumps').style.visibility=kind==='flower'?'visible':'hidden';prepareProductTargets();
+}));
+document.addEventListener('change',e=>{if(e.target.name==='account-preview'){closeNameEditor();editingRow=null;prepareProductTargets();syncProductContext();}});
+prepareProductTargets();syncProductContext();
+const prototypeNote=document.createElement('p');prototypeNote.className='small';prototypeNote.textContent='名称2パネル比較試作：品名を選ぶと開きます。履歴は品名ごと・このページを開いている間だけ保持します。再読み込みで消えます。資材は見本候補、イベントは試作用候補です。永続保存・Access連携は未実装です。';$('.guide').append(prototypeNote);
 
 </script></body></html>
 
