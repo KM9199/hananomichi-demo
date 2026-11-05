@@ -354,6 +354,8 @@ body.account-demo .navigation .list-button{width:auto;flex:1;min-width:38px}
 body.account-demo .shared-account .shared-account-mark{display:inline-block}
 body.account-demo .serial{gap:4px;min-width:0}
 body.account-demo .account{gap:6px}
+/* 比較試作の暫定色：同じ所属No.に2会計以上ある場合だけ、上部全体を薄オレンジにします。 */
+body.account-demo .account.shared-account{background:#fff0dc}
 @media(max-width:374px){.shared-account-mark{font-size:9px;padding:3px 2px}body.account-demo .serial{gap:2px}}
 #hold-message{font-weight:700}
 #hold-record-status{font-weight:700;color:#a64b4b}
@@ -1045,7 +1047,7 @@ function renderAccountHeader(){
  document.body.classList.toggle('account-paid',a.paid);
  $('.account').classList.toggle('shared-account',demoAccounts.filter(b=>b.groupNo===a.groupNo).length>=2);
  $('.account').dataset.accountId=a.id;
- $('.account').title='同じNo.に複数の会計がある場合は、No.の右に目印を表示します';
+ $('.account').title='同じNo.に複数の会計がある場合は、背景全体を薄オレンジにし、No.の右に目印を表示します（色は比較用の暫定案です）';
  $('#account-prev').disabled=demoAccounts.indexOf(a)===0;
  $('#account-next').textContent=demoAccounts.indexOf(a)===demoAccounts.length-1?'新規〉':'次〉';
  renderHold();wrapNumbers();requestAnimationFrame(()=>{fitNumbers();scheduleAsciiDisplay();});
@@ -1094,9 +1096,16 @@ function placeExtra(){
 function hasAccountChildren(a){return demoAccounts.some(child=>child.parentAccountId===a.id);}
 function isAccountRoot(a){return !!a&&a.groupNo===a.originalNo&&a.parentAccountId===null;}
 function canMoveAccount(a){return isAccountRoot(a)&&!hasAccountChildren(a);}
-function canAcceptAccount(source,target){
- return canMoveAccount(source)&&isAccountRoot(target)&&target.registered&&
-  source.id!==target.id&&source.date===target.date&&source.groupNo!==target.groupNo;
+// 移動先はタップした会計IDではなく、同日・所属No.の正規親へ解決します。
+// 正規親が一意でない不整合データは受け入れません。移動元の親／子ロックとは別の判定です。
+function accountDestinationRoot(source,row){
+ if(!source||!row||source.date!==row.date)return null;
+ const roots=demoAccounts.filter(a=>a.date===source.date&&a.groupNo===row.groupNo&&isAccountRoot(a)&&a.registered);
+ return roots.length===1?roots[0]:null;
+}
+function canAcceptAccount(source,row){
+ const target=accountDestinationRoot(source,row);
+ return canMoveAccount(source)&&!!target&&source.id!==target.id&&source.groupNo!==target.groupNo;
 }
 function canRestoreAccount(a){return !!a&&a.parentAccountId!==null&&a.groupNo!==a.originalNo&&!hasAccountChildren(a);}
 function fitExtraRows(){
@@ -1112,8 +1121,9 @@ function fitExtraRows(){
 function askExtra(target=null,restore=false){
  if(activeAccount.id!==extraSourceId)return;
  if(restore?!canRestoreAccount(activeAccount):!canAcceptAccount(activeAccount,target))return;
- pendingRestore=restore;pendingParentId=restore?null:target.id;
- pendingGroup=restore?activeAccount.originalNo:target.groupNo;
+ const destination=restore?null:accountDestinationRoot(activeAccount,target);
+ pendingRestore=restore;pendingParentId=restore?null:destination.id;
+ pendingGroup=restore?activeAccount.originalNo:destination.groupNo;
  $('#extra-change').textContent='No.'+activeAccount.groupNo+'→No.'+pendingGroup;
  $('#extra-question').textContent=restore?'複数会計を解除して元のNo.'+pendingGroup+'に戻しますか？':'No.'+pendingGroup+'の複数会計にしますか？';
  confirmExtra.showModal();placeExtra();$('#extra-no').focus({preventScroll:true});
