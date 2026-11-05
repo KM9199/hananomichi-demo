@@ -339,6 +339,50 @@ button:disabled{background:#eceeec!important;color:#909790!important;border-colo
 #hold-record-status{font-size:13px;color:#315e49;margin:10px 0}#hold-record-status[hidden]{display:none}#hold-error{color:#a33e3e;font-size:13px;margin:8px 0}#hold-error:empty{display:none}#hold-register{display:block;margin:16px 0 0 auto;min-width:100px;min-height:46px;padding:8px 20px;border:1px solid #315e49;border-radius:7px;background:#315e49;color:#fff;font-size:16px;font-weight:600}
 #hold-panel.hold-keyboard{top:var(--hold-top);bottom:auto;max-height:var(--hold-height)}
 @keyframes hold-rise{from{transform:translateY(24px);opacity:.5}to{transform:translateY(0);opacity:1}}@media(prefers-reduced-motion:reduce){#hold-panel[open]{animation:none}}
+</style><style>
+/* 会計IDを保持する追加会計試作。既存の4列と入力パネルを維持します。 */
+body.account-demo .cash-body{display:table-row-group!important}
+body.account-demo .pay-body,body.account-demo .overflow-body,body.account-demo .pay-qty,body.account-demo .pay-amount,body.account-demo .new-value,body.account-demo .over-value{display:none!important}
+body.account-demo .cash-qty,body.account-demo .cash-amount,body.account-demo .normal-value{display:inline-block!important}
+body.account-demo .payment>.status{display:none!important}
+body.account-demo:not(.account-paid) .payment>.unpaid-status,body.account-demo.account-paid .payment>.paid-status{display:inline-flex!important}
+body.account-demo .account-nav{display:flex;gap:4px;margin-left:auto}
+body.account-demo .account-nav .btn{min-width:48px;padding:0 7px}
+body.account-demo .navigation{display:flex;justify-content:initial}
+body.account-demo .navigation .list-button{width:auto;flex:1;min-width:38px}
+body.account-demo .shared-account .total-label,body.account-demo .shared-account .amount{background:#fff0b8}
+body.account-demo .shared-account .total-label{border-radius:4px 0 0 4px;padding:7px 2px}
+body.account-demo .shared-account .amount{border-radius:0 4px 4px 0;padding:4px 2px}
+#hold-message{font-weight:700}
+#hold-record-status{font-weight:700;color:#a64b4b}
+.account-previews{display:flex;flex-wrap:wrap;gap:4px}
+.extra-dialog{position:fixed;inset:auto;margin:0;left:var(--extra-left,0px);top:var(--extra-top,100%);transform:translateY(-100%);width:var(--extra-width, min(100%,430px));max-width:100vw;max-height:var(--extra-max-height,calc(100dvh - 12px));box-sizing:border-box;padding:0;border:1px solid #b7c7bb;border-radius:14px 14px 0 0;background:#fff;color:#293c33;overflow:auto;overscroll-behavior:contain;font-family:inherit}
+.extra-dialog[open]{display:flex;flex-direction:column}
+.extra-dialog::backdrop{background:#17332266}
+.extra-dialog header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;gap:8px;flex:none}
+.extra-dialog h2{font-size:18px;margin:0}
+.extra-dialog button{font-family:inherit;font-size:15px;color:inherit;cursor:pointer}
+.extra-dialog header button{height:44px;width:44px;flex:none;border:1px solid #bccbbf;border-radius:5px;background:white;font-size:25px}
+.extra-help{font-size:13px;line-height:1.6;padding:0 14px;margin:0 0 10px;flex:none}
+.extra-columns,.extra-account-row{display:grid;grid-template-columns:minmax(70px,1fr) minmax(0,1.6fr) minmax(70px,1fr);align-items:center;gap:4px;text-align:right}
+.extra-columns{padding:8px 14px;background:#e7eee7;font-size:13px;font-weight:700;flex:none}
+.extra-columns>span:first-child{text-align:left}
+#extra-account-list{overflow-y:auto;overflow-x:hidden;min-height:0;flex:1;overscroll-behavior:contain;touch-action:pan-y}
+.extra-account-row{width:100%;border:0;border-bottom:1px solid #d7dfd6;background:white;min-height:50px;padding:4px 14px}
+.extra-account-row>span{min-width:0;overflow-wrap:anywhere}
+.extra-no-cell{text-align:left;justify-self:start;padding:7px 5px;border-radius:4px}
+.current-account .extra-no-cell{background:#f6d779;color:#293c33;font-weight:700}
+.extra-dialog footer{padding:10px 14px max(12px,env(safe-area-inset-bottom));border-top:1px solid #d7dfd6;flex:none}
+.extra-dialog footer button{min-height:46px;border:1px solid #bccbbf;border-radius:6px;background:white;padding:8px 16px}
+.extra-dialog footer:not(.extra-confirm-buttons) button{width:100%}
+.extra-confirm-content{padding:0 16px;overflow:auto;min-height:0;font-size:16px;line-height:1.7;overflow-wrap:anywhere}
+#extra-change{font-size:23px;font-weight:700;margin:8px 0}
+.extra-confirm-buttons{display:flex;gap:12px}
+.extra-confirm-buttons button{flex:1}
+.extra-confirm-buttons #extra-yes{background:#315e49;color:white;border-color:#315e49}
+.extra-dialog button:focus-visible{outline:3px solid #ba7e30;outline-offset:-3px}
+@media(max-width:374px){body.account-demo .navigation{gap:4px}body.account-demo .account-nav .btn{min-width:44px;padding:0 4px}.extra-account-row{font-size:14px;padding-left:10px;padding-right:10px}}
+
 </style></head><body class="iphone-demo focus-view">
 <input class="state" type="radio" name="preview" id="main" checked aria-label="会計入力の見本"><input class="state" type="radio" name="preview" id="product" aria-label="品名パネルの見本"><input class="state" type="radio" name="preview" id="quantity" aria-label="数量パネルの見本"><input class="state" type="radio" name="preview" id="price" aria-label="単価パネルの見本"><input class="state" type="radio" name="preview" id="paypay" aria-label="別会計の見本">
 <input class="state" type="radio" name="account-preview" id="a-first"  aria-label="先頭会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-middle" checked aria-label="途中会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-last"  aria-label="最後の既存会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-new"  aria-label="新しい来客の空白会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-over"  aria-label="桁超過の固定見本"><input class="state" type="radio" name="account-preview" id="a-qty-only"><input class="state" type="radio" name="account-preview" id="a-money-only"><input class="state" type="radio" name="account-preview" id="a-boundary"><input class="state" type="checkbox" id="paid-preview" aria-label="現金の決済状態の表示切替"><main class="workspace"><aside class="guide"><div class="preview-tools"><button type="button" id="focus-view">デモへ戻る</button></div><div class="eyebrow">第6版から分けた比較試作</div><h1>実寸と押しやすさを試します</h1><p>花のこみち売上入力システム<br>数量・単価の3タップ連続入力を試します。</p><div class="rule"></div>
@@ -948,6 +992,159 @@ document.addEventListener('click',scheduleAsciiDisplay);
 document.addEventListener('toggle',scheduleAsciiDisplay,true);
 document.fonts.ready.then(scheduleAsciiDisplay);
 observeAsciiDisplay();scheduleAsciiDisplay();
+
+
+// 追加会計比較試作。会計IDと元Noは不変。明細DOMは会計ごとに保持し、所属変更では触りません。
+const demoDate=$('.date').textContent.trim();
+const issuedMaxByDay=new Map([[demoDate,6]]);
+let accountSequence=0,activeAccount=null;
+const demoAccounts=[];
+const cashTemplate=$('.cash-body').cloneNode(true),payTemplate=$('.pay-body').cloneNode(true);
+for(const [copy,source] of [[cashTemplate,$('.cash-body')],[payTemplate,$('.pay-body')]]){
+ [...copy.rows].forEach((row,i)=>{if(!row.matches('.blank'))nameTestOriginal.set(row,{...rowData(source.rows[i])});});
+}
+function makeAccount(originalNo,body,method='cash',registered=true,groupNo=originalNo){
+ const a={groupNo,body,method,paid:method==='paypay',registered,scrollTop:0};
+ Object.defineProperties(a,{id:{value:'demo-account-'+(++accountSequence),enumerable:true},originalNo:{value:originalNo,enumerable:true},createdOrder:{value:accountSequence,enumerable:true},date:{value:demoDate,enumerable:true}});
+ body.className='cash-body';demoAccounts.push(a);return a;
+}
+function simpleBody(price){
+ const body=document.createElement('tbody'),row=body.insertRow();
+ ['ビオラ','',String(price),'1',String(price)].forEach(v=>{row.insertCell().textContent=v;});return body;
+}
+makeAccount(1,simpleBody(450));makeAccount(2,simpleBody(1350));
+makeAccount(3,simpleBody(550));makeAccount(3,simpleBody(350),'paypay');
+makeAccount(4,simpleBody(2500));const initialAccount=makeAccount(5,cashTemplate);
+makeAccount(6,payTemplate,'paypay');
+function blankAccount(){
+ const no=(issuedMaxByDay.get(demoDate)||0)+1;issuedMaxByDay.set(demoDate,no);
+ const body=simpleBody(0);body.rows[0].cells[0].textContent='';body.rows[0].cells[3].textContent='0';body.rows[0].className='blank';
+ return makeAccount(no,body,'cash',false);
+}
+function accountTotals(a){
+ let qty=0,money=0;[...a.body.rows].filter(r=>!r.matches('.excluded,.blank')).forEach(r=>{qty+=numeric(r.cells[3]);money+=numeric(r.cells[4]);});return {qty,money};
+}
+function isNewBlank(a){return !a.registered&&![...a.body.rows].some(r=>!r.matches('.blank')&&(rowData(r).name||numeric(r.cells[3])||numeric(r.cells[4])));}
+function renderAccountHeader(){
+ const a=activeAccount,t=accountTotals(a);
+ $('.visitor-no').textContent='No.'+a.groupNo;
+ $('.cash-qty .normal-value').textContent=t.qty.toLocaleString('ja-JP');$('.cash-amount .normal-value').textContent=t.money.toLocaleString('ja-JP');
+ document.body.classList.toggle('demo-paypay',a.method==='paypay');$('#paid-preview').checked=a.paid;
+ document.body.classList.toggle('account-paid',a.paid);
+ $('.account').classList.toggle('shared-account',demoAccounts.filter(b=>b.groupNo===a.groupNo).length>=2);
+ $('.account').dataset.accountId=a.id;
+ $('.account').title='同じ来客No.の会計は合計欄に色を付けます';
+ $('#account-prev').disabled=demoAccounts.indexOf(a)===0;
+ $('#account-next').textContent=demoAccounts.indexOf(a)===demoAccounts.length-1?'新規〉':'次〉';
+ renderHold();wrapNumbers();requestAnimationFrame(()=>{fitNumbers();scheduleAsciiDisplay();});
+}
+function showAccount(a){
+ if(activeAccount)activeAccount.scrollTop=$('.sheet-scroll').scrollTop;
+ pendingPair=null;editingRow=null;$('#main').checked=true;nameTestOn=false;
+ const current=$('.cash-body');if(current!==a.body)current.replaceWith(a.body);
+ activeAccount=a;prepareRows();renderNameTest();prepareProductTargets();renderAccountHeader();$('.sheet-scroll').scrollTop=a.scrollTop;
+}
+// 取り置きも支払方法から切り離し、不変の会計IDで関連付けます。
+holdAccountKey=function(){return activeAccount?.id||'initializing';};
+const oldUpdateTotals=updateTotals;
+updateTotals=function(body){oldUpdateTotals(body);if(activeAccount&&body===activeAccount.body){activeAccount.registered=true;renderAccountHeader();}};
+const oldSelectProduct=selectProduct;
+selectProduct=function(name,kind){oldSelectProduct(name,kind);if(activeAccount){activeAccount.registered=true;renderAccountHeader();}};
+const oldCommitName2=commitName2;
+commitName2=function(value){oldCommitName2(value);if(activeAccount){activeAccount.registered=true;renderAccountHeader();}};
+const oldHoldSet=holdRecords.set.bind(holdRecords);
+holdRecords.set=function(key,value){if(activeAccount&&key===activeAccount.id)activeAccount.registered=true;return oldHoldSet(key,value);};
+// 旧固定見本のナビは実会計の作成順移動へ置換します。
+all('.nav-pair').forEach(el=>el.remove());
+const nav=document.createElement('div');nav.className='account-nav';
+nav.innerHTML='<button class="btn" id="account-prev" type="button">〈前</button><button class="btn next" id="account-next" type="button">次〉</button>';
+$('.navigation').append(nav);
+$('#account-prev').onclick=()=>showAccount(demoAccounts[demoAccounts.indexOf(activeAccount)-1]||activeAccount);
+$('#account-next').onclick=()=>showAccount(demoAccounts[demoAccounts.indexOf(activeAccount)+1]||blankAccount());
+const previews=$('.account-previews');previews.replaceChildren();
+[['先頭の会計',()=>demoAccounts[0]],['途中の会計',()=>initialAccount],['最後の会計',()=>demoAccounts.at(-1)],['新規空白',()=>demoAccounts.find(isNewBlank)||blankAccount()]].forEach(([text,get])=>{const b=document.createElement('button');b.type='button';b.className='btn';b.textContent=text;b.onclick=()=>showAccount(get());previews.append(b);});
+// 桁数比較は必要時だけ別会計を発行し、既存会計のデータは初期化しません。
+const sizeSamples=new Map();
+[['長い品名・桁超過',123,1250],['数量だけ超過',123,10],['金額だけ超過',6,7000],['通常桁の上限',99,101]].forEach(([text,qty,price])=>{
+ const b=document.createElement('button');b.type='button';b.className='btn';b.textContent=text;b.onclick=()=>{let a=sizeSamples.get(text);if(!a){a=blankAccount();const row=a.body.rows[0];row.className='';row.cells[0].textContent=text==='長い品名・桁超過'?'ガーデンシクラメン長い品名の比較':'ビオラ';row.cells[2].textContent=price;row.cells[3].textContent=qty;row.cells[4].textContent=qty*price;a.registered=true;sizeSamples.set(text,a);}showAccount(a);};previews.append(b);
+});
+const extra=document.createElement('dialog');extra.id='extra-account-panel';extra.className='extra-dialog';extra.setAttribute('aria-labelledby','extra-title');
+extra.innerHTML='<header><h2 id="extra-title">追加会計</h2><button type="button" id="extra-close" aria-label="追加会計を取り消して閉じる">×</button></header><p class="extra-help">変更先のNo.を選んでください。色付きのNo.が現在の会計です。</p><div class="extra-columns"><span>No.</span><span>会計合計</span><span>支払方法</span></div><div id="extra-account-list" role="group" aria-label="会計の一覧"></div><footer><button type="button" id="extra-cancel">キャンセル</button></footer>';
+document.body.append(extra);
+const confirmExtra=document.createElement('dialog');confirmExtra.id='extra-account-confirm';confirmExtra.className='extra-dialog';confirmExtra.setAttribute('aria-labelledby','extra-confirm-title');confirmExtra.innerHTML='<header><h2 id="extra-confirm-title">追加会計の確認</h2><button type="button" id="extra-confirm-close" aria-label="変更せず戻る">×</button></header><div class="extra-confirm-content"><p id="extra-change"></p><p id="extra-question"></p></div><footer class="extra-confirm-buttons"><button type="button" id="extra-no" autofocus>いいえ</button><button type="button" id="extra-yes">はい</button></footer>';document.body.append(confirmExtra);
+let extraSourceId=null,pendingGroup=null,extraReturn=null,extraScroll=null;
+function placeExtra(){
+ const box=phone.getBoundingClientRect(),vv=window.visualViewport;
+ const viewportTop=vv?.offsetTop||0,viewportHeight=vv?.height||innerHeight;
+ for(const d of [extra,confirmExtra]){d.style.setProperty('--extra-left',Math.max(0,box.left)+'px');d.style.setProperty('--extra-width',Math.min(box.width,innerWidth)+'px');d.style.setProperty('--extra-top',(viewportTop+viewportHeight)+'px');d.style.setProperty('--extra-max-height',Math.max(1,viewportHeight-12)+'px');}
+}
+function populateExtra(){
+ const list=$('#extra-account-list');list.replaceChildren();
+ const rows=demoAccounts.filter(a=>a.registered||!isNewBlank(a)||a.id===activeAccount.id);
+ if(activeAccount.groupNo!==activeAccount.originalNo&&!rows.some(a=>a.groupNo===activeAccount.originalNo)){
+  // 元Noが欠番なら復帰先を明示します。会計レコードは作りません。
+  rows.push({groupNo:activeAccount.originalNo,restore:true,createdOrder:Infinity});
+ }
+ rows.sort((a,b)=>a.groupNo-b.groupNo||a.createdOrder-b.createdOrder).forEach(a=>{
+  const b=document.createElement('button');b.type='button';b.className='extra-account-row';
+  const current=a.id===activeAccount.id;b.classList.toggle('current-account',current);if(current)b.setAttribute('aria-current','true');
+  b.dataset.targetNo=a.groupNo;if(a.id)b.dataset.accountId=a.id;
+  const n=document.createElement('span');n.className='extra-no-cell';n.textContent='No.'+a.groupNo;
+  const amount=document.createElement('span');amount.textContent=a.restore?'元のNo.に戻す':isNewBlank(a)?'（新規）':accountTotals(a).money.toLocaleString('ja-JP')+'円';
+  const method=document.createElement('span');method.textContent=a.restore?'':a.method==='paypay'?'PayPay':'現金';b.append(n,amount,method);
+  if(current)b.setAttribute('aria-label',b.textContent+' 現在の会計');
+  b.onclick=e=>{if(dragged&&e.detail!==0)return;if(a.groupNo===activeAccount.groupNo)return;
+   pendingGroup=a.groupNo;const restore=pendingGroup===activeAccount.originalNo;
+   $('#extra-change').textContent='No.'+activeAccount.groupNo+' → No.'+pendingGroup;
+   $('#extra-question').textContent=restore?'追加会計を解除して、元のNo.'+pendingGroup+'に戻しますか？':'No.'+pendingGroup+'の追加会計にしますか？';
+   confirmExtra.showModal();placeExtra();$('#extra-no').focus({preventScroll:true});
+  };list.append(b);
+ });
+}
+function openExtra(trigger){
+ if(extra.open||confirmExtra.open||holdPanel.open||customerTotal.open)return;
+ extraSourceId=activeAccount.id;extraReturn=trigger;extraScroll={x:scrollX,y:scrollY};populateExtra();placeExtra();extra.showModal();$('#extra-close').focus({preventScroll:true});
+}
+function cancelExtraConfirm(){confirmExtra.close();pendingGroup=null;}
+function closeExtra(){if(confirmExtra.open)cancelExtraConfirm();extra.close();pendingGroup=null;extraSourceId=null;extraReturn?.focus({preventScroll:true});if(extraScroll)window.scrollTo(extraScroll.x,extraScroll.y);}
+$('#extra-close').onclick=closeExtra;$('#extra-cancel').onclick=closeExtra;
+$('#extra-no').onclick=cancelExtraConfirm;$('#extra-confirm-close').onclick=cancelExtraConfirm;
+$('#extra-yes').onclick=()=>{if(activeAccount.id!==extraSourceId||pendingGroup===null){closeExtra();return;}
+ // 所属No以外に書き込みません。会計DOM・編集途中の値もそのままです。
+ activeAccount.groupNo=pendingGroup;renderAccountHeader();closeExtra();
+};
+for(const d of [extra,confirmExtra]){
+ d.addEventListener('cancel',e=>{e.preventDefault();d===extra?closeExtra():cancelExtraConfirm();});
+ let backdrop=false;const outside=e=>{const r=d.getBoundingClientRect();return e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom;};
+ d.addEventListener('pointerdown',e=>{backdrop=e.target===d&&outside(e);});d.addEventListener('click',e=>{if(backdrop&&!dragged&&e.target===d&&outside(e))d===extra?closeExtra():cancelExtraConfirm();backdrop=false;});
+}
+// ネイティブdialogのEscape処理を、旧パネルの一括取消から独立させます。
+document.addEventListener('keydown',e=>{if(extra.open||confirmExtra.open){e.stopImmediatePropagation();if(e.key==='Escape'){e.preventDefault();confirmExtra.open?cancelExtraConfirm():closeExtra();}}},true);
+window.addEventListener('resize',placeExtra);window.visualViewport?.addEventListener('resize',placeExtra);window.visualViewport?.addEventListener('scroll',placeExtra);
+// 支払方法と決済をそれぞれ会計ID内に保持します。旧固定見本の既定動作は止めます。
+document.addEventListener('click',e=>{
+ const add=e.target.closest('.add-account');if(add){e.preventDefault();e.stopImmediatePropagation();if(!dragged)openExtra(add);return;}
+ const method=e.target.closest('.payment .cash,.payment .paypay');
+ if(method){e.preventDefault();e.stopImmediatePropagation();activeAccount.method=method.classList.contains('paypay')?'paypay':'cash';if(activeAccount.method==='paypay')activeAccount.paid=true;activeAccount.registered=true;renderAccountHeader();return;}
+ const paid=e.target.closest('.payment .status');if(paid){e.preventDefault();e.stopImmediatePropagation();if(activeAccount.method==='paypay')return;activeAccount.paid=!activeAccount.paid;activeAccount.registered=true;renderAccountHeader();return;}
+ const paySample=e.target.closest('.preview-menu label[for="paypay"]');if(paySample){e.preventDefault();e.stopImmediatePropagation();showAccount(demoAccounts[3]);return;}
+ const addLine=e.target.closest('.add-line');if(addLine){e.preventDefault();e.stopImmediatePropagation();const row=simpleBody(0).rows[0];row.cells[0].textContent='';row.cells[3].textContent='0';row.className='blank';activeAccount.body.append(row);prepareRows();prepareProductTargets();row.cells[0].focus({preventScroll:true});return;}
+},true);
+// 旧sampleStateによる再初期化の入口は比較ボタンへ置換済みです。
+all('input[name="account-preview"]').forEach(el=>el.disabled=true);
+document.body.classList.add('account-demo');
+$('.footer-note').innerHTML='<span>追加会計・比較試作</span><span>一時データ／再読込で消えます</span>';
+$('.demo-bar>span').firstChild.textContent='追加会計・比較デモ／保存なし';
+$('.caption').textContent='会計IDごとの一時データです。前後・新規・追加会計を比較できます。永続保存は未実装です。';
+// 古い未実装案内と矛盾しないよう、手順欄の説明を現行試作に置き換えます。
+all('.guide>p.small,.guide>ul').forEach(el=>el.remove());
+holdNote.textContent='取り置きは会計IDごとに保持します。完了⇔完了済・再編集は決済と独立です。両欄空白は登録せず、片欄のみは登録できます。記録自体の削除は未設計です。';
+const notice=document.createElement('p');notice.className='small';notice.textContent='追加会計試作：所属No.だけを変更します。明細・支払方法・決済・取り置きは会計IDごとに保持し、会計間の移動でも維持します。仮運用：初期見本、または入力・支払状態・取り置きを一度でも確定した会計を登録済みとし、未登録の新規空白会計だけに（新規）を表示します。過去最大No.から採番し欠番を再使用しません。元No.が欠番のときは「元のNo.に戻す」行を表示します。最終色は実機で別途決定します。一時データのため再読込で消えます。永続保存・CSV・Access連携・メモ・本格的な一覧は未実装です。';$('.guide').append(notice);
+$('.guide>p:not(.small)').textContent='品名→名称2、単価→数量の3タップ入力と、追加会計を試します。';
+$('.preview-menu label[for="paypay"]').firstChild.textContent='PayPay会計の見本';
+const howTo=all('.guide details').find(d=>d.querySelector('summary')?.textContent==='実機での確認順序');
+if(howTo)howTo.innerHTML='<summary>実機での確認順序</summary><ol><li>Safariの表示を100%にし、品名→名称2・単価→数量の入力を試します。</li><li>追加会計から別No.を選び、いいえ・はい・元No.への解除を確認します。</li><li>最後の会計から新規を作り、所属変更後にも次のNo.が欠番を再使用しないことを確認します。</li><li>前後へ移動して明細・支払・取り置きが各会計に残ることを確認します。</li><li>品名候補の横・縦スクロールと五十音ジャンプ、取り置き完了⇔完了済、お会計拡大を試します。</li><li>横向きやSafariのバー表示・非表示も確認します。永続保存は未実装で、再読込すると入力は消えます。</li></ol>';
+showAccount(initialAccount);
 
 </script></body></html>
 
