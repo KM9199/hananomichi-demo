@@ -309,6 +309,10 @@ button:disabled{background:#eceeec!important;color:#909790!important;border-colo
 .name2-entry{margin-bottom:0}
 /* native dialog の最前面表示で、下の入力・決済操作を遮断します。 */
 .customer-total-trigger{cursor:pointer;touch-action:manipulation}
+/* この2つの会計操作だけ、タッチ・マウス後の枠とキーボードの枠を区別します。 */
+.customer-total-trigger,#customer-total-close{-webkit-tap-highlight-color:transparent}
+.customer-total-trigger.customer-pointer-focus:focus,#customer-total.customer-pointer-focus #customer-total-close:focus{outline:none}
+#customer-total-close:focus-visible{outline:3px solid #ba7e30;outline-offset:2px}
 .customer-total-trigger:focus-visible{outline:3px solid #ba7e30;outline-offset:3px}
 #customer-total{position:fixed;inset:0;margin:0;width:100%;max-width:none;height:100%;height:100dvh;max-height:none;border:0;padding:0;background:#fff;color:#000;overflow:hidden;overscroll-behavior:none;touch-action:none}
 #customer-total::backdrop{background:#fff}
@@ -317,7 +321,7 @@ button:disabled{background:#eceeec!important;color:#909790!important;border-colo
 #customer-total-heading{font:700 clamp(30px,9vw,44px)/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin:0 0 24px;color:#000}
 #customer-total-amount{display:block;white-space:nowrap;font:700 160px/1.25 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:0;font-variant-numeric:tabular-nums;color:#000}
 #customer-total-amount small{font-size:.5em;margin-left:.08em}
-#customer-total-close{position:absolute;top:max(8px,env(safe-area-inset-top));right:max(8px,env(safe-area-inset-right));min-width:88px;min-height:48px;border:0;padding:10px 12px;background:#fff;color:#b3b3b3;font:400 15px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;cursor:pointer}
+#customer-total-close{position:absolute;top:max(8px,env(safe-area-inset-top));right:max(8px,env(safe-area-inset-right));min-width:88px;min-height:48px;border:1px solid currentColor;border-radius:5px;padding:10px 12px;background:#fff;color:#b3b3b3;font:400 15px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;cursor:pointer}
 
 </style></head><body class="iphone-demo focus-view">
 <input class="state" type="radio" name="preview" id="main" checked aria-label="会計入力の見本"><input class="state" type="radio" name="preview" id="product" aria-label="品名パネルの見本"><input class="state" type="radio" name="preview" id="quantity" aria-label="数量パネルの見本"><input class="state" type="radio" name="preview" id="price" aria-label="単価パネルの見本"><input class="state" type="radio" name="preview" id="paypay" aria-label="別会計の見本">
@@ -769,6 +773,18 @@ all('.total-label,.account .amount').forEach(trigger=>{
  trigger.addEventListener('click',()=>{if(!dragged)openCustomerTotal(trigger);});
  trigger.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openCustomerTotal(trigger);}});
 });
+// フォーカス自体と復帰先を保ち、ポインター操作時の装飾だけを抑えます。
+const customerControls=all('.customer-total-trigger');
+function customerPointerFocus(trigger){
+ customerTotal.classList.add('customer-pointer-focus');
+ customerControls.forEach(el=>el.classList.toggle('customer-pointer-focus',el===trigger));
+}
+customerControls.forEach(trigger=>trigger.addEventListener('pointerdown',()=>customerPointerFocus(trigger)));
+$('#customer-total-close').addEventListener('pointerdown',()=>customerPointerFocus(customerReturn));
+document.addEventListener('keydown',()=>{
+ customerTotal.classList.remove('customer-pointer-focus');
+ customerControls.forEach(el=>el.classList.remove('customer-pointer-focus'));
+},true);
 $('#customer-total-close').addEventListener('click',closeCustomerTotal);
 customerTotal.addEventListener('cancel',e=>e.preventDefault());
 // Escapeや既存のショートカットから下の画面を変更しません。閉じるボタンだけで戻ります。
