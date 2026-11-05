@@ -295,6 +295,30 @@ button:disabled{background:#eceeec!important;color:#909790!important;border-colo
 .phone.name2-keyboard .name2-panel .close{top:7px}
 .phone.name2-keyboard .name2-panel .panel-content{padding-top:8px}
 .sheet-scroll tbody tr:not(.excluded) td:first-child{cursor:pointer}
+
+/* 比較試作：候補一覧だけを縮め、空欄と新規入力へのアクセスを保ちます。 */
+.name2-panel .panel-content{display:flex;flex-direction:column}
+#name2-blank,#name2-form{flex-shrink:0}
+#name2-list-area{display:flex;flex-direction:column;min-height:28px;flex:0 1 auto}
+#name2-list-area[hidden]{display:none}
+#name2-list-area h4{flex-shrink:0}
+#name2-history{max-height:205px;min-height:0;overflow-y:auto;overscroll-behavior-y:contain;touch-action:pan-y;-webkit-overflow-scrolling:touch;scrollbar-gutter:stable;flex-shrink:1}
+#name2-history.has-scroll{outline:1px solid #cbd5cb;outline-offset:3px;border-radius:3px}
+#name2-history button{flex-shrink:0}
+#name2-form{margin-top:14px}
+.name2-entry{margin-bottom:0}
+/* native dialog の最前面表示で、下の入力・決済操作を遮断します。 */
+.customer-total-trigger{cursor:pointer;touch-action:manipulation}
+.customer-total-trigger:focus-visible{outline:3px solid #ba7e30;outline-offset:3px}
+#customer-total{position:fixed;inset:0;margin:0;width:100%;max-width:none;height:100%;height:100dvh;max-height:none;border:0;padding:0;background:#fff;color:#000;overflow:hidden;overscroll-behavior:none;touch-action:none}
+#customer-total::backdrop{background:#fff}
+#customer-total[open]{display:flex;align-items:center;justify-content:center}
+.customer-total-content{width:100%;padding: max(20px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(20px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));text-align:center}
+#customer-total-heading{font:700 clamp(30px,9vw,44px)/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin:0 0 24px;color:#000}
+#customer-total-amount{display:block;white-space:nowrap;font:700 160px/1.25 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:0;font-variant-numeric:tabular-nums;color:#000}
+#customer-total-amount small{font-size:.5em;margin-left:.08em}
+#customer-total-close{position:absolute;top:max(8px,env(safe-area-inset-top));right:max(8px,env(safe-area-inset-right));min-width:88px;min-height:48px;border:0;padding:10px 12px;background:#fff;color:#b3b3b3;font:400 15px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;cursor:pointer}
+
 </style></head><body class="iphone-demo focus-view">
 <input class="state" type="radio" name="preview" id="main" checked aria-label="会計入力の見本"><input class="state" type="radio" name="preview" id="product" aria-label="品名パネルの見本"><input class="state" type="radio" name="preview" id="quantity" aria-label="数量パネルの見本"><input class="state" type="radio" name="preview" id="price" aria-label="単価パネルの見本"><input class="state" type="radio" name="preview" id="paypay" aria-label="別会計の見本">
 <input class="state" type="radio" name="account-preview" id="a-first"  aria-label="先頭会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-middle" checked aria-label="途中会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-last"  aria-label="最後の既存会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-new"  aria-label="新しい来客の空白会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-over"  aria-label="桁超過の固定見本"><input class="state" type="radio" name="account-preview" id="a-qty-only"><input class="state" type="radio" name="account-preview" id="a-money-only"><input class="state" type="radio" name="account-preview" id="a-boundary"><input class="state" type="checkbox" id="paid-preview" aria-label="現金の決済状態の表示切替"><main class="workspace"><aside class="guide"><div class="preview-tools"><button type="button" id="focus-view">デモへ戻る</button></div><div class="eyebrow">第6版から分けた比較試作</div><h1>実寸と押しやすさを試します</h1><p>花のこみち売上入力システム<br>数量・単価の3タップ連続入力を試します。</p><div class="rule"></div>
@@ -318,9 +342,10 @@ button:disabled{background:#eceeec!important;color:#909790!important;border-colo
 <div class="table-note">グレーの行は除外中です。<br>行の左スワイプ → 除外／戻すの操作は今後実装します。</div><div class="actions"><button class="btn add-line" type="button">＋ 行追加</button><nav class="navigation" aria-label="会計移動の静的見本"><button class="add-account" type="button" title="名称・操作は仮案です"><span class="button-caption">追加会計</span></button><button class="btn list-button" type="button" title="一覧の詳細は未実装です">一覧</button><div class="nav-pair nav-first"><button class="btn" disabled aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></button><label class="btn next" for="a-middle" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div><div class="nav-pair nav-middle"><label class="btn" for="a-first" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><label class="btn next" for="a-last" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div><div class="nav-pair nav-last"><label class="btn" for="a-middle" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><label class="btn next" for="a-new" aria-label="新規〉"><span class="button-caption caption-next"><span class="caption-text">新規</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div><div class="nav-pair nav-new"><label class="btn" for="a-last" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><button class="btn" disabled title="空白会計からの次操作は詳細未確定です" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div><div class="nav-pair nav-over"><label class="btn" for="a-middle" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><label class="btn next" for="a-last" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div></nav></div><div class="footer-note"><span>数量・単価の比較試作</span><span>数量×単価を計算／保存なし</span></div>
 <label class="scrim" for="main" aria-label="取消してパネルを閉じます"></label>
 <section class="bottom-sheet product-panel" aria-label="品名選択の表示見本"><div class="handle"></div><header class="panel-header"><h3>品名を選択</h3><div class="context"><strong>明細行No.1 ｜ ビオラ</strong><br>現在の品名：ビオラ ／ 名称2：フリル紫</div><label class="close" for="main" aria-label="取消して閉じます">×</label></header><div class="panel-content"><div class="recent-switch"><span class="recent-toggle" aria-label="最近使用：花">花</span><div class="recent recent-flowers"><div class="choice word" title="ビオラ">ビオラ</div><div class="choice word" title="パンジー">パンジー</div><div class="choice word" title="アリッサム">アリッサム</div><div class="choice word" title="ガーデンシクラメン">ガーデンシクラメン</div><div class="choice word" title="キク">キク</div><div class="choice word" title="カルーナ">カルーナ</div><div class="choice word" title="ハボタン">ハボタン</div><div class="choice word" title="プリムラ">プリムラ</div></div><div class="recent recent-materials"><div class="choice word" title="培養土">培養土</div><div class="choice word" title="鉢">鉢</div><div class="choice word" title="肥料">肥料</div><div class="choice word" title="支柱">支柱</div><div class="choice word" title="鉢底石">鉢底石</div><div class="choice word" title="プランター">プランター</div></div><div class="recent recent-events"><span class="recent-empty">最近使用したイベントはありません</span></div></div><div class="categories"><div class="seasons"><span class="category">春</span><span class="category">夏</span><span class="category active">秋</span><span class="category">冬</span></div><span class="category">資材</span><span class="category">イベント</span></div><div class="catalog"><div class="product-list" aria-label="縦1列の品名一覧"><section id="kana-a" class="kana-group"><div class="product-item" data-kana="ありっさむ"><span>アリッサム</span></div><div class="product-item" data-kana="うぃんたーこすもす"><span>ウィンターコスモス</span></div></section><section id="kana-ka" class="kana-group"><div class="product-item" data-kana="がーでんしくらめん"><span>ガーデンシクラメン</span></div><div class="product-item" data-kana="かるーな"><span>カルーナ</span></div><div class="product-item" data-kana="きく"><span>キク</span></div></section><section id="kana-sa" class="kana-group"><div class="product-item" data-kana="しくらめん"><span>シクラメン</span></div><div class="product-item" data-kana="すいーとありっさむ"><span>スイートアリッサム</span></div></section><section id="kana-ta" class="kana-group"><div class="product-item" data-kana="だいあんさす"><span>ダイアンサス</span></div></section><section id="kana-na" class="kana-group"><div class="product-item" data-kana="なでしこ"><span>ナデシコ</span></div></section><section id="kana-ha" class="kana-group"><div class="product-item" data-kana="はぼたん"><span>ハボタン</span></div><div class="product-item" data-kana="ぱんじー"><span>パンジー</span></div><div class="product-item" data-kana="びおら"><span>ビオラ</span></div><div class="product-item" data-kana="ぷりむら"><span>プリムラ</span></div></section><section id="kana-ma" class="kana-group"><div class="product-item" data-kana="まーがれっと"><span>マーガレット</span></div></section><section id="kana-ya" class="kana-group"><div class="product-item" data-kana="ゆりおぷすでーじー"><span>ユリオプスデージー</span></div></section><section id="kana-ra" class="kana-group"><div class="product-item" data-kana="らべんだー"><span>ラベンダー</span></div></section><section id="kana-wa" class="kana-group"><div class="product-item" data-kana="わすれなぐさ"><span>ワスレナグサ</span></div></section></div><nav class="jumps" aria-label="五十音行ジャンプ"><a href="#kana-a" aria-label="あ行へ">ア</a><a href="#kana-ka" aria-label="か行へ">カ</a><a href="#kana-sa" aria-label="さ行へ">サ</a><a href="#kana-ta" aria-label="た行へ">タ</a><a href="#kana-na" aria-label="な行へ">ナ</a><a href="#kana-ha" aria-label="は行へ">ハ</a><a href="#kana-ma" aria-label="ま行へ">マ</a><a href="#kana-ya" aria-label="や行へ">ヤ</a><a href="#kana-ra" aria-label="ら行へ">ラ</a><a href="#kana-wa" aria-label="わ行へ">ワ</a></nav></div></div><footer class="panel-footer"><button class="direct" id="edit-name2" type="button" disabled>名称2変更</button><button class="direct" id="edit-product" type="button">品名を直接入力</button><button class="direct" type="button">差額</button></footer></section>
-<section class="bottom-sheet name2-panel" role="dialog" aria-modal="true" aria-labelledby="name2-heading"><div class="handle"></div><header class="panel-header"><h3 id="name2-heading">名称2を選択</h3><div class="context" id="name2-row"></div><div class="name2-selected" id="name2-product"></div><button type="button" class="close" id="name2-cancel" aria-label="変更を取り消して閉じます">×</button></header><div class="panel-content"><button type="button" id="name2-blank">空欄</button><form id="name2-form"><label for="name2-input">新しい名称2を入力</label><div class="name2-entry"><input id="name2-input" type="text" autocomplete="off" enterkeyhint="done" placeholder="名称2を入力…"><button type="submit" id="name2-register" disabled>登録</button></div></form><div id="name2-list-area"><h4>名称2一覧</h4><div id="name2-history"></div></div></div></section><section class="bottom-sheet quantity-panel" aria-label="数量選択の表示見本"><div class="handle"></div><header class="panel-header"><h3>数量を選択</h3><div class="context"><strong>明細行No.1 ｜ ビオラ</strong><br>現在の数量：3 ／ 単価：150円 ／ 計：450円</div><label class="close" for="main" aria-label="取消して閉じます">×</label></header><div class="panel-content"><div class="section-label">数量</div><div class="choices"><div class="choice">1</div><div class="choice">2</div><div class="choice">3</div><div class="choice">4</div><div class="choice">5</div><div class="choice">6</div><div class="choice">7</div><div class="choice">8</div><div class="choice">9</div><div class="choice">10</div><div class="choice">11</div><div class="choice">12</div></div><button class="direct" type="button">数量を直接入力</button><p class="panel-note">すべて同じ色・同じサイズの表示見本です。</p></div></section>
+<section class="bottom-sheet name2-panel" role="dialog" aria-modal="true" aria-labelledby="name2-heading"><div class="handle"></div><header class="panel-header"><h3 id="name2-heading">名称2を選択</h3><div class="context" id="name2-row"></div><div class="name2-selected" id="name2-product"></div><button type="button" class="close" id="name2-cancel" aria-label="変更を取り消して閉じます">×</button></header><div class="panel-content"><button type="button" id="name2-blank">空欄</button><div id="name2-list-area"><h4>名称2一覧</h4><div id="name2-history" role="region" aria-label="名称2の候補一覧" tabindex="0"></div></div><form id="name2-form"><label for="name2-input">新しい名称2を入力</label><div class="name2-entry"><input id="name2-input" type="text" autocomplete="off" enterkeyhint="done" placeholder="名称2を入力…"><button type="submit" id="name2-register" disabled>登録</button></div></form></div></section><section class="bottom-sheet quantity-panel" aria-label="数量選択の表示見本"><div class="handle"></div><header class="panel-header"><h3>数量を選択</h3><div class="context"><strong>明細行No.1 ｜ ビオラ</strong><br>現在の数量：3 ／ 単価：150円 ／ 計：450円</div><label class="close" for="main" aria-label="取消して閉じます">×</label></header><div class="panel-content"><div class="section-label">数量</div><div class="choices"><div class="choice">1</div><div class="choice">2</div><div class="choice">3</div><div class="choice">4</div><div class="choice">5</div><div class="choice">6</div><div class="choice">7</div><div class="choice">8</div><div class="choice">9</div><div class="choice">10</div><div class="choice">11</div><div class="choice">12</div></div><button class="direct" type="button">数量を直接入力</button><p class="panel-note">すべて同じ色・同じサイズの表示見本です。</p></div></section>
 <section class="bottom-sheet price-panel" aria-label="単価選択の表示見本"><div class="handle"></div><header class="panel-header"><h3>単価を選択</h3><div class="context"><strong>明細行No.1 ｜ ビオラ</strong><br>現在の単価：150円 ／ 数量：3 ／ 計：450円</div><label class="close" for="main" aria-label="取消して閉じます">×</label></header><div class="panel-content"><div class="section-label">単価（円）</div><div class="choices"><div class="choice">150</div><div class="choice">200</div><div class="choice">250</div><div class="choice">300</div><div class="choice">350</div><div class="choice">400</div><div class="choice">100</div><div class="choice">450</div><div class="choice">500</div><div class="choice">550</div><div class="choice">600</div><div class="choice">650</div><div class="choice">700</div><div class="choice">750</div><div class="choice">800</div><div class="choice">850</div><div class="choice">900</div><div class="choice">950</div></div><button class="direct" type="button">単価を直接入力</button><p class="panel-note">頻度・直前使用による色や大きさの強調はありません。</p></div></section>
-</div><p class="caption">第6版の静的表示見本です。列幅・文字サイズ・タップ領域は実機で確認します。<br>別会計は同じ日付・No.の例で、数量・金額とも個別に表示します。</p></section></main><div class="demo-toast" role="status" aria-live="polite"></div><script>
+</div><p class="caption">第6版の静的表示見本です。列幅・文字サイズ・タップ領域は実機で確認します。<br>別会計は同じ日付・No.の例で、数量・金額とも個別に表示します。</p></section></main><div class="demo-toast" role="status" aria-live="polite"></div><dialog id="customer-total" aria-labelledby="customer-total-heading" aria-describedby="customer-total-amount"><button type="button" id="customer-total-close" autofocus>× 閉じる</button><div class="customer-total-content"><h2 id="customer-total-heading">お会計</h2><div id="customer-total-amount"><span id="customer-total-number"></span><small>円</small></div></div></dialog>
+<script>
 // 表示見本の切替と文字の収まりのみです。売上入力・計算・保存は行いません。
 const $ = s => document.querySelector(s);
 const all = s => [...document.querySelectorAll(s)];
@@ -644,13 +669,14 @@ function openNameEditor(mode='name2'){
  $('#name2-row').textContent='明細行No.'+row.rowIndex+' ｜ 選択中の品名';
  $('#name2-product').textContent=d.name||'未入力';
  $('#name2-form label').textContent=mode==='name2'?'新しい名称2を入力':'品名を入力';
- entry.placeholder=mode==='name2'?'名称2を入力…':'品名を入力…';entry.value=mode==='name2'?d.name2:d.name;
+ entry.placeholder=mode==='name2'?'名称2を入力…':'品名を入力…';entry.value=mode==='name2'?'':d.name;
  $('#name2-blank').hidden=mode!=='name2';$('#name2-list-area').hidden=mode!=='name2';
  $('#name2-register').disabled=!entry.value.trim();
  const list=$('#name2-history');list.replaceChildren();
  const values=name2History.get(d.name)||[];
  if(!values.length){const p=document.createElement('p');p.className='name2-empty';p.textContent='この品名の名称2はまだありません';list.append(p);}
  values.forEach(value=>{const b=document.createElement('button');b.type='button';b.textContent=value;b.addEventListener('click',e=>{if(dragged&&e.detail!==0)return;commitName2(value);});list.append(b);});
+ list.scrollTop=0;list.classList.toggle('has-scroll',values.length>4);
  editor.querySelector('.panel-content').scrollTop=0;$('#name2-cancel').focus({preventScroll:true});editorViewport();
 }
 function selectProduct(name,kind){
@@ -706,6 +732,50 @@ all('.category').forEach(el=>el.addEventListener('click',()=>{
 document.addEventListener('change',e=>{if(e.target.name==='account-preview'){closeNameEditor();editingRow=null;prepareProductTargets();syncProductContext();}});
 prepareProductTargets();syncProductContext();
 const prototypeNote=document.createElement('p');prototypeNote.className='small';prototypeNote.textContent='名称2パネル比較試作：品名を選ぶと開きます。履歴は品名ごと・このページを開いている間だけ保持します。再読み込みで消えます。資材は見本候補、イベントは試作用候補です。永続保存・Access連携は未実装です。';$('.guide').append(prototypeNote);
+
+
+// 合計の既存表示値を読むだけで、明細・決済・計算処理には書き込みません。
+const customerTotal=$('#customer-total'),customerNumber=$('#customer-total-number'),customerAmount=$('#customer-total-amount');
+let customerReturn=null,customerScroll=null;
+function fitCustomerTotal(){
+ if(!customerTotal.open)return;
+ const available=customerAmount.clientWidth;
+ const value=customerNumber.textContent;
+ customerAmount.style.fontSize='160px';customerNumber.textContent='9,999';
+ const measure=()=>{const range=document.createRange();range.selectNodeContents(customerAmount);return range.getBoundingClientRect().width;};
+ const base=Math.min(160,160*(available-2)/measure());
+ customerNumber.textContent=value;customerAmount.style.fontSize=base+'px';
+ const actual=measure();
+ if(actual>available-2)customerAmount.style.fontSize=(base*(available-2)/actual)+'px';
+}
+function openCustomerTotal(trigger){
+ if(customerTotal.open||editorMode||!($('#main').checked||$('#paypay').checked))return;
+ const source=all('.amount .fit-value').find(el=>el.getClientRects().length);
+ if(!source)return;
+ customerNumber.textContent=Number(source.textContent.replace(/,/g,'')).toLocaleString('ja-JP');
+ customerReturn=trigger;
+ customerScroll={x:scrollX,y:scrollY,style:document.body.getAttribute('style')};
+ Object.assign(document.body.style,{position:'fixed',top:-scrollY+'px',left:-scrollX+'px',width:'100%'});
+ customerTotal.showModal();fitCustomerTotal();
+}
+function closeCustomerTotal(){
+ customerTotal.close();
+ if(customerScroll.style===null)document.body.removeAttribute('style');else document.body.setAttribute('style',customerScroll.style);
+ window.scrollTo(customerScroll.x,customerScroll.y);
+ customerReturn?.focus({preventScroll:true});customerScroll=null;
+}
+all('.total-label,.account .amount').forEach(trigger=>{
+ trigger.classList.add('customer-total-trigger');trigger.tabIndex=0;trigger.setAttribute('role','button');trigger.setAttribute('aria-label','お客様向けに会計金額を大きく表示');trigger.setAttribute('aria-haspopup','dialog');
+ trigger.addEventListener('click',()=>{if(!dragged)openCustomerTotal(trigger);});
+ trigger.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openCustomerTotal(trigger);}});
+});
+$('#customer-total-close').addEventListener('click',closeCustomerTotal);
+customerTotal.addEventListener('cancel',e=>e.preventDefault());
+// Escapeや既存のショートカットから下の画面を変更しません。閉じるボタンだけで戻ります。
+document.addEventListener('keydown',e=>{if(customerTotal.open){e.stopImmediatePropagation();if(e.key==='Escape')e.preventDefault();}},true);
+window.addEventListener('resize',fitCustomerTotal);
+window.visualViewport?.addEventListener('resize',fitCustomerTotal);
+document.fonts.ready.then(fitCustomerTotal);
 
 </script></body></html>
 
