@@ -498,7 +498,7 @@ let nameTestSecondCount=testCount(testParams.get('name2chars'),10,0);
 const nameTestOriginal=new WeakMap();
 function shortenName(value,limit){
  const chars=Array.from(value);
- return chars.length<=limit?value:chars.slice(0,limit-1).join('')+'…';
+ return chars.length<=limit?value:chars.slice(0,limit-1).join('')+'...';
 }
 function formatDisplayName(name,name2){
  if(!name2)return shortenName(name,17);
@@ -544,7 +544,7 @@ function measureNameTest(){
   }
   const available=Math.max(0,right-rect.left),style=getComputedStyle(text);
   const glyphWidth=value=>{const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');ctx.font=style.fontWeight+' '+style.fontSize+' '+style.fontFamily;return ctx.measureText(value).width;};
-  return {name:row.dataset.fullName,name2:row.dataset.fullName2,display:text.textContent,width:rect.width,available,fits:rect.width<=available+0.01,fontSize:style.fontSize,fontFamily:style.fontFamily,fontWeight:style.fontWeight,parenthesesWidth:glyphWidth('()'),ellipsisWidth:glyphWidth('…'),aWidth:glyphWidth('あ')};
+  return {name:row.dataset.fullName,name2:row.dataset.fullName2,display:text.textContent,width:rect.width,available,fits:rect.width<=available+0.01,fontSize:style.fontSize,fontFamily:style.fontFamily,fontWeight:style.fontWeight,parenthesesWidth:glyphWidth('()'),ellipsisWidth:glyphWidth('...'),aWidth:glyphWidth('あ')};
  }).filter(Boolean);
  const first=window.nameTestMeasurements[0];
  $('#test-result').textContent=first?'画面幅 '+innerWidth+'px／文字 '+first.fontSize+'／描画 '+first.width.toFixed(2)+'px・表示枠 '+first.available.toFixed(2)+'px。'+(first.fits?'括弧・省略記号を含め全体が収まります。':'枠を超え、末尾の括弧・省略が欠ける可能性があります。配分・列幅・文字サイズは変更していません。')+' iPhone Safari実機は未検証です。':'表示対象行がありません。';
