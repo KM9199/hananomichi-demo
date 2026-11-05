@@ -502,7 +502,7 @@ function shortenName(value,limit){
 }
 function formatDisplayName(name,name2){
  if(!name2)return shortenName(name,17);
- return shortenName(name,9)+'('+shortenName(name2,16-Math.min(Array.from(name).length,9))+')';
+ return shortenName(name,9)+'('+shortenName(name2,17-Math.min(Array.from(name).length,9))+')';
 }
 function originalNames(row){
  if(!nameTestOriginal.has(row)){
