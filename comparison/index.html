@@ -464,6 +464,21 @@ body.account-demo .account.shared-account{background:#fff0dc}
  .account-list-row:has(.account-list-badge){row-gap:6px}
  .extra-columns,.extra-account-row{grid-template-columns:66px 88px minmax(62px,1fr);column-gap:12px;padding-left:10px;padding-right:10px}
 }
+
+/* 2026-11-06 会計一覧だけの再配分。支払全文と状態ピルの領域を分離します。 */
+.account-list-columns,.account-list-row{
+ grid-template-columns:26px var(--list-no-width,56px) var(--list-money-width,72px) minmax(60px,1fr) 119px;
+ column-gap:6px;
+}
+.account-list-columns>span:nth-child(4),.account-list-row>span:nth-child(4){padding-left:6px}
+.account-list-row>.account-list-icons{
+ justify-content:flex-end;flex-wrap:wrap;gap:4px;grid-column:auto;
+}
+.list-status-below .account-list-columns,.list-status-below .account-list-row{grid-template-columns:26px var(--list-no-width,56px) var(--list-money-width,72px) minmax(60px,1fr)}
+.list-status-below .account-list-columns>span:nth-child(5){display:none}
+.list-status-below .account-list-row>.account-list-icons{grid-column:2 / -1;justify-content:flex-end}
+.list-status-below .account-list-row>.account-list-icons:empty{display:none}
+.list-status-below .account-list-row:has(.account-list-badge){row-gap:8px}
 </style></head><body class="iphone-demo focus-view">
 <input class="state" type="radio" name="preview" id="main" checked aria-label="会計入力の見本"><input class="state" type="radio" name="preview" id="product" aria-label="品名パネルの見本"><input class="state" type="radio" name="preview" id="quantity" aria-label="数量パネルの見本"><input class="state" type="radio" name="preview" id="price" aria-label="単価パネルの見本"><input class="state" type="radio" name="preview" id="paypay" aria-label="別会計の見本">
 <input class="state" type="radio" name="account-preview" id="a-first"  aria-label="先頭会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-middle" checked aria-label="途中会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-last"  aria-label="最後の既存会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-new"  aria-label="新しい来客の空白会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-over"  aria-label="桁超過の固定見本"><input class="state" type="radio" name="account-preview" id="a-qty-only"><input class="state" type="radio" name="account-preview" id="a-money-only"><input class="state" type="radio" name="account-preview" id="a-boundary"><input class="state" type="checkbox" id="paid-preview" aria-label="現金の決済状態の表示切替"><main class="workspace"><aside class="guide"><div class="preview-tools"><button type="button" id="focus-view">デモへ戻る</button></div><div class="eyebrow">第6版から分けた比較試作</div><h1>実寸と押しやすさを試します</h1><p>花のこみち売上入力システム<br>数量・単価の3タップ連続入力を試します。</p><div class="rule"></div>
@@ -1285,7 +1300,20 @@ function placeAccountList(){
  accountList.style.setProperty('--extra-top',(top+height)+'px');
  accountList.style.setProperty('--extra-max-height',Math.max(1,height-12)+'px');
 }
-function fitAccountList(){}
+function fitAccountList(){
+ if(!accountList.open)return;
+ const rows=[...accountList.querySelectorAll('.account-list-row')];
+ if(!rows.length)return;
+ // 全会計で同じ列幅を使い、桁の多い金額や元No.も全文を保ちます。
+ const width=(cell)=>{const range=document.createRange();range.selectNodeContents(cell);return Math.ceil(range.getBoundingClientRect().width);};
+ const noWidth=Math.max(56,...rows.map(row=>width(row.children[1])));
+ const moneyWidth=Math.max(72,...rows.map(row=>width(row.children[2])));
+ accountList.style.setProperty('--list-no-width',noWidth+'px');
+ accountList.style.setProperty('--list-money-width',moneyWidth+'px');
+ const style=getComputedStyle(rows[0]);
+ const available=rows[0].clientWidth-parseFloat(style.paddingLeft)-parseFloat(style.paddingRight);
+ accountList.classList.toggle('list-status-below',available<26+noWidth+moneyWidth+60+119+4*6);
+}
 function populateAccountList(){
  const groups=$('#account-list-groups');groups.replaceChildren();let dateKey=null,section=null;
  const columns=document.createElement('div');columns.className='account-list-columns';
