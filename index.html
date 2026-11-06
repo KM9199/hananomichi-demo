@@ -499,6 +499,11 @@ body.account-demo .account.shared-account{background:#fff0dc}
 
 #memo-panel .memo-header{position:relative;padding:0 64px 12px 18px;border-bottom:1px solid #dae2d7}
 #memo-input{margin:0}
+/* 入力欄だけの控えめなフォーカス表示。タッチ時は通常の細い境界線を保ちます。 */
+#memo-form input:focus,#hold-form input:focus{outline:none;box-shadow:none}
+#memo-form input:focus-visible,#hold-form input:focus-visible{outline:1px solid #728a79;outline-offset:1px;box-shadow:none}
+body.panel-text-pointer #memo-form input:focus,body.panel-text-pointer #hold-form input:focus{outline:none;box-shadow:none}
+
 @media(max-width:359px){.payment{grid-template-columns:minmax(111px,1fr) 68px 98px;gap:3px;padding-left:7px;padding-right:7px}.memo-tools #hold-open{width:67px;min-width:67px;padding:0 2px;font-size:14px}.payment>.status{width:68px;font-size:14px}.payment>.status .status-icon{width:17px;flex-basis:17px}.payment-method{gap:2px}.payment-method .cash{width:40px}.payment-method .paypay{width:56px}}
 /* 支払方法の列を全行共通幅にし、状態領域の左端を固定します。 */
 .account-list-columns,.account-list-row{grid-template-columns:26px var(--list-no-width,56px) var(--list-money-width,72px) var(--list-method-width,64px) max-content}
@@ -1446,13 +1451,40 @@ document.addEventListener('keydown',e=>{
  if(e.key==='Escape'){e.preventDefault();closeMemo();}
 },true);
 document.addEventListener('pointerdown',e=>{if(e.target.closest('#memo-open,#memo-panel'))document.body.classList.add('memo-pointer-focus');},true);
-$('#memo-form').addEventListener('submit',e=>{
- e.preventDefault();if(!memoEditingId||memoComposing||e.isComposing)return;
+function registerMemo(explicit=false){
+ if(!memoPanel.open||memoEditingId===null||(!explicit&&memoComposing))return;
  const target=demoAccounts.find(a=>a.id===memoEditingId);if(!target)return;
  const value=memoInput.value.trim();
  if(value){target.memo=value;target.registered=true;}else delete target.memo;
  closeMemo();renderMemo();renderAccountHeader();
-});
+}
+$('#memo-form').addEventListener('submit',e=>{e.preventDefault();if(!e.isComposing)registerMemo();});
+const memoRegister=$('#memo-register');
+// 文字入力中もタッチ操作の表示を維持し、Tab移動では細い目印を戻します。
+document.addEventListener('pointerdown',e=>{if(e.target.closest('#memo-panel,#hold-panel'))document.body.classList.add('panel-text-pointer');},true);
+window.addEventListener('keydown',e=>{if(e.key==='Tab')document.body.classList.remove('panel-text-pointer');},true);
+// blurによるパネル移動より先に、入力欄のフォーカスを維持します。
+memoRegister.addEventListener('pointerdown',e=>{if(e.isPrimary&&e.button===0)e.preventDefault();});
+// Safariの互換クリックに依存せず、ボタン内で完了した一度のタップを登録します。
+// 開始時には保存せず、スクロール・中断・ボタン外への移動は登録しません。
+let memoRegisterTouch=null;
+memoRegister.addEventListener('touchstart',e=>{
+ memoRegisterTouch=e.touches.length===1?{id:e.touches[0].identifier,x:e.touches[0].clientX,y:e.touches[0].clientY}:null;
+},{passive:true});
+memoRegister.addEventListener('touchmove',e=>{
+ const t=Array.from(e.touches).find(t=>t.identifier===memoRegisterTouch?.id);
+ if(!t||Math.hypot(t.clientX-memoRegisterTouch.x,t.clientY-memoRegisterTouch.y)>10)memoRegisterTouch=null;
+},{passive:true});
+memoRegister.addEventListener('touchcancel',()=>{memoRegisterTouch=null;});
+memoRegister.addEventListener('touchend',e=>{
+ const start=memoRegisterTouch;memoRegisterTouch=null;
+ const t=Array.from(e.changedTouches).find(t=>t.identifier===start?.id);if(!t)return;
+ const r=memoRegister.getBoundingClientRect();
+ if(e.touches.length||Math.hypot(t.clientX-start.x,t.clientY-start.y)>10||t.clientX<r.left||t.clientX>r.right||t.clientY<r.top||t.clientY>r.bottom)return;
+ e.preventDefault();registerMemo(true);
+},{passive:false});
+// マウス・キーボード・支援技術の明示的な登録操作も同じ保存処理へ通します。
+memoRegister.addEventListener('click',e=>{e.preventDefault();registerMemo(true);});
 memoInput.addEventListener('focus',()=>requestAnimationFrame(fitMemoPanel));
 memoInput.addEventListener('blur',()=>memoPanel.classList.remove('memo-keyboard'));
 window.addEventListener('resize',fitMemoPanel);window.visualViewport?.addEventListener('resize',fitMemoPanel);window.visualViewport?.addEventListener('scroll',fitMemoPanel);
