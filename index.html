@@ -376,14 +376,12 @@ body.account-demo .account.shared-account{background:#fff0dc}
 .extra-account-row>span{min-width:0;white-space:nowrap}
 .extra-money{font-variant-numeric:tabular-nums}
 .extra-dialog button:disabled{cursor:default;background:#f0f2f0;color:#868d88}
-.extra-account-row.current-account{background:#edf4ef}
-.extra-account-row.current-account:disabled{background:#edf4ef}
 .extra-controls{display:flex;gap:8px}
 .extra-controls button{flex:1;min-width:0;white-space:nowrap}
 .extra-pointer-focus .add-account:focus,.extra-pointer-focus .extra-dialog button:focus{outline:none}
 .add-account,.extra-dialog button{-webkit-tap-highlight-color:transparent}
 .extra-no-cell{text-align:left;justify-self:start;padding:7px 5px;border-radius:4px}
-.current-account .extra-no-cell{background:#dcebe1;color:#355a44;font-weight:700}
+.current-account .extra-no-cell,.account-list-row.current-account .account-no-text{background:#fff0a8;color:#293c33;border-radius:4px;font-weight:700}
 .extra-dialog footer{padding:10px 14px max(12px,env(safe-area-inset-bottom));border-top:1px solid #d7dfd6;flex:none}
 .extra-dialog footer button{min-height:46px;border:1px solid #bccbbf;border-radius:6px;background:white;padding:8px 16px}
 .extra-dialog footer.extra-controls button{padding:8px 6px;font-size:14px}
@@ -398,9 +396,9 @@ body.account-demo .account.shared-account{background:#fff0dc}
 
 /* No.と金額を固定の隣接列にし、残り幅は支払方法側へ割り当てます。 */
 .extra-columns,.extra-account-row{grid-template-columns:62px 72px minmax(62px,1fr);gap:2px}
-.extra-columns>span:nth-child(3),.extra-account-row>span:nth-child(3){text-align:center}
+.extra-columns>span:nth-child(3),.extra-account-row>span:nth-child(3){text-align:left;padding-left:6px}
 .extra-money{text-align:right}
-.extra-no-cell{padding-left:0;padding-right:0}
+.extra-no-cell{padding:2px 0;max-width:100%}
 .account-list-dialog{height:var(--extra-max-height,calc(100dvh - 12px));overflow:hidden}
 .account-list-dialog header{border-bottom:1px solid #d7dfd6}
 .account-list-actions{display:flex;gap:6px}
@@ -413,7 +411,7 @@ body.account-demo .account.shared-account{background:#fff0dc}
 .account-list-columns>span:first-child,.account-list-row>span:first-child{text-align:left}
 .account-list-columns>span:nth-child(2),.account-list-row>span:nth-child(2){text-align:right}
 .account-list-dialog .account-list-row{width:100%;border:0;border-bottom:1px solid #d7dfd6;background:white;min-height:48px;font-size:14px;font-variant-numeric:tabular-nums;letter-spacing:0}
-.account-list-row.current-account{background:#edf4ef}
+.account-list-columns>span:nth-child(3),.account-list-row>span:nth-child(3){text-align:left;padding-left:6px}
 .account-list-row>span:nth-child(1),.account-list-row>span:nth-child(2){font-weight:700}
 .account-list-row>span:nth-child(4){color:#b13d3d;font-size:19px;font-weight:700}
 .account-list-row>span:nth-child(5){font-size:12px}
@@ -436,7 +434,7 @@ body.account-demo .account.shared-account{background:#fff0dc}
 .account-list-badge{display:inline-flex;flex:0 0 21px;width:21px;height:21px;border-radius:50%;align-items:center;justify-content:center;box-sizing:border-box;color:#fff;font-size:14px;font-weight:700;line-height:1}
 .account-list-badge.hold{background:#287d43}
 .account-list-badge.memo{background:#c65b00}
-.extra-columns>span:first-child,.account-list-columns>span:first-child{white-space:pre-line;line-height:1.3}
+.extra-columns>span:first-child,.account-list-columns>span:first-child{white-space:nowrap;line-height:1.3}
 </style></head><body class="iphone-demo focus-view">
 <input class="state" type="radio" name="preview" id="main" checked aria-label="会計入力の見本"><input class="state" type="radio" name="preview" id="product" aria-label="品名パネルの見本"><input class="state" type="radio" name="preview" id="quantity" aria-label="数量パネルの見本"><input class="state" type="radio" name="preview" id="price" aria-label="単価パネルの見本"><input class="state" type="radio" name="preview" id="paypay" aria-label="別会計の見本">
 <input class="state" type="radio" name="account-preview" id="a-first"  aria-label="先頭会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-middle" checked aria-label="途中会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-last"  aria-label="最後の既存会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-new"  aria-label="新しい来客の空白会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-over"  aria-label="桁超過の固定見本"><input class="state" type="radio" name="account-preview" id="a-qty-only"><input class="state" type="radio" name="account-preview" id="a-money-only"><input class="state" type="radio" name="account-preview" id="a-boundary"><input class="state" type="checkbox" id="paid-preview" aria-label="現金の決済状態の表示切替"><main class="workspace"><aside class="guide"><div class="preview-tools"><button type="button" id="focus-view">デモへ戻る</button></div><div class="eyebrow">第6版から分けた比較試作</div><h1>実寸と押しやすさを試します</h1><p>花のこみち売上入力システム<br>数量・単価の3タップ連続入力を試します。</p><div class="rule"></div>
@@ -1135,7 +1133,7 @@ const sizeSamples=new Map();
  const b=document.createElement('button');b.type='button';b.className='btn';b.textContent=text;b.onclick=()=>{let a=sizeSamples.get(text);if(!a){a=blankAccount();const row=a.body.rows[0];row.className='';row.cells[0].textContent=text==='長い品名・桁超過'?'ガーデンシクラメン長い品名の比較':'ビオラ';row.cells[2].textContent=price;row.cells[3].textContent=qty;row.cells[4].textContent=qty*price;a.registered=true;sizeSamples.set(text,a);}showAccount(a);};previews.append(b);
 });
 const extra=document.createElement('dialog');extra.id='extra-account-panel';extra.className='extra-dialog';extra.setAttribute('aria-labelledby','extra-title');
-extra.innerHTML='<header><h2 id="extra-title">複数会計</h2><button type="button" id="extra-close" aria-label="複数会計を取り消して閉じる">×</button></header><p class="extra-help">変更先のNo.を選んでください。淡い緑色の行が現在の会計です。グレーの行は選択できません。</p><div class="extra-columns"><span>No.<br>（元No.）</span><span>会計合計</span><span>支払方法</span></div><div id="extra-account-list" role="group" aria-label="会計の一覧"></div><footer class="extra-controls"><button type="button" id="extra-restore">元のNo.に戻す</button><button type="button" id="extra-cancel">キャンセル</button></footer>';
+extra.innerHTML='<header><h2 id="extra-title">複数会計</h2><button type="button" id="extra-close" aria-label="複数会計を取り消して閉じる">×</button></header><p class="extra-help">変更先のNo.を選んでください。黄色のNo.が現在の会計です。グレーの行は選択できません。</p><div class="extra-columns"><span>No.</span><span>会計合計</span><span>支払方法</span></div><div id="extra-account-list" role="group" aria-label="会計の一覧"></div><footer class="extra-controls"><button type="button" id="extra-restore">元のNo.に戻す</button><button type="button" id="extra-cancel">キャンセル</button></footer>';
 document.body.append(extra);
 const confirmExtra=document.createElement('dialog');confirmExtra.id='extra-account-confirm';confirmExtra.className='extra-dialog';confirmExtra.setAttribute('aria-labelledby','extra-confirm-title');confirmExtra.innerHTML='<header><h2 id="extra-confirm-title">複数会計の確認</h2><button type="button" id="extra-confirm-close" aria-label="変更せず戻る">×</button></header><div class="extra-confirm-content"><p id="extra-change"></p><p id="extra-question"></p></div><footer class="extra-confirm-buttons"><button type="button" id="extra-no" autofocus>いいえ</button><button type="button" id="extra-yes">はい</button></footer>';document.body.append(confirmExtra);
 let extraSourceId=null,pendingGroup=null,pendingParentId=null,pendingRestore=false,extraReturn=null,extraScroll=null;
@@ -1276,15 +1274,16 @@ function fitAccountList(){
 }
 function populateAccountList(){
  const groups=$('#account-list-groups');groups.replaceChildren();let dateKey=null,section=null;
+ const columns=document.createElement('div');columns.className='account-list-columns';
+ for(const text of ['No.','会計合計','支払方法','決済','']){const cell=document.createElement('span');cell.textContent=text;columns.append(cell);}
+ groups.append(columns);
  for(const a of orderedAccounts()){
   // 欠番を生成せず、操作中の未登録会計も実在するIDとして表示します。
   const key=accountDateParts(a.date).join('/');
   if(key!==dateKey){
    dateKey=key;section=document.createElement('section');
    const heading=document.createElement('h3');heading.className='account-list-date';heading.textContent=key;
-   const columns=document.createElement('div');columns.className='account-list-columns';
-   for(const text of ['No.\n（元No.）','会計合計','支払方法','決済','']){const cell=document.createElement('span');cell.textContent=text;columns.append(cell);}
-   section.append(heading,columns);groups.append(section);
+   section.append(heading);groups.append(section);
   }
   const hold=holdRecords.get(a.id),hasHold=!!hold&&!hold.completed;
   const hasMemo=typeof a.memo==='string'&&a.memo.trim().length>0;
@@ -1293,7 +1292,11 @@ function populateAccountList(){
   const method=a.method==='paypay'?'PayPay':'現金';
   const row=document.createElement('button');row.type='button';row.className='account-list-row';row.dataset.accountId=a.id;
   if(a.id===activeAccount.id){row.classList.add('current-account');row.setAttribute('aria-current','true');}
-  for(const text of [no,amount,method,a.paid?'✓':'']){const cell=document.createElement('span');cell.textContent=text;row.append(cell);}
+  for(const [index,text] of [no,amount,method,a.paid?'✓':''].entries()){
+   const cell=document.createElement('span');
+   if(index===0){const label=document.createElement('span');label.className='account-no-text';label.textContent=text;cell.append(label);}else cell.textContent=text;
+   row.append(cell);
+  }
   const icons=document.createElement('span');icons.className='account-list-icons';
   for(const [visible,kind,text,label] of [[hasHold,'hold','取','取り置き・引渡し未完了'],[hasMemo,'memo','メ','メモあり']]){
    if(!visible)continue;
