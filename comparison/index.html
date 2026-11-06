@@ -477,6 +477,34 @@ body.account-demo .account.shared-account{background:#fff0dc}
 .account-list-row.list-status-below>.account-list-icons{grid-column:2 / -1;margin-left:0;justify-content:flex-start}
 .account-list-row>.account-list-icons:empty{display:none}
 .account-list-row.list-status-below:has(.account-list-badge){row-gap:8px}
+
+/* メモは会計ID別の一時データです。 */
+.payment{grid-template-columns:minmax(120px,1fr) auto minmax(122px,1fr);gap:4px}
+.memo-tools{display:flex;align-items:center;gap:0;min-width:0}
+.memo-tools #hold-open{width:76px;min-width:76px;padding:0 8px}
+#memo-open{display:inline-flex;align-items:center;justify-content:center;flex:none;width:44px;height:44px;padding:8px;border:0;border-radius:0;background:transparent;color:#315e49;-webkit-tap-highlight-color:transparent}
+#memo-open svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+#memo-open:focus:not(:focus-visible),.memo-pointer-focus #memo-open:focus,.memo-pointer-focus #memo-panel button:focus{outline:none}
+#memo-open:focus-visible,#memo-panel button:focus-visible{outline:2px solid #315e49;outline-offset:-2px}
+#memo-info[hidden]{display:none!important}
+#memo-info{flex:none;display:flex;align-items:baseline;gap:8px;margin:8px 10px 0;padding:6px;border:1px solid #c4d2c7;border-radius:8px;background:#f3f7f2;font-size:13px;line-height:1.5;font-weight:700}
+#memo-info>span{flex:none;color:#607064}
+#memo-display{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:clip}
+#memo-panel{position:fixed;inset:auto 0 0;margin:0 auto;width:100%;max-width:430px;max-height:calc(100dvh - 16px);padding:0;border:1px solid #b7c7bb;border-bottom:0;border-radius:16px 16px 0 0;background:#fff;color:#293c33;overflow:auto;overscroll-behavior:contain;box-shadow:0 -8px 28px #263b3220}
+#memo-panel::backdrop{background:#17332255}#memo-panel[open]{animation:hold-rise .18s ease-out}
+#memo-panel .memo-header{position:relative;padding:0 64px 12px 18px;border-bottom:1px solid #dae2d7}#memo-heading{margin:0;font-size:18px;line-height:1.7}#memo-cancel{position:absolute;right:12px;top:0;min-width:44px;min-height:44px;border:1px solid #c5d0c4;border-radius:6px;background:#fff;font-size:26px;line-height:1}
+#memo-form{padding:14px max(18px,env(safe-area-inset-right)) max(18px,env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left))}#memo-form label{display:block;font-size:14px;font-weight:600;margin-bottom:6px}#memo-form input{display:block;width:100%;min-width:0;min-height:46px;border:1px solid #afc0b1;border-radius:6px;padding:9px 10px;font:400 16px/1.5 -apple-system,BlinkMacSystemFont,'Meiryo',sans-serif;color:#293c33;background:#fff}#memo-name{max-width:90%;margin-bottom:16px}#memo-time{margin-bottom:8px}
+#memo-record-status{font-size:13px;color:#315e49;margin:10px 0}#memo-record-status[hidden]{display:none}#memo-error{color:#a33e3e;font-size:13px;margin:8px 0}#memo-error:empty{display:none}#memo-register{display:block;margin:16px 0 0 auto;min-width:100px;min-height:46px;padding:8px 20px;border:1px solid #315e49;border-radius:7px;background:#315e49;color:#fff;font-size:16px;font-weight:600}
+#memo-panel.memo-keyboard{top:var(--memo-top);bottom:auto;max-height:var(--memo-height)}
+
+#memo-panel .memo-header{position:relative;padding:0 64px 12px 18px;border-bottom:1px solid #dae2d7}
+#memo-input{margin:0}
+@media(max-width:359px){.payment{grid-template-columns:minmax(111px,1fr) 68px 98px;gap:3px;padding-left:7px;padding-right:7px}.memo-tools #hold-open{width:67px;min-width:67px;padding:0 2px;font-size:14px}.payment>.status{width:68px;font-size:14px}.payment>.status .status-icon{width:17px;flex-basis:17px}.payment-method{gap:2px}.payment-method .cash{width:40px}.payment-method .paypay{width:56px}}
+/* 支払方法の列を全行共通幅にし、状態領域の左端を固定します。 */
+.account-list-columns,.account-list-row{grid-template-columns:26px var(--list-no-width,56px) var(--list-money-width,72px) var(--list-method-width,64px) max-content}
+.account-list-row>.account-list-icons{grid-column:auto;margin-left:6px;gap:6px}
+.account-list-row.list-status-below>.account-list-icons{grid-column:2 / -1;margin-left:0}
+@media(max-width:359px){.account-list-row:has(.account-list-badge){row-gap:0}.account-list-row.list-status-below:has(.account-list-badge){row-gap:8px}}
 </style></head><body class="iphone-demo focus-view">
 <input class="state" type="radio" name="preview" id="main" checked aria-label="会計入力の見本"><input class="state" type="radio" name="preview" id="product" aria-label="品名パネルの見本"><input class="state" type="radio" name="preview" id="quantity" aria-label="数量パネルの見本"><input class="state" type="radio" name="preview" id="price" aria-label="単価パネルの見本"><input class="state" type="radio" name="preview" id="paypay" aria-label="別会計の見本">
 <input class="state" type="radio" name="account-preview" id="a-first"  aria-label="先頭会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-middle" checked aria-label="途中会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-last"  aria-label="最後の既存会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-new"  aria-label="新しい来客の空白会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-over"  aria-label="桁超過の固定見本"><input class="state" type="radio" name="account-preview" id="a-qty-only"><input class="state" type="radio" name="account-preview" id="a-money-only"><input class="state" type="radio" name="account-preview" id="a-boundary"><input class="state" type="checkbox" id="paid-preview" aria-label="現金の決済状態の表示切替"><main class="workspace"><aside class="guide"><div class="preview-tools"><button type="button" id="focus-view">デモへ戻る</button></div><div class="eyebrow">第6版から分けた比較試作</div><h1>実寸と押しやすさを試します</h1><p>花のこみち売上入力システム<br>数量・単価の3タップ連続入力を試します。</p><div class="rule"></div>
@@ -493,8 +521,8 @@ body.account-demo .account.shared-account{background:#fff0dc}
 <section class="stage" aria-label="スマートフォン用の配置見本"><div class="stage-caption"><span>会計入力・選択パネル</span><span>第6版 / 2026.10.31</span></div>
 <div class="phone"><div class="demo-bar"><span>連続入力・比較デモ／保存なし<small id="js-status">JavaScript：未確認です</small></span><button type="button" id="show-guide">見本・手順</button></div><header class="app-header"><div class="title-row"><h2>花のこみち売上入力システム</h2><button class="date" type="button" title="日付変更は未実装です">2026/10/31</button></div></header>
 <div class="account"><div class="serial"><strong class="visitor-no"><span class="no-first">No.1</span><span class="no-middle">No.5</span><span class="no-last">No.6</span><span class="no-new">No.7</span><span class="no-over">No.8</span></strong><span class="shared-account-mark">複数会計</span></div><div class="sum"><span class="total-qty">総数量 <b class="cash-qty"><span class="normal-value">6</span><span class="new-value">0</span><span class="over-value">123</span></b><b class="pay-qty">2</b></span><span class="total-label">会計合計</span><span class="amount"><span class="cash-amount"><span class="normal-value">1,550</span><span class="new-value">0</span><span class="over-value">153,750</span></span><span class="pay-amount">600</span><small>円</small></span></div></div>
-<div class="payment"><button class="btn" id="hold-open" type="button" aria-haspopup="dialog" aria-controls="hold-panel"><span class="button-caption">取り置き</span></button><label class="status unpaid-status" for="paid-preview"><span class="status-text">未決済</span></label><label class="status paid-status" for="paid-preview"><svg class="status-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 12.5 8.5 19 21.5 4"/></svg><span class="status-text">決済済</span></label><div class="payment-method"><label class="btn cash" for="main">現金</label><label class="btn paypay" for="paypay">PayPay</label></div></div>
-<section id="hold-info" aria-label="取り置き情報" hidden aria-live="polite"><div class="hold-name-group"><span class="hold-label">氏名</span><strong id="hold-display-name"><span id="hold-name-value"></span><span id="hold-name-suffix"> 様</span></strong></div><div class="hold-pickup" id="hold-pickup"><span class="hold-label">お渡し日時</span><span id="hold-display-time"></span></div><span id="hold-message" hidden>商品のお渡しは完了しました。</span><button type="button" id="hold-complete" aria-pressed="false">完了</button></section><section class="name-test-tools" hidden aria-hidden="true" aria-label="品名と名称2の省略表示試験"><div class="test-controls"><strong>省略表示試験</strong><select id="test-case" aria-label="品名と名称2の試験ケース"><option value="10,10">品名10＋名称2 10</option><option value="9,7">品名9＋名称2 7</option><option value="9,8">品名9＋名称2 8</option><option value="3,13">品名3＋名称2 13</option><option value="3,14">品名3＋名称2 14</option><option value="17,0">品名17・名称2なし</option><option value="18,0">品名18・名称2なし</option></select><button type="button" id="test-less" aria-label="品名の試験文字数を1減らす">−</button><span id="test-count"></span><button type="button" id="test-more" aria-label="品名の試験文字数を1増やす">＋</button><button type="button" id="test-toggle">通常表示へ</button></div><div id="test-description"></div><output id="test-result" aria-live="polite"></output></section><div class="details-heading"><strong>購入明細</strong><span>金額単位：円</span></div><div class="sheet-scroll"><table aria-label="4列の購入明細"><colgroup><col><col class="test-price"><col class="test-qty"><col class="test-total"></colgroup><thead><tr><th>品名</th><th>名称2</th><th>単価</th><th aria-label="数量">数</th><th>計</th></tr></thead>
+<div class="payment"><div class="memo-tools"><button class="btn" id="hold-open" type="button" aria-haspopup="dialog" aria-controls="hold-panel"><span class="button-caption">取り置き</span></button><button id="memo-open" type="button" aria-label="メモ" aria-haspopup="dialog" aria-controls="memo-panel"><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><path d="M16 4H5v21h18V14M9 9h5M9 13h3M9 18h2M14 19l1-5L24 5l3 3-9 9-4 2ZM22 7l3 3"/></svg></button></div><label class="status unpaid-status" for="paid-preview"><span class="status-text">未決済</span></label><label class="status paid-status" for="paid-preview"><svg class="status-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 12.5 8.5 19 21.5 4"/></svg><span class="status-text">決済済</span></label><div class="payment-method"><label class="btn cash" for="main">現金</label><label class="btn paypay" for="paypay">PayPay</label></div></div>
+<section id="hold-info" aria-label="取り置き情報" hidden aria-live="polite"><div class="hold-name-group"><span class="hold-label">氏名</span><strong id="hold-display-name"><span id="hold-name-value"></span><span id="hold-name-suffix"> 様</span></strong></div><div class="hold-pickup" id="hold-pickup"><span class="hold-label">お渡し日時</span><span id="hold-display-time"></span></div><span id="hold-message" hidden>商品のお渡しは完了しました。</span><button type="button" id="hold-complete" aria-pressed="false">完了</button></section><section id="memo-info" aria-label="メモ情報" aria-live="polite" hidden><span>メモ</span><strong id="memo-display"></strong></section><section class="name-test-tools" hidden aria-hidden="true" aria-label="品名と名称2の省略表示試験"><div class="test-controls"><strong>省略表示試験</strong><select id="test-case" aria-label="品名と名称2の試験ケース"><option value="10,10">品名10＋名称2 10</option><option value="9,7">品名9＋名称2 7</option><option value="9,8">品名9＋名称2 8</option><option value="3,13">品名3＋名称2 13</option><option value="3,14">品名3＋名称2 14</option><option value="17,0">品名17・名称2なし</option><option value="18,0">品名18・名称2なし</option></select><button type="button" id="test-less" aria-label="品名の試験文字数を1減らす">−</button><span id="test-count"></span><button type="button" id="test-more" aria-label="品名の試験文字数を1増やす">＋</button><button type="button" id="test-toggle">通常表示へ</button></div><div id="test-description"></div><output id="test-result" aria-live="polite"></output></section><div class="details-heading"><strong>購入明細</strong><span>金額単位：円</span></div><div class="sheet-scroll"><table aria-label="4列の購入明細"><colgroup><col><col class="test-price"><col class="test-qty"><col class="test-total"></colgroup><thead><tr><th>品名</th><th>名称2</th><th>単価</th><th aria-label="数量">数</th><th>計</th></tr></thead>
 <tbody class="cash-body"><tr><td title="ビオラ"><label for="product"><span class="row-no">1</span>ビオラ</label></td><td title="フリル紫">フリル紫</td><td><label for="price">150</label></td><td><label for="quantity">3</label></td><td>450</td></tr><tr><td><span class="row-no">2</span>パンジー</td><td>黄</td><td>200</td><td>2</td><td>400</td></tr><tr><td><span class="row-no">3</span>培養土</td><td>14L</td><td>700</td><td>1</td><td>700</td></tr><tr class="excluded" title="除外行：総数量・会計合計の対象外です"><td><span class="row-no">4</span>ビオラ</td><td>白</td><td>150</td><td>4</td><td>600</td></tr></tbody>
 <tbody class="overflow-body"><tr><td title="ガーデンシクラメン・冬の限定品種"><span class="row-no">1</span>ガーデンシクラメン・冬の限定品種</td><td title="フリル咲きピンク・仕入番号12345">フリル咲きピンク・仕入番号12345</td><td><span class="number over-number">1,250</span></td><td><span class="number over-number">123</span></td><td><span class="number over-total">153,750</span></td></tr></tbody><tbody class="pay-body"><tr><td title="ガーデンシクラメン"><span class="row-no">1</span>ガーデンシクラメン</td><td>白</td><td>300</td><td>2</td><td>600</td></tr></tbody><tbody><tr class="blank"><td><label for="product">品名を選択</label></td><td></td><td></td><td></td><td></td></tr><tr class="blank"><td></td><td></td><td></td><td></td><td></td></tr><tr class="blank"><td></td><td></td><td></td><td></td><td></td></tr><tr class="blank"><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
 <div class="table-note">グレーの行は除外中です。<br>行の左スワイプ → 除外／戻すの操作は今後実装します。</div><div class="actions"><button class="btn add-line" type="button">＋ 行追加</button><nav class="navigation" aria-label="会計移動"><button class="add-account" type="button" title="名称・操作は仮案です"><span class="button-caption">複数会計</span></button><button class="btn list-button" type="button" title="会計一覧を開きます">一覧</button><div class="nav-pair nav-first"><button class="btn" disabled aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></button><label class="btn next" for="a-middle" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div><div class="nav-pair nav-middle"><label class="btn" for="a-first" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><label class="btn next" for="a-last" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div><div class="nav-pair nav-last"><label class="btn" for="a-middle" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><label class="btn next" for="a-new" aria-label="新規〉"><span class="button-caption caption-next"><span class="caption-text">新規</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div><div class="nav-pair nav-new"><label class="btn" for="a-last" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><button class="btn" disabled title="空白会計からの次操作は詳細未確定です" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div><div class="nav-pair nav-over"><label class="btn" for="a-middle" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><label class="btn next" for="a-last" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div></nav></div><div class="footer-note"><span>数量・単価の比較試作</span><span>数量×単価を計算／保存なし</span></div>
@@ -503,6 +531,7 @@ body.account-demo .account.shared-account{background:#fff0dc}
 <section class="bottom-sheet name2-panel" role="dialog" aria-modal="true" aria-labelledby="name2-heading"><div class="handle"></div><header class="panel-header"><h3 id="name2-heading">名称2を選択</h3><div class="context" id="name2-row"></div><div class="name2-selected" id="name2-product"></div><button type="button" class="close" id="name2-cancel" aria-label="変更を取り消して閉じます">×</button></header><div class="panel-content"><button type="button" id="name2-blank">空欄</button><div id="name2-list-area"><h4>名称2一覧</h4><div id="name2-history" role="region" aria-label="名称2の候補一覧" tabindex="0"></div></div><form id="name2-form"><label for="name2-input">新しい名称2を入力</label><div class="name2-entry"><input id="name2-input" type="text" autocomplete="off" enterkeyhint="done" placeholder="名称2を入力..."><button type="submit" id="name2-register" disabled>登録</button></div></form></div></section><section class="bottom-sheet quantity-panel" aria-label="数量選択の表示見本"><div class="handle"></div><header class="panel-header"><h3>数量を選択</h3><div class="context"><strong>明細行No.1 ｜ ビオラ</strong><br>現在の数量：3 ／ 単価：150円 ／ 計：450円</div><label class="close" for="main" aria-label="取消して閉じます">×</label></header><div class="panel-content"><div class="section-label">数量</div><div class="choices"><div class="choice">1</div><div class="choice">2</div><div class="choice">3</div><div class="choice">4</div><div class="choice">5</div><div class="choice">6</div><div class="choice">7</div><div class="choice">8</div><div class="choice">9</div><div class="choice">10</div><div class="choice">11</div><div class="choice">12</div></div><button class="direct" type="button">数量を直接入力</button><p class="panel-note">すべて同じ色・同じサイズの表示見本です。</p></div></section>
 <section class="bottom-sheet price-panel" aria-label="単価選択の表示見本"><div class="handle"></div><header class="panel-header"><h3>単価を選択</h3><div class="context"><strong>明細行No.1 ｜ ビオラ</strong><br>現在の単価：150円 ／ 数量：3 ／ 計：450円</div><label class="close" for="main" aria-label="取消して閉じます">×</label></header><div class="panel-content"><div class="section-label">単価（円）</div><div class="choices"><div class="choice">150</div><div class="choice">200</div><div class="choice">250</div><div class="choice">300</div><div class="choice">350</div><div class="choice">400</div><div class="choice">100</div><div class="choice">450</div><div class="choice">500</div><div class="choice">550</div><div class="choice">600</div><div class="choice">650</div><div class="choice">700</div><div class="choice">750</div><div class="choice">800</div><div class="choice">850</div><div class="choice">900</div><div class="choice">950</div></div><button class="direct" type="button">単価を直接入力</button><p class="panel-note">頻度・直前使用による色や大きさの強調はありません。</p></div></section>
 </div><p class="caption">第6版の静的表示見本です。列幅・文字サイズ・タップ領域は実機で確認します。<br>別会計は同じ日付・No.の例で、数量・金額とも個別に表示します。</p></section></main><div class="demo-toast" role="status" aria-live="polite"></div><dialog id="customer-total" aria-labelledby="customer-total-heading" aria-describedby="customer-total-amount"><button type="button" id="customer-total-close" autofocus>× 閉じる</button><div class="customer-total-content"><h2 id="customer-total-heading">お会計</h2><div id="customer-total-amount"><span id="customer-total-number"></span><small>円</small></div></div></dialog>
+<dialog id="memo-panel" aria-labelledby="memo-heading"><div class="handle" aria-hidden="true"></div><header class="memo-header"><h2 id="memo-heading">メモ</h2><button type="button" id="memo-cancel" aria-label="メモの編集を取り消して閉じる" autofocus>×</button></header><form id="memo-form"><input id="memo-input" type="text" aria-label="メモ" maxlength="200" autocomplete="off" enterkeyhint="done"><button type="submit" id="memo-register">登録</button></form></dialog>
 <dialog id="hold-panel" aria-labelledby="hold-heading"><div class="handle" aria-hidden="true"></div><header class="hold-header"><h2 id="hold-heading">取り置き</h2><button type="button" id="hold-cancel" aria-label="取り置きの編集を取り消して閉じる" autofocus>×</button></header><form id="hold-form"><label for="hold-name">氏名</label><input id="hold-name" name="hold-name" type="text" autocomplete="off" enterkeyhint="next"><label for="hold-time">お渡し日時</label><input id="hold-time" name="hold-time" type="text" autocomplete="off" placeholder="11/6 15:00、明日午後、夕方ごろ" enterkeyhint="done"><p id="hold-record-status" hidden>商品のお渡しは完了しました。</p><p id="hold-error" role="alert"></p><button type="submit" id="hold-register">登録</button></form></dialog>
 <script>
 // 表示見本の切替と文字の収まりのみです。売上入力・計算・保存は行いません。
@@ -1030,7 +1059,7 @@ renderHold();
 // 省略は表示専用です。ブラウザーのellipsisには文字種を任せずASCIIの3点を実測して挿入します。
 // 編集用Map・明細の全文・候補選択値は変更しません。最近使用は全文の横スクロール、名称2履歴は全文の折返しを維持します。
 const displaySources=new WeakMap();
-const asciiTargets='#hold-name-value,#hold-display-time,#hold-message,.name-test-string,.product-item>span,.old-recent>span,.choice.word:not(.recent .word)';
+const asciiTargets='#memo-display,#hold-name-value,#hold-display-time,#hold-message,.name-test-string,.product-item>span,.old-recent>span,.choice.word:not(.recent .word)';
 function displayFullText(el){
  if(el.dataset.displayFull!==undefined)return el.dataset.displayFull;
  const saved=displaySources.get(el);
@@ -1142,7 +1171,7 @@ function renderAccountHeader(){
  const ordered=orderedAccounts(),index=ordered.indexOf(a);
  $('#account-prev').disabled=index===0;
  $('#account-next').textContent=index===ordered.length-1?'新規〉':'次〉';
- renderHold();wrapNumbers();requestAnimationFrame(()=>{fitNumbers();scheduleAsciiDisplay();});
+ renderHold();renderMemo();wrapNumbers();requestAnimationFrame(()=>{fitNumbers();scheduleAsciiDisplay();});
 }
 function showAccount(a){
  if(activeAccount)activeAccount.scrollTop=$('.sheet-scroll').scrollTop;
@@ -1278,7 +1307,7 @@ $('.caption').textContent='会計IDごとの一時データです。前後・新
 // 古い未実装案内と矛盾しないよう、手順欄の説明を現行試作に置き換えます。
 all('.guide>p.small,.guide>ul').forEach(el=>el.remove());
 holdNote.textContent='取り置きは会計IDごとに保持します。完了⇔完了済・再編集は決済と独立です。両欄空白は登録せず、片欄のみは登録できます。記録自体の削除は未設計です。';
-const notice=document.createElement('p');notice.className='small';notice.textContent='複数会計試作：所属No.だけを変更します。明細・支払方法・決済・取り置きは会計IDごとに保持し、会計間の移動でも維持します。仮運用：初期見本、または入力・支払状態・取り置きを一度でも確定した会計を登録済みとし、未登録の新規空白会計だけに（新規）を表示します。過去最大No.から採番し欠番を再使用しません。欠番は一覧に出さず、移動済み会計だけ元No.を括弧で表示します。元No.への復帰は専用ボタンで行います。移動済みの子と、子を受け入れている親は他No.へ移動できません。初期のNo.3のPayPay見本は元No.7の子として扱うため、当日発行済み最大No.は7から開始します。最終色は実機で別途決定します。一時データのため再読込で消えます。会計一覧と前後ナビは日付・所属No.・同No.内作成順に並びます。永続保存・CSV・設定・Access連携・メモ入力は未実装です。';$('.guide').append(notice);
+const notice=document.createElement('p');notice.className='small';notice.textContent='複数会計試作：所属No.だけを変更します。明細・支払方法・決済・取り置きは会計IDごとに保持し、会計間の移動でも維持します。仮運用：初期見本、または入力・支払状態・取り置きを一度でも確定した会計を登録済みとし、未登録の新規空白会計だけに（新規）を表示します。過去最大No.から採番し欠番を再使用しません。欠番は一覧に出さず、移動済み会計だけ元No.を括弧で表示します。元No.への復帰は専用ボタンで行います。移動済みの子と、子を受け入れている親は他No.へ移動できません。初期のNo.3のPayPay見本は元No.7の子として扱うため、当日発行済み最大No.は7から開始します。最終色は実機で別途決定します。一時データのため再読込で消えます。会計一覧と前後ナビは日付・所属No.・同No.内作成順に並びます。永続保存・CSV・設定・Access連携は未実装です。メモは会計IDごとの一時データで、再読込すると消えます。';$('.guide').append(notice);
 $('.guide>p:not(.small)').textContent='品名→名称2、単価→数量の3タップ入力と、複数会計を試します。';
 $('.preview-menu label[for="paypay"]').firstChild.textContent='PayPay会計の見本';
 const howTo=all('.guide details').find(d=>d.querySelector('summary')?.textContent==='実機での確認順序');
@@ -1307,17 +1336,14 @@ function fitAccountList(){
  const moneyWidth=Math.max(72,...rows.map(row=>width(row.children[2])));
  accountList.style.setProperty('--list-no-width',noWidth+'px');
  accountList.style.setProperty('--list-money-width',moneyWidth+'px');
- const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');
+ // 実際の支払文字幅（最大PayPay）を全行の列幅として確保します。
+ const methodWidth=Math.max(64,...rows.map(row=>width(row.children[3])+9));
+ accountList.style.setProperty('--list-method-width',methodWidth+'px');
+ // 同じ列構成で収まらない場合だけ、状態ピル群を次段へ移します。
  for(const row of rows){
   row.classList.remove('list-status-below');
-  const payment=row.children[3],icons=row.children[4],style=getComputedStyle(payment);
-  ctx.font=style.fontWeight+' '+style.fontSize+' '+style.fontFamily;
-  const metrics=ctx.measureText(payment.textContent);
-  // 文字の右側余白を除き、文字端からピル外枠まで約12pxにします。
-  row.style.setProperty('--list-status-offset',(6-(metrics.width-metrics.actualBoundingBoxRight))+'px');
-  const r=row.getBoundingClientRect(),rs=getComputedStyle(row);
-  const availableRight=r.right-parseFloat(rs.paddingRight);
-  if(icons.children.length&&icons.getBoundingClientRect().right>availableRight+.1)row.classList.add('list-status-below');
+  const icons=row.children[4],r=row.getBoundingClientRect(),rs=getComputedStyle(row);
+  if(icons.children.length&&icons.getBoundingClientRect().right>r.right-parseFloat(rs.paddingRight)+.1)row.classList.add('list-status-below');
  }
 }
 function populateAccountList(){
@@ -1375,6 +1401,61 @@ window.addEventListener('resize',()=>{placeAccountList();if(accountList.open)fit
 window.visualViewport?.addEventListener('resize',placeAccountList);window.visualViewport?.addEventListener('scroll',placeAccountList);
 document.fonts.ready.then(()=>{if(accountList.open)fitAccountList();});
 
+
+// メモは所属No.や決済と独立し、不変の会計IDに属します。永続保存は行いません。
+const memoPanel=$('#memo-panel'),memoInput=$('#memo-input');
+let memoEditingId=null,memoScroll=null,memoBackdropDown=false,memoComposing=false;
+function renderMemo(){
+ const full=activeAccount?.memo||'';
+ $('#memo-info').hidden=!full.trim();
+ $('#memo-display').textContent=full;$('#memo-display').dataset.displayFull=full;$('#memo-display').title=full;
+ scheduleAsciiDisplay();
+}
+function fitMemoPanel(){
+ if(!memoPanel.open)return;
+ const vv=window.visualViewport,compact=document.activeElement===memoInput&&vv&&vv.height<600;
+ memoPanel.classList.toggle('memo-keyboard',!!compact);
+ if(compact){const height=Math.max(1,vv.height-12);memoPanel.style.setProperty('--memo-top',(vv.offsetTop+vv.height-height)+'px');memoPanel.style.setProperty('--memo-height',height+'px');}
+}
+function openMemo(){
+ if(memoPanel.open||document.querySelector('dialog[open]')||editorMode)return;
+ memoEditingId=activeAccount.id;memoInput.value=activeAccount.memo||'';memoComposing=false;
+ memoScroll={x:scrollX,y:scrollY,style:document.body.getAttribute('style')};
+ document.body.style.overflow='hidden';memoPanel.showModal();fitMemoPanel();
+}
+function closeMemo(){
+ if(!memoPanel.open)return;
+ memoPanel.close();memoEditingId=null;memoInput.value='';memoComposing=false;memoPanel.classList.remove('memo-keyboard');
+ if(memoScroll.style===null)document.body.removeAttribute('style');else document.body.setAttribute('style',memoScroll.style);
+ window.scrollTo(memoScroll.x,memoScroll.y);memoScroll=null;$('#memo-open').focus({preventScroll:true});
+}
+$('#memo-open').addEventListener('click',openMemo);
+$('#memo-cancel').addEventListener('click',closeMemo);
+memoPanel.addEventListener('cancel',e=>{e.preventDefault();closeMemo();});
+function outsideMemo(e){const r=memoPanel.getBoundingClientRect();return e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom;}
+memoPanel.addEventListener('pointerdown',e=>{memoBackdropDown=e.target===memoPanel&&outsideMemo(e);});
+memoPanel.addEventListener('click',e=>{if(memoBackdropDown&&e.target===memoPanel&&outsideMemo(e))closeMemo();memoBackdropDown=false;});
+memoPanel.addEventListener('pointercancel',()=>{memoBackdropDown=false;});
+memoInput.addEventListener('compositionstart',()=>{memoComposing=true;});
+memoInput.addEventListener('compositionend',()=>{memoComposing=false;});
+document.addEventListener('keydown',e=>{
+ document.body.classList.remove('memo-pointer-focus');
+ if(!memoPanel.open)return;
+ e.stopImmediatePropagation();
+ if(e.key==='Enter'&&(e.isComposing||memoComposing||e.keyCode===229))e.preventDefault();
+ if(e.key==='Escape'){e.preventDefault();closeMemo();}
+},true);
+document.addEventListener('pointerdown',e=>{if(e.target.closest('#memo-open,#memo-panel'))document.body.classList.add('memo-pointer-focus');},true);
+$('#memo-form').addEventListener('submit',e=>{
+ e.preventDefault();if(!memoEditingId||memoComposing||e.isComposing)return;
+ const target=demoAccounts.find(a=>a.id===memoEditingId);if(!target)return;
+ const value=memoInput.value.trim();
+ if(value){target.memo=value;target.registered=true;}else delete target.memo;
+ closeMemo();renderMemo();renderAccountHeader();
+});
+memoInput.addEventListener('focus',()=>requestAnimationFrame(fitMemoPanel));
+memoInput.addEventListener('blur',()=>memoPanel.classList.remove('memo-keyboard'));
+window.addEventListener('resize',fitMemoPanel);window.visualViewport?.addEventListener('resize',fitMemoPanel);window.visualViewport?.addEventListener('scroll',fitMemoPanel);
 showAccount(initialAccount);
 
 </script></body></html>
