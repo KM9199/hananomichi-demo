@@ -1318,7 +1318,13 @@ function canAcceptAccount(source,row){
  const target=accountDestinationRoot(source,row);
  return canMoveAccount(source)&&!!target&&source.id!==target.id&&source.groupNo!==target.groupNo;
 }
-function canRestoreAccount(a){return !!a&&a.parentAccountId!==null&&!hasAccountChildren(a);}
+// 解除可否は本人と親のID・現在の所属で判断します。元No.との数値一致は解除を妨げません。
+function accountParent(a){
+ if(!a||a.parentAccountId===null)return null;
+ const parent=demoAccounts.find(row=>row.id===a.parentAccountId);
+ return parent&&isAccountRoot(parent)&&parent.date===a.date&&parent.groupNo===a.groupNo?parent:null;
+}
+function canRestoreAccount(a){return !!accountParent(a)&&!hasAccountChildren(a);}
 function fitExtraRows(){}
 function askExtra(target=null,restore=false){
  if(activeAccount.id!==extraSourceId)return;
@@ -1332,8 +1338,15 @@ function askExtra(target=null,restore=false){
 }
 function populateExtra(){
  const list=$('#extra-account-list');list.replaceChildren();
- // 実在する会計だけを並べます。未登録の空白会計は現在のものだけ表示します。
- const rows=demoAccounts.filter(a=>a.registered||!isNewBlank(a)||a.id===activeAccount.id);
+ // 表示中の会計IDの日付で絞ります。親の元日付・初回日付は使いません。
+ const source=demoAccounts.find(a=>a.id===extraSourceId);
+ if(!source)return;
+ const restorable=canRestoreAccount(source),hasChildren=hasAccountChildren(source);
+ const kind=restorable?'子会計':hasChildren?'親会計':'単独会計';
+ const hint=restorable?'［複数会計を解除］で、この日付のNo.'+(ownNumber(source)??nextNumber(source.date))+'に戻せます。':hasChildren?'子会計の解除は、［会計一覧］で子の行を選んでから行ってください。':'この会計は複数会計の子ではないため、解除できません。';
+ $('.extra-help').textContent='表示中：'+source.date+' No.'+source.groupNo+'（'+kind+'）。'+hint+' 変更先は同じ日付の会計だけです。黄色のNo.が表示中の会計、グレーの行は変更先に選べません。';
+ // 未登録の空白会計は現在のものだけ表示します。
+ const rows=demoAccounts.filter(a=>a.date===source.date&&(a.registered||!isNewBlank(a)||a.id===source.id));
  rows.sort(compareAccounts).forEach(a=>{
   const b=document.createElement('button');b.type='button';b.className='extra-account-row';
   const current=a.id===activeAccount.id;b.classList.toggle('current-account',current);if(current)b.setAttribute('aria-current','true');
@@ -1345,7 +1358,7 @@ function populateExtra(){
   if(current)b.setAttribute('aria-label',b.textContent+' 現在の会計');
   b.onclick=e=>{if(b.disabled||(dragged&&e.detail!==0))return;askExtra(a);};list.append(b);
  });
- $('#extra-restore').disabled=!canRestoreAccount(activeAccount);
+ $('#extra-restore').disabled=!restorable;
  requestAnimationFrame(fitExtraRows);
 }
 function openExtra(trigger){
