@@ -266,9 +266,9 @@ body #a-over:checked~.workspace .cash-qty,body #a-over:checked~.workspace .cash-
 .name-test-tools .test-controls{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
 .name-test-tools button{min-height:32px;min-width:32px;background:white;border:1px solid #a89673;border-radius:4px;font-size:12px}
 .name-test-tools output{display:block;overflow-wrap:anywhere}
-/* 局所修正：PayPay白文字と、明細の確認操作を伴うスワイプです。 */
-body.account-demo .workspace .payment .paypay{color:#fff;-webkit-text-fill-color:#fff}
-body.account-demo:not(.demo-paypay) .workspace .payment .paypay{background:#555;border-color:#555}
+/* 局所修正：支払方法の選択色と、明細の確認操作を伴うスワイプです。 */
+body.account-demo:not(.demo-paypay) .workspace .payment .paypay{background:#fff;color:#111;border-color:#bccbbf;-webkit-text-fill-color:currentColor}
+body.account-demo.demo-paypay .workspace .payment .paypay{background:var(--green);color:#fff;border-color:var(--green);-webkit-text-fill-color:currentColor}
 .sheet-scroll{touch-action:pan-y pinch-zoom;overflow-x:hidden;overscroll-behavior-x:none}
 .sheet-scroll tbody tr.swipe-open{transform:translateX(-80px)}
 .row-swipe-action{position:absolute;z-index:8;width:80px;min-height:44px;border:0;border-radius:0;background:#b42332;color:#fff;-webkit-text-fill-color:#fff;font-size:16px;font-weight:700;touch-action:manipulation;cursor:pointer}
