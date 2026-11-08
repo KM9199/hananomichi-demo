@@ -518,6 +518,23 @@ body.panel-text-pointer #memo-form input:focus,body.panel-text-pointer #hold-for
 .account-list-row>.account-list-icons{grid-column:auto;margin-left:6px;gap:6px}
 .account-list-row.list-status-below>.account-list-icons{grid-column:2 / -1;margin-left:0}
 @media(max-width:359px){.account-list-row:has(.account-list-badge){row-gap:0}.account-list-row.list-status-below:has(.account-list-badge){row-gap:8px}}
+/* 日付だけの追加。全体の配色と既存パネル配置は維持します。 */
+.date-dialog{color:#222;border-color:#bbb}
+.date-dialog::backdrop{background:#0005}
+.date-dialog header button,.date-dialog footer button{color:#222;border-color:#bbb}
+.date-help,.date-preview,.date-error{margin:0;padding:4px 14px 10px;font-size:14px;line-height:1.6}
+.date-error{color:#a12626;min-height:22px}
+.date-wheels{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:8px;margin:0 14px 12px;position:relative}
+.date-wheel{height:220px;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;scroll-snap-type:y mandatory;scrollbar-width:none;border:1px solid #bbb;border-radius:6px;padding:88px 0;box-sizing:border-box;background:linear-gradient(#fff 0%,#fff 39.8%,#f1f1f1 40%,#f1f1f1 60%,#fff 60.2%,#fff 100%);-webkit-overflow-scrolling:touch}
+.date-wheel::-webkit-scrollbar{display:none}
+.date-wheel button{display:block;height:44px;min-height:44px;width:100%;padding:0;border:0;background:transparent;color:#555;font-size:22px;font-variant-numeric:tabular-nums;scroll-snap-align:center;touch-action:pan-y}
+.date-wheel button[aria-selected=true]{color:#111;font-weight:700}
+.date-dialog footer{display:flex;gap:12px}.date-dialog footer button{flex:1}
+.date-dialog #date-apply{background:#444;color:#fff;border-color:#444}
+.date-preview{font-weight:600;min-height:50px}
+.date-wheel:focus-visible{outline:2px solid #777;outline-offset:2px}
+@media(max-height:580px){.date-wheel{height:132px;padding:44px 0}.date-preview{min-height:0}.date-dialog header{padding-top:6px;padding-bottom:4px}.date-help{padding-bottom:4px}}
+
 </style></head><body class="iphone-demo focus-view">
 <input class="state" type="radio" name="preview" id="main" checked aria-label="会計入力の見本"><input class="state" type="radio" name="preview" id="product" aria-label="品名パネルの見本"><input class="state" type="radio" name="preview" id="quantity" aria-label="数量パネルの見本"><input class="state" type="radio" name="preview" id="price" aria-label="単価パネルの見本"><input class="state" type="radio" name="preview" id="paypay" aria-label="別会計の見本">
 <input class="state" type="radio" name="account-preview" id="a-first"  aria-label="先頭会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-middle" checked aria-label="途中会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-last"  aria-label="最後の既存会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-new"  aria-label="新しい来客の空白会計の固定見本"><input class="state" type="radio" name="account-preview" id="a-over"  aria-label="桁超過の固定見本"><input class="state" type="radio" name="account-preview" id="a-qty-only"><input class="state" type="radio" name="account-preview" id="a-money-only"><input class="state" type="radio" name="account-preview" id="a-boundary"><input class="state" type="checkbox" id="paid-preview" aria-label="現金の決済状態の表示切替"><main class="workspace"><aside class="guide"><div class="preview-tools"><button type="button" id="focus-view">デモへ戻る</button></div><div class="eyebrow">第6版から分けた比較試作</div><h1>実寸と押しやすさを試します</h1><p>花のこみち売上入力システム<br>数量・単価の3タップ連続入力を試します。</p><div class="rule"></div>
@@ -532,13 +549,13 @@ body.panel-text-pointer #memo-form input:focus,body.panel-text-pointer #hold-for
 <ul><li>最近使用は丸い花／資切替と可変幅の横1行です。</li><li>寸法・配色・一覧の表示件数は検討用です。</li><li>「複数会計」は仮の入口です。</li><li>取り置きは会計見本ごとの一時試作です。一覧は配置のみです。</li></ul>
 <p class="small">総数量6・1,550円は現在の会計の有効3行の例です。グレーの除外行と、同じNo.の別会計は含めません。</p><details><summary>比較用旧案：最近使用3列×3行</summary><p>第4版の旧案です。今回の第一試作案は花・資材切替＋横1行です。</p><div class="old-recent"><span>ビオラ</span><span>パンジー</span><span>アリッサム</span><span>ガーデンシクラメン</span><span>キク</span><span>カルーナ</span><span>ハボタン</span><span>プリムラ</span><span>培養土</span></div></details></aside>
 <section class="stage" aria-label="スマートフォン用の配置見本"><div class="stage-caption"><span>会計入力・選択パネル</span><span>第6版 / 2026.10.31</span></div>
-<div class="phone"><div class="demo-bar"><span>連続入力・比較デモ／保存なし<small id="js-status">JavaScript：未確認です</small></span><button type="button" id="show-guide">見本・手順</button></div><header class="app-header"><div class="title-row"><h2>花のこみち売上入力システム</h2><button class="date" type="button" title="日付変更は未実装です">2026/10/31</button></div></header>
+<div class="phone"><div class="demo-bar"><span>連続入力・比較デモ／保存なし<small id="js-status">JavaScript：未確認です</small></span><button type="button" id="show-guide">見本・手順</button></div><header class="app-header"><div class="title-row"><h2>花のこみち売上入力システム</h2><button class="date" type="button" title="現在の会計の日付を変更します" aria-haspopup="dialog">2026/10/31</button></div></header>
 <div class="account"><div class="serial"><strong class="visitor-no"><span class="no-first">No.1</span><span class="no-middle">No.5</span><span class="no-last">No.6</span><span class="no-new">No.7</span><span class="no-over">No.8</span></strong><span class="shared-account-mark">複数会計</span></div><div class="sum"><span class="total-qty">総数量 <b class="cash-qty"><span class="normal-value">6</span><span class="new-value">0</span><span class="over-value">123</span></b><b class="pay-qty">2</b></span><span class="total-label">会計合計</span><span class="amount"><span class="cash-amount"><span class="normal-value">1,550</span><span class="new-value">0</span><span class="over-value">153,750</span></span><span class="pay-amount">600</span><small>円</small></span></div></div>
 <div class="payment"><div class="memo-tools"><button class="btn" id="hold-open" type="button" aria-haspopup="dialog" aria-controls="hold-panel"><span class="button-caption">取り置き</span></button><button id="memo-open" type="button" aria-label="メモ" aria-haspopup="dialog" aria-controls="memo-panel"><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><path d="M16 4H5v21h18V14M9 9h5M9 13h3M9 18h2M14 19l1-5L24 5l3 3-9 9-4 2ZM22 7l3 3"/></svg></button></div><label class="status unpaid-status" for="paid-preview"><span class="status-text">未決済</span></label><label class="status paid-status" for="paid-preview"><svg class="status-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 12.5 8.5 19 21.5 4"/></svg><span class="status-text">決済済</span></label><div class="payment-method"><label class="btn cash" for="main">現金</label><label class="btn paypay" for="paypay">PayPay</label></div></div>
 <section id="hold-info" aria-label="取り置き情報" hidden aria-live="polite"><div class="hold-name-group"><span class="hold-label">氏名</span><strong id="hold-display-name"><span id="hold-name-value"></span><span id="hold-name-suffix"> 様</span></strong></div><div class="hold-pickup" id="hold-pickup"><span class="hold-label">お渡し日時</span><span id="hold-display-time"></span></div><span id="hold-message" hidden>商品のお渡しは完了しました。</span><button type="button" id="hold-complete" aria-pressed="false">完了</button></section><section id="memo-info" aria-label="メモ情報" aria-live="polite" hidden><span>メモ</span><strong id="memo-display"></strong></section><section class="name-test-tools" hidden aria-hidden="true" aria-label="品名と名称2の省略表示試験"><div class="test-controls"><strong>省略表示試験</strong><select id="test-case" aria-label="品名と名称2の試験ケース"><option value="10,10">品名10＋名称2 10</option><option value="9,7">品名9＋名称2 7</option><option value="9,8">品名9＋名称2 8</option><option value="3,13">品名3＋名称2 13</option><option value="3,14">品名3＋名称2 14</option><option value="17,0">品名17・名称2なし</option><option value="18,0">品名18・名称2なし</option></select><button type="button" id="test-less" aria-label="品名の試験文字数を1減らす">−</button><span id="test-count"></span><button type="button" id="test-more" aria-label="品名の試験文字数を1増やす">＋</button><button type="button" id="test-toggle">通常表示へ</button></div><div id="test-description"></div><output id="test-result" aria-live="polite"></output></section><div class="details-heading"><strong>購入明細</strong><span>金額単位：円</span></div><div class="sheet-scroll"><table aria-label="4列の購入明細"><colgroup><col><col class="test-price"><col class="test-qty"><col class="test-total"></colgroup><thead><tr><th>品名</th><th>名称2</th><th>単価</th><th aria-label="数量">数</th><th>計</th></tr></thead>
 <tbody class="cash-body"><tr><td title="ビオラ"><label for="product"><span class="row-no">1</span>ビオラ</label></td><td title="フリル紫">フリル紫</td><td><label for="price">150</label></td><td><label for="quantity">3</label></td><td>450</td></tr><tr><td><span class="row-no">2</span>パンジー</td><td>黄</td><td>200</td><td>2</td><td>400</td></tr><tr><td><span class="row-no">3</span>培養土</td><td>14L</td><td>700</td><td>1</td><td>700</td></tr><tr class="excluded" title="除外行：総数量・会計合計の対象外です"><td><span class="row-no">4</span>ビオラ</td><td>白</td><td>150</td><td>4</td><td>600</td></tr></tbody>
 <tbody class="overflow-body"><tr><td title="ガーデンシクラメン・冬の限定品種"><span class="row-no">1</span>ガーデンシクラメン・冬の限定品種</td><td title="フリル咲きピンク・仕入番号12345">フリル咲きピンク・仕入番号12345</td><td><span class="number over-number">1,250</span></td><td><span class="number over-number">123</span></td><td><span class="number over-total">153,750</span></td></tr></tbody><tbody class="pay-body"><tr><td title="ガーデンシクラメン"><span class="row-no">1</span>ガーデンシクラメン</td><td>白</td><td>300</td><td>2</td><td>600</td></tr></tbody><tbody><tr class="blank"><td><label for="product">品名を選択</label></td><td></td><td></td><td></td><td></td></tr><tr class="blank"><td></td><td></td><td></td><td></td><td></td></tr><tr class="blank"><td></td><td></td><td></td><td></td><td></td></tr><tr class="blank"><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
-<div class="table-note">グレーの行は除外中です。<br>行を左スワイプして［除外］／［戻す］を押します。</div><div class="actions"><button class="btn add-line" type="button">＋ 行追加</button><nav class="navigation" aria-label="会計移動"><button class="add-account" type="button" title="名称・操作は仮案です"><span class="button-caption">複数会計</span></button><button class="btn list-button" type="button" title="会計一覧を開きます">一覧</button><div class="nav-pair nav-first"><button class="btn" disabled aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></button><label class="btn next" for="a-middle" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div><div class="nav-pair nav-middle"><label class="btn" for="a-first" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><label class="btn next" for="a-last" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div><div class="nav-pair nav-last"><label class="btn" for="a-middle" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><label class="btn next" for="a-new" aria-label="新規〉"><span class="button-caption caption-next"><span class="caption-text">新規</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div><div class="nav-pair nav-new"><label class="btn" for="a-last" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><button class="btn" disabled title="空白会計からの次操作は詳細未確定です" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div><div class="nav-pair nav-over"><label class="btn" for="a-middle" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><label class="btn next" for="a-last" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div></nav></div><div class="footer-note"><span>数量・単価の比較試作</span><span>数量×単価を計算／保存なし</span></div>
+<div class="table-note">グレーの行は除外中です。<br>行を左スワイプして［除外］／［戻す］を押します。</div><div class="actions"><button class="btn add-line" type="button">＋ 行追加</button><nav class="navigation" aria-label="会計移動"><button class="add-account" type="button" title="名称・操作は仮案です"><span class="button-caption">複数会計</span></button><button class="btn list-button" type="button" title="会計一覧を開きます">会計一覧</button><div class="nav-pair nav-first"><button class="btn" disabled aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></button><label class="btn next" for="a-middle" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div><div class="nav-pair nav-middle"><label class="btn" for="a-first" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><label class="btn next" for="a-last" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div><div class="nav-pair nav-last"><label class="btn" for="a-middle" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><label class="btn next" for="a-new" aria-label="新規〉"><span class="button-caption caption-next"><span class="caption-text">新規</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div><div class="nav-pair nav-new"><label class="btn" for="a-last" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><button class="btn" disabled title="空白会計からの次操作は詳細未確定です" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div><div class="nav-pair nav-over"><label class="btn" for="a-middle" aria-label="〈前"><span class="button-caption caption-prev"><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M5 1L1 6L5 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="caption-text">前</span></span></label><label class="btn next" for="a-last" aria-label="次〉"><span class="button-caption caption-next"><span class="caption-text">次</span><svg class="caption-arrow" viewBox="0 0 6 12" aria-hidden="true" focusable="false"><path d="M1 1L5 6L1 11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></div></nav></div><div class="footer-note"><span>数量・単価の比較試作</span><span>数量×単価を計算／保存なし</span></div>
 <label class="scrim" for="main" aria-label="取消してパネルを閉じます"></label>
 <section class="bottom-sheet product-panel" aria-label="品名選択の表示見本"><div class="handle"></div><header class="panel-header"><h3>品名を選択</h3><div class="context"><strong>明細行No.1 ｜ ビオラ</strong><br>現在の品名：ビオラ ／ 名称2：フリル紫</div><label class="close" for="main" aria-label="取消して閉じます">×</label></header><div class="panel-content"><div class="recent-switch"><span class="recent-toggle" aria-label="最近使用：花">花</span><div class="recent recent-flowers"><div class="choice word" title="ビオラ">ビオラ</div><div class="choice word" title="パンジー">パンジー</div><div class="choice word" title="アリッサム">アリッサム</div><div class="choice word" title="ガーデンシクラメン">ガーデンシクラメン</div><div class="choice word" title="キク">キク</div><div class="choice word" title="カルーナ">カルーナ</div><div class="choice word" title="ハボタン">ハボタン</div><div class="choice word" title="プリムラ">プリムラ</div></div><div class="recent recent-materials"><div class="choice word" title="培養土">培養土</div><div class="choice word" title="鉢">鉢</div><div class="choice word" title="肥料">肥料</div><div class="choice word" title="支柱">支柱</div><div class="choice word" title="鉢底石">鉢底石</div><div class="choice word" title="プランター">プランター</div></div><div class="recent recent-events"><span class="recent-empty">最近使用したイベントはありません</span></div></div><div class="categories"><div class="seasons"><span class="category">春</span><span class="category">夏</span><span class="category active">秋</span><span class="category">冬</span></div><span class="category">資材</span><span class="category">イベント</span></div><div class="catalog"><div class="product-list" aria-label="縦1列の品名一覧"><section id="kana-a" class="kana-group"><div class="product-item" data-kana="ありっさむ"><span>アリッサム</span></div><div class="product-item" data-kana="うぃんたーこすもす"><span>ウィンターコスモス</span></div></section><section id="kana-ka" class="kana-group"><div class="product-item" data-kana="がーでんしくらめん"><span>ガーデンシクラメン</span></div><div class="product-item" data-kana="かるーな"><span>カルーナ</span></div><div class="product-item" data-kana="きく"><span>キク</span></div></section><section id="kana-sa" class="kana-group"><div class="product-item" data-kana="しくらめん"><span>シクラメン</span></div><div class="product-item" data-kana="すいーとありっさむ"><span>スイートアリッサム</span></div></section><section id="kana-ta" class="kana-group"><div class="product-item" data-kana="だいあんさす"><span>ダイアンサス</span></div></section><section id="kana-na" class="kana-group"><div class="product-item" data-kana="なでしこ"><span>ナデシコ</span></div></section><section id="kana-ha" class="kana-group"><div class="product-item" data-kana="はぼたん"><span>ハボタン</span></div><div class="product-item" data-kana="ぱんじー"><span>パンジー</span></div><div class="product-item" data-kana="びおら"><span>ビオラ</span></div><div class="product-item" data-kana="ぷりむら"><span>プリムラ</span></div></section><section id="kana-ma" class="kana-group"><div class="product-item" data-kana="まーがれっと"><span>マーガレット</span></div></section><section id="kana-ya" class="kana-group"><div class="product-item" data-kana="ゆりおぷすでーじー"><span>ユリオプスデージー</span></div></section><section id="kana-ra" class="kana-group"><div class="product-item" data-kana="らべんだー"><span>ラベンダー</span></div></section><section id="kana-wa" class="kana-group"><div class="product-item" data-kana="わすれなぐさ"><span>ワスレナグサ</span></div></section></div><nav class="jumps" aria-label="五十音行ジャンプ"><a href="#kana-a" aria-label="あ行へ">ア</a><a href="#kana-ka" aria-label="か行へ">カ</a><a href="#kana-sa" aria-label="さ行へ">サ</a><a href="#kana-ta" aria-label="た行へ">タ</a><a href="#kana-na" aria-label="な行へ">ナ</a><a href="#kana-ha" aria-label="は行へ">ハ</a><a href="#kana-ma" aria-label="ま行へ">マ</a><a href="#kana-ya" aria-label="や行へ">ヤ</a><a href="#kana-ra" aria-label="ら行へ">ラ</a><a href="#kana-wa" aria-label="わ行へ">ワ</a></nav></div></div><footer class="panel-footer"><button class="direct" id="edit-name2" type="button" disabled>名称2変更</button><button class="direct" id="edit-product" type="button">品名を直接入力</button><button class="direct" type="button">差額</button></footer></section>
 <section class="bottom-sheet name2-panel" role="dialog" aria-modal="true" aria-labelledby="name2-heading"><div class="handle"></div><header class="panel-header"><h3 id="name2-heading">名称2を選択</h3><div class="context" id="name2-row"></div><div class="name2-selected" id="name2-product"></div><button type="button" class="close" id="name2-cancel" aria-label="変更を取り消して閉じます">×</button></header><div class="panel-content"><button type="button" id="name2-blank">空欄</button><div id="name2-list-area"><h4>名称2一覧</h4><div id="name2-history" role="region" aria-label="名称2の候補一覧" tabindex="0"></div></div><form id="name2-form"><label for="name2-input">新しい名称2を入力</label><div class="name2-entry"><input id="name2-input" type="text" autocomplete="off" enterkeyhint="done" placeholder="名称2を入力..."><button type="submit" id="name2-register" disabled>登録</button></div></form></div></section><section class="bottom-sheet quantity-panel" aria-label="数量選択の表示見本"><div class="handle"></div><header class="panel-header"><h3>数量を選択</h3><div class="context"><strong>明細行No.1 ｜ ビオラ</strong><br>現在の数量：3 ／ 単価：150円 ／ 計：450円</div><label class="close" for="main" aria-label="取消して閉じます">×</label></header><div class="panel-content"><div class="section-label">数量</div><div class="choices"><div class="choice">1</div><div class="choice">2</div><div class="choice">3</div><div class="choice">4</div><div class="choice">5</div><div class="choice">6</div><div class="choice">7</div><div class="choice">8</div><div class="choice">9</div><div class="choice">10</div><div class="choice">11</div><div class="choice">12</div></div><button class="direct" type="button">数量を直接入力</button><p class="panel-note">すべて同じ色・同じサイズの表示見本です。</p></div></section>
@@ -1136,8 +1153,35 @@ observeAsciiDisplay();scheduleAsciiDisplay();
 
 
 // 複数会計比較試作。会計IDと元Noは不変。明細DOMは会計ごとに保持し、所属変更では触りません。
-const demoDate=$('.date').textContent.trim();
-const issuedMaxByDay=new Map([[demoDate,7]]);
+// 日本時間の日付だけを比較します。見本の日付を「今日」には使いません。
+function japanToday(now=new Date()){
+ const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now);
+ const get=k=>Number(parts.find(p=>p.type===k).value);return [get('year'),get('month'),get('day')];
+}
+function dateText(parts){return parts[0]+'/'+String(parts[1]).padStart(2,'0')+'/'+String(parts[2]).padStart(2,'0');}
+function dateValue(parts){return parts[0]*10000+parts[1]*100+parts[2];}
+function daysInMonth(y,m){return new Date(Date.UTC(y,m,0)).getUTCDate();}
+function validAccountDate(date,today=japanToday()){
+ const p=accountDateParts(date);return p.length===3&&p.every(Number.isInteger)&&p[0]>=1&&p[0]<=9999&&p[1]>=1&&p[1]<=12&&p[2]>=1&&p[2]<=daysInMonth(p[0],p[1])&&dateValue(p)<=dateValue(today);
+}
+const demoDate=dateText(japanToday());
+const issuedMaxByDay=new Map();
+// ID → 日付 → 本人に予約した番号。所属No.を履歴に書き戻しません。
+const numberHistory=new Map();
+function ownNumber(a,date=a.date){return numberHistory.get(a.id)?.get(date)??null;}
+function nextNumber(date){return (issuedMaxByDay.get(date)||0)+1;}
+function reserveNumber(a,date,no=nextNumber(date)){
+ const history=numberHistory.get(a.id);
+ if(history.has(date))return history.get(date);
+ if([...numberHistory].some(([id,h])=>id!==a.id&&h.get(date)===no))throw Error('会計番号の予約が重複しています。');
+ history.set(date,no);issuedMaxByDay.set(date,Math.max(issuedMaxByDay.get(date)||0,no));
+ if(a.originalNo===null)Object.defineProperties(a,{originalNo:{value:no,enumerable:true,configurable:false},originalDate:{value:date,enumerable:true,configurable:false}});
+ return no;
+}
+function ensureAccountNumber(a){
+ if(a.originalNo===null&&!isNewBlank(a))a.groupNo=reserveNumber(a,a.date);
+ if(a.originalNo===null)a.groupNo=nextNumber(a.date);
+}
 let accountSequence=0,activeAccount=null;
 const demoAccounts=[];
 const cashTemplate=$('.cash-body').cloneNode(true),payTemplate=$('.pay-body').cloneNode(true);
@@ -1145,8 +1189,9 @@ for(const [copy,source] of [[cashTemplate,$('.cash-body')],[payTemplate,$('.pay-
  [...copy.rows].forEach((row,i)=>{if(!row.matches('.blank'))nameTestOriginal.set(row,{...rowData(source.rows[i])});});
 }
 function makeAccount(originalNo,body,method='cash',registered=true,groupNo=originalNo,date=demoDate){
- const a={groupNo,parentAccountId:null,body,method,paid:method==='paypay',registered,isDemoSample:registered,scrollTop:0};
- Object.defineProperties(a,{id:{value:'demo-account-'+(++accountSequence),enumerable:true},originalNo:{value:originalNo,enumerable:true},createdOrder:{value:accountSequence,enumerable:true},date:{value:date,enumerable:true},sourceNo:{get(){return this.groupNo!==this.originalNo?this.originalNo:null;},enumerable:true}});
+ const a={date,groupNo,parentAccountId:null,body,method,paid:method==='paypay',registered,isDemoSample:registered,scrollTop:0};
+ Object.defineProperties(a,{id:{value:'demo-account-'+(++accountSequence),enumerable:true},originalNo:{value:originalNo,enumerable:true,configurable:originalNo===null},createdOrder:{value:accountSequence,enumerable:true},originalDate:{value:originalNo===null?null:date,enumerable:true,configurable:originalNo===null},sourceNo:{get(){return this.parentAccountId!==null?(ownNumber(this)??this.originalNo):null;},enumerable:true}});
+ numberHistory.set(a.id,new Map());if(originalNo!==null)reserveNumber(a,date,originalNo);
  body.className='cash-body';demoAccounts.push(a);return a;
 }
 function simpleBody(price){
@@ -1161,9 +1206,11 @@ makeAccount(4,simpleBody(2500));const initialAccount=makeAccount(5,cashTemplate)
 makeAccount(6,payTemplate,'paypay');
 function blankAccount(){
  const date=activeAccount?.date||demoDate;
- const no=(issuedMaxByDay.get(date)||0)+1;issuedMaxByDay.set(date,no);
+ const pending=demoAccounts.find(a=>a.originalNo===null&&isNewBlank(a));
+ if(pending){pending.date=date;pending.groupNo=nextNumber(date);return pending;}
+ const no=nextNumber(date);
  const body=simpleBody(0);body.rows[0].cells[0].textContent='';body.rows[0].cells[3].textContent='0';body.rows[0].className='blank';
- return makeAccount(no,body,'cash',false,no,date);
+ return makeAccount(null,body,'cash',false,no,date);
 }
 function accountTotals(a){
  let qty=0,money=0;[...a.body.rows].filter(r=>!r.matches('.excluded,.blank')).forEach(r=>{qty+=numeric(r.cells[3]);money+=numeric(r.cells[4]);});return {qty,money};
@@ -1181,8 +1228,22 @@ function compareAccounts(a,b){
  const x=accountDateParts(a.date),y=accountDateParts(b.date);
  return (x[0]-y[0])||(x[1]-y[1])||(x[2]-y[2])||a.groupNo-b.groupNo||a.createdOrder-b.createdOrder;
 }
-function orderedAccounts(){return [...demoAccounts].sort(compareAccounts);}
+function orderedAccounts(){demoAccounts.forEach(ensureAccountNumber);return [...demoAccounts].sort(compareAccounts);}
+function dayAccounts(){return orderedAccounts().filter(a=>a.date===activeAccount.date);}
+function moveAccountDate(a,date){
+ if(!validAccountDate(date))return false;
+ date=dateText(accountDateParts(date));
+ const root=a.parentAccountId===null?a:demoAccounts.find(x=>x.id===a.parentAccountId);
+ if(!root||root.parentAccountId!==null||root.date!==a.date)return false;
+ const members=demoAccounts.filter(x=>x.id===root.id||x.parentAccountId===root.id);
+ if(members.some(x=>x.date!==root.date))return false;
+ ensureAccountNumber(root);
+ const no=root.originalNo===null?nextNumber(date):reserveNumber(root,date);
+ for(const member of members){member.date=date;member.groupNo=no;}
+ return true;
+}
 function renderAccountHeader(){
+ demoAccounts.forEach(ensureAccountNumber);
  const a=activeAccount,t=accountTotals(a);
  $('.date').textContent=a.date;
  $('.visitor-no').textContent='No.'+a.groupNo;
@@ -1192,7 +1253,7 @@ function renderAccountHeader(){
  $('.account').classList.toggle('shared-account',demoAccounts.filter(b=>b.date===a.date&&b.groupNo===a.groupNo).length>=2);
  $('.account').dataset.accountId=a.id;
  $('.account').title='同じNo.に複数の会計がある場合は、背景全体を薄オレンジにし、No.の右に目印を表示します（色は比較用の暫定案です）';
- const ordered=orderedAccounts(),index=ordered.indexOf(a);
+ const ordered=dayAccounts(),index=ordered.indexOf(a);
  $('#account-prev').disabled=index===0;
  $('#account-next').textContent=index===ordered.length-1?'新規〉':'次〉';
  renderHold();renderMemo();wrapNumbers();requestAnimationFrame(()=>{fitNumbers();scheduleAsciiDisplay();});
@@ -1212,17 +1273,17 @@ selectProduct=function(name,kind){oldSelectProduct(name,kind);if(activeAccount){
 const oldCommitName2=commitName2;
 commitName2=function(value){oldCommitName2(value);if(activeAccount){activeAccount.registered=true;renderAccountHeader();}};
 const oldHoldSet=holdRecords.set.bind(holdRecords);
-holdRecords.set=function(key,value){if(activeAccount&&key===activeAccount.id)activeAccount.registered=true;return oldHoldSet(key,value);};
+holdRecords.set=function(key,value){const result=oldHoldSet(key,value);if(activeAccount&&key===activeAccount.id){activeAccount.registered=true;ensureAccountNumber(activeAccount);}return result;};
 // 旧固定見本のナビは実会計の作成順移動へ置換します。
 all('.nav-pair').forEach(el=>el.remove());
 const nav=document.createElement('div');nav.className='account-nav';
 nav.innerHTML='<button class="btn" id="account-prev" type="button">〈前</button><button class="btn next" id="account-next" type="button">次〉</button>';
 $('.navigation').append(nav);
-$('#account-prev').onclick=()=>{const rows=orderedAccounts();showAccount(rows[rows.indexOf(activeAccount)-1]||activeAccount);};
+$('#account-prev').onclick=()=>{const rows=dayAccounts();showAccount(rows[rows.indexOf(activeAccount)-1]||activeAccount);};
 $('#account-next').onclick=()=>{
- const rows=orderedAccounts(),next=rows[rows.indexOf(activeAccount)+1];
+ const rows=dayAccounts(),next=rows[rows.indexOf(activeAccount)+1];
  if(next){showAccount(next);return;}
- if(isNewBlank(activeAccount)){tell('入力のない新規会計です。この画面から入力を始めてください。');return;}
+ if(isNewBlank(activeAccount))return;
  showAccount(blankAccount());
 };
 const previews=$('.account-previews');previews.replaceChildren();
@@ -1233,7 +1294,7 @@ const sizeSamples=new Map();
  const b=document.createElement('button');b.type='button';b.className='btn';b.textContent=text;b.onclick=()=>{let a=sizeSamples.get(text);if(!a){a=blankAccount();const row=a.body.rows[0];row.className='';row.cells[0].textContent=text==='長い品名・桁超過'?'ガーデンシクラメン長い品名の比較':'ビオラ';row.cells[2].textContent=price;row.cells[3].textContent=qty;row.cells[4].textContent=qty*price;a.registered=true;sizeSamples.set(text,a);}showAccount(a);};previews.append(b);
 });
 const extra=document.createElement('dialog');extra.id='extra-account-panel';extra.className='extra-dialog';extra.setAttribute('aria-labelledby','extra-title');
-extra.innerHTML='<header><h2 id="extra-title">複数会計</h2><button type="button" id="extra-close" aria-label="複数会計を取り消して閉じる">×</button></header><p class="extra-help">変更先のNo.を選んでください。黄色のNo.が現在の会計です。グレーの行は選択できません。</p><div class="extra-columns"><span>No.</span><span>会計合計</span><span>支払方法</span></div><div id="extra-account-list" role="group" aria-label="会計の一覧"></div><footer class="extra-controls"><button type="button" id="extra-restore">元のNo.に戻す</button><button type="button" id="extra-cancel">キャンセル</button></footer>';
+extra.innerHTML='<header><h2 id="extra-title">複数会計</h2><button type="button" id="extra-close" aria-label="複数会計を取り消して閉じる">×</button></header><p class="extra-help">変更先のNo.を選んでください。黄色のNo.が現在の会計です。グレーの行は選択できません。</p><div class="extra-columns"><span>No.</span><span>会計合計</span><span>支払方法</span></div><div id="extra-account-list" role="group" aria-label="会計の一覧"></div><footer class="extra-controls"><button type="button" id="extra-restore">複数会計を解除</button><button type="button" id="extra-cancel">キャンセル</button></footer>';
 document.body.append(extra);
 const confirmExtra=document.createElement('dialog');confirmExtra.id='extra-account-confirm';confirmExtra.className='extra-dialog';confirmExtra.setAttribute('aria-labelledby','extra-confirm-title');confirmExtra.innerHTML='<header><h2 id="extra-confirm-title">複数会計の確認</h2><button type="button" id="extra-confirm-close" aria-label="変更せず戻る">×</button></header><div class="extra-confirm-content"><p id="extra-change"></p><p id="extra-question"></p></div><footer class="extra-confirm-buttons"><button type="button" id="extra-no" autofocus>いいえ</button><button type="button" id="extra-yes">はい</button></footer>';document.body.append(confirmExtra);
 let extraSourceId=null,pendingGroup=null,pendingParentId=null,pendingRestore=false,extraReturn=null,extraScroll=null;
@@ -1244,7 +1305,7 @@ function placeExtra(){
 }
 // 可否の判定・確定は表示No.だけでなく不変の会計IDで行います。
 function hasAccountChildren(a){return demoAccounts.some(child=>child.parentAccountId===a.id);}
-function isAccountRoot(a){return !!a&&a.groupNo===a.originalNo&&a.parentAccountId===null;}
+function isAccountRoot(a){return !!a&&a.parentAccountId===null;}
 function canMoveAccount(a){return isAccountRoot(a)&&!hasAccountChildren(a);}
 // 移動先はタップした会計IDではなく、同日・所属No.の正規親へ解決します。
 // 正規親が一意でない不整合データは受け入れません。移動元の親／子ロックとは別の判定です。
@@ -1257,23 +1318,23 @@ function canAcceptAccount(source,row){
  const target=accountDestinationRoot(source,row);
  return canMoveAccount(source)&&!!target&&source.id!==target.id&&source.groupNo!==target.groupNo;
 }
-function canRestoreAccount(a){return !!a&&a.parentAccountId!==null&&a.groupNo!==a.originalNo&&!hasAccountChildren(a);}
+function canRestoreAccount(a){return !!a&&a.parentAccountId!==null&&!hasAccountChildren(a);}
 function fitExtraRows(){}
 function askExtra(target=null,restore=false){
  if(activeAccount.id!==extraSourceId)return;
  if(restore?!canRestoreAccount(activeAccount):!canAcceptAccount(activeAccount,target))return;
  const destination=restore?null:accountDestinationRoot(activeAccount,target);
  pendingRestore=restore;pendingParentId=restore?null:destination.id;
- pendingGroup=restore?activeAccount.originalNo:destination.groupNo;
+ pendingGroup=restore?(ownNumber(activeAccount)??nextNumber(activeAccount.date)):destination.groupNo;
  $('#extra-change').textContent='No.'+activeAccount.groupNo+'→No.'+pendingGroup;
- $('#extra-question').textContent=restore?'複数会計を解除して元のNo.'+pendingGroup+'に戻しますか？':'No.'+pendingGroup+'の複数会計にしますか？';
+ $('#extra-question').textContent=restore?'現在の日付で複数会計を解除し、No.'+pendingGroup+'にしますか？':'No.'+pendingGroup+'の複数会計にしますか？';
  confirmExtra.showModal();placeExtra();$('#extra-no').focus({preventScroll:true});
 }
 function populateExtra(){
  const list=$('#extra-account-list');list.replaceChildren();
  // 実在する会計だけを並べます。未登録の空白会計は現在のものだけ表示します。
  const rows=demoAccounts.filter(a=>a.registered||!isNewBlank(a)||a.id===activeAccount.id);
- rows.sort((a,b)=>a.groupNo-b.groupNo||a.createdOrder-b.createdOrder).forEach(a=>{
+ rows.sort(compareAccounts).forEach(a=>{
   const b=document.createElement('button');b.type='button';b.className='extra-account-row';
   const current=a.id===activeAccount.id;b.classList.toggle('current-account',current);if(current)b.setAttribute('aria-current','true');
   b.dataset.targetNo=a.groupNo;b.dataset.accountId=a.id;
@@ -1300,7 +1361,8 @@ $('#extra-yes').onclick=()=>{if(activeAccount.id!==extraSourceId||pendingGroup==
  // 確認表示後もIDと親子条件を再確認し、所属と親IDだけを更新します。
  const target=demoAccounts.find(a=>a.id===pendingParentId);
  if(pendingRestore?!canRestoreAccount(activeAccount):!canAcceptAccount(activeAccount,target)){cancelExtraConfirm();populateExtra();return;}
- activeAccount.groupNo=pendingRestore?activeAccount.originalNo:target.groupNo;
+ if(!pendingRestore){if(target.originalNo===null)target.groupNo=reserveNumber(target,target.date);ensureAccountNumber(activeAccount);if(activeAccount.originalNo===null)reserveNumber(activeAccount,activeAccount.date);}
+ activeAccount.groupNo=pendingRestore?reserveNumber(activeAccount,activeAccount.date):target.groupNo;
  activeAccount.parentAccountId=pendingRestore?null:target.id;
  renderAccountHeader();closeExtra();
 };
@@ -1336,11 +1398,11 @@ $('.caption').textContent='会計IDごとの一時データです。前後・新
 // 古い未実装案内と矛盾しないよう、手順欄の説明を現行試作に置き換えます。
 all('.guide>p.small,.guide>ul').forEach(el=>el.remove());
 holdNote.textContent='取り置きは会計IDごとに保持します。完了⇔完了済・再編集は決済と独立です。両欄空白は登録せず、片欄のみは登録できます。記録自体の削除は未設計です。';
-const notice=document.createElement('p');notice.className='small';notice.textContent='複数会計試作：所属No.だけを変更します。明細・支払方法・決済・取り置きは会計IDごとに保持し、会計間の移動でも維持します。仮運用：初期見本は通常の空会計と区別します。明細入力（除外中も含む）・登録メモ・取り置き・複数会計の関係がない空会計では、新規を押してもNo.と会計IDを増やしません。支払方法・決済表示の操作だけでは入力済みにしません。メモを削除して完全に空に戻った場合も新規発行を止めます。過去最大No.から採番し欠番を再使用しません。欠番は一覧に出さず、移動済み会計だけ元No.を括弧で表示します。元No.への復帰は専用ボタンで行います。移動済みの子と、子を受け入れている親は他No.へ移動できません。初期のNo.3のPayPay見本は元No.7の子として扱うため、当日発行済み最大No.は7から開始します。最終色は実機で別途決定します。一時データのため再読込で消えます。会計一覧と前後ナビは日付・所属No.・同No.内作成順に並びます。永続保存・CSV・設定・Access連携は未実装です。メモは会計IDごとの一時データで、再読込すると消えます。';$('.guide').append(notice);
+const notice=document.createElement('p');notice.className='small';notice.textContent='複数会計試作：所属No.だけを変更します。明細・支払方法・決済・取り置きは会計IDごとに保持し、会計間の移動でも維持します。仮運用：初期見本は通常の空会計と区別します。明細入力（除外中も含む）・登録メモ・取り置き・複数会計の関係がない空会計では、新規を押してもNo.と会計IDを増やしません。支払方法・決済表示の操作だけでは入力済みにしません。メモを削除して完全に空に戻った場合も新規発行を止めます。過去最大No.から採番し欠番を再使用しません。欠番は一覧に出さず、移動済み会計だけ元No.を括弧で表示します。解除は現在の日付で本人の予約No.へ復帰し、履歴がなければ新規採番します。移動済みの子と、子を受け入れている親は他No.へ移動できません。初期のNo.3のPayPay見本は元No.7の子として扱うため、当日発行済み最大No.は7から開始します。最終色は実機で別途決定します。一時データのため再読込で消えます。会計一覧と前後ナビは日付・所属No.・同No.内作成順に並びます。永続保存・CSV・設定・Access連携は未実装です。メモは会計IDごとの一時データで、再読込すると消えます。';$('.guide').append(notice);
 $('.guide>p:not(.small)').textContent='品名→名称2、単価→数量の3タップ入力と、複数会計を試します。';
 $('.preview-menu label[for="paypay"]').firstChild.textContent='PayPay会計の見本';
 const howTo=all('.guide details').find(d=>d.querySelector('summary')?.textContent==='実機での確認順序');
-if(howTo)howTo.innerHTML='<summary>実機での確認順序</summary><ol><li>Safariの表示を100%にし、品名→名称2・単価→数量の入力を試します。</li><li>複数会計から別No.を選び、いいえ・はい・元No.への解除を確認します。</li><li>最後の会計から新規を作り、所属変更後にも次のNo.が欠番を再使用しないことを確認します。</li><li>前後へ移動して明細・支払・取り置きが各会計に残ることを確認します。</li><li>品名候補の横・縦スクロールと五十音ジャンプ、取り置き完了⇔完了済、お会計拡大を試します。</li><li>横向きやSafariのバー表示・非表示も確認します。永続保存は未実装で、再読込すると入力は消えます。</li></ol>';
+if(howTo)howTo.innerHTML='<summary>実機での確認順序</summary><ol><li>Safariの表示を100%にし、品名→名称2・単価→数量の入力を試します。</li><li>複数会計から別No.を選び、いいえ・はい・複数会計の解除を確認します。</li><li>最後の会計から新規を作り、所属変更後にも次のNo.が欠番を再使用しないことを確認します。</li><li>前後へ移動して明細・支払・取り置きが各会計に残ることを確認します。</li><li>品名候補の横・縦スクロールと五十音ジャンプ、取り置き完了⇔完了済、お会計拡大を試します。</li><li>横向きやSafariのバー表示・非表示も確認します。永続保存は未実装で、再読込すると入力は消えます。</li></ol>';
 
 // 一覧は参照と会計ID指定の移動だけです。開閉では入力状態を変更しません。
 const accountList=document.createElement('dialog');accountList.id='account-list-panel';
@@ -1581,6 +1643,79 @@ window.visualViewport?.addEventListener('resize',closeRowSwipe);window.visualVie
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeRowSwipe();});
 const showAccountBeforeSwipe=showAccount;
 showAccount=function(a){closeRowSwipe();rowGesture=null;showAccountBeforeSwipe(a);};
+// ロールの下書きは確定まで会計に反映しません。
+const datePanel=document.createElement('dialog');datePanel.id='date-panel';datePanel.className='extra-dialog date-dialog';datePanel.setAttribute('aria-labelledby','date-title');
+datePanel.innerHTML='<header><h2 id="date-title">日付変更</h2><button type="button" id="date-close" aria-label="日付変更を取り消す">×</button></header><p class="date-help">年・月・日を上下に動かして選びます。</p><div class="date-wheels"></div><p class="date-preview" aria-live="polite"></p><p class="date-error" role="alert"></p><footer><button type="button" id="date-cancel">取消</button><button type="button" id="date-apply">変更</button></footer>';
+document.body.append(datePanel);
+const dateWheels=['年','月','日'].map((label,i)=>{const el=document.createElement('div');el.className='date-wheel';el.dataset.part=i;el.tabIndex=0;el.setAttribute('role','listbox');el.setAttribute('aria-label',label);$('.date-wheels').append(el);return el;});
+let dateDraft=null,dateSourceId=null,dateReturn=null,datePageScroll=null,dateRevision=0;
+const wheelTimers=new Map(),wheelValues=new Map(),wheelTouch=new Map();
+function clampDateDraft(parts,today=japanToday()){
+ let [y,m,d]=parts;y=Math.min(today[0],Math.max(1,y));m=Math.min(y===today[0]?today[1]:12,Math.max(1,m));
+ d=Math.min(daysInMonth(y,m),y===today[0]&&m===today[1]?today[2]:31,Math.max(1,d));return [y,m,d];
+}
+function placeDatePanel(){
+ const r=phone.getBoundingClientRect(),v=window.visualViewport,top=v?.offsetTop||0,height=v?.height||innerHeight;
+ datePanel.style.setProperty('--extra-left',Math.max(0,r.left)+'px');datePanel.style.setProperty('--extra-width',Math.min(r.width,innerWidth)+'px');
+ datePanel.style.setProperty('--extra-top',(top+height)+'px');datePanel.style.setProperty('--extra-max-height',Math.max(1,height-12)+'px');
+}
+function previewDateMove(){
+ const root=activeAccount.parentAccountId===null?activeAccount:demoAccounts.find(a=>a.id===activeAccount.parentAccountId);
+ const date=dateText(dateDraft),no=root.originalNo===null?nextNumber(date):(ownNumber(root,date)??nextNumber(date));
+ const count=demoAccounts.filter(a=>a.id===root.id||a.parentAccountId===root.id).length;
+ $('.date-preview').textContent=activeAccount.date+' No.'+activeAccount.groupNo+' → '+date+' No.'+no+(count>1?'（親子'+count+'会計を移動）':'')+(root.originalNo===null?'（入力時に採番）':'');
+}
+function renderDateWheels(){
+ const revision=++dateRevision,today=japanToday();dateDraft=clampDateDraft(dateDraft,today);
+ dateWheels.forEach((el,i)=>{
+  clearTimeout(wheelTimers.get(el));el.dataset.scrolling='false';
+  const max=i===0?today[0]:i===1?(dateDraft[0]===today[0]?today[1]:12):Math.min(daysInMonth(dateDraft[0],dateDraft[1]),dateDraft[0]===today[0]&&dateDraft[1]===today[1]?today[2]:31);
+  const values=Array.from({length:max},(_,n)=>n+1);wheelValues.set(el,values);el.replaceChildren();
+  const fragment=document.createDocumentFragment();for(const value of values){const b=document.createElement('button');b.type='button';b.tabIndex=-1;b.setAttribute('role','option');b.id='date-option-'+i+'-'+value;b.dataset.value=value;b.textContent=value+['年','月','日'][i];b.setAttribute('aria-selected',String(value===dateDraft[i]));b.onclick=()=>{if(el.dataset.scrolling==='true')return;setDatePart(i,value);};fragment.append(b);}el.append(fragment);
+  el.setAttribute('aria-activedescendant','date-option-'+i+'-'+dateDraft[i]);el.dataset.rendering='true';el.scrollTop=(dateDraft[i]-1)*44;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{if(revision===dateRevision)el.dataset.rendering='false';}));
+ });previewDateMove();
+}
+function setDatePart(i,value){if(!datePanel.open)return;dateDraft[i]=value;renderDateWheels();$('.date-error').textContent='';}
+function settleDateWheel(el){
+ if(!datePanel.open||el.dataset.rendering==='true')return;
+ const i=Number(el.dataset.part),values=wheelValues.get(el),index=Math.max(0,Math.min(values.length-1,Math.round(el.scrollTop/44)));
+ el.dataset.scrolling='false';if(dateDraft[i]!==values[index])setDatePart(i,values[index]);else el.scrollTop=index*44;
+}
+for(const el of dateWheels){
+ el.addEventListener('scroll',()=>{if(el.dataset.rendering==='true')return;el.dataset.scrolling='true';clearTimeout(wheelTimers.get(el));wheelTimers.set(el,setTimeout(()=>{if(!wheelTouch.has(el))settleDateWheel(el);},160));},{passive:true});
+ el.addEventListener('touchstart',()=>{wheelTouch.set(el,true);},{passive:true});
+ const end=()=>{wheelTouch.delete(el);clearTimeout(wheelTimers.get(el));wheelTimers.set(el,setTimeout(()=>settleDateWheel(el),180));};
+ el.addEventListener('touchend',end,{passive:true});el.addEventListener('touchcancel',end,{passive:true});
+ el.addEventListener('keydown',e=>{const i=Number(el.dataset.part);if(['ArrowUp','ArrowDown','Home','End','PageUp','PageDown'].includes(e.key)){e.preventDefault();const values=wheelValues.get(el);let n=dateDraft[i]+({ArrowUp:-1,ArrowDown:1,PageUp:-10,PageDown:10}[e.key]||0);if(e.key==='Home')n=values[0];if(e.key==='End')n=values.at(-1);setDatePart(i,Math.max(values[0],Math.min(values.at(-1),n)));}});
+}
+function openDatePanel(trigger){
+ if(datePanel.open||document.querySelector('dialog[open]'))return;
+ if(!$('#main').checked)return;
+ dateSourceId=activeAccount.id;dateDraft=accountDateParts(activeAccount.date);dateReturn=trigger;datePageScroll={x:scrollX,y:scrollY};
+ $('.date-error').textContent='';placeDatePanel();datePanel.showModal();renderDateWheels();$('#date-close').focus({preventScroll:true});
+}
+function closeDatePanel(){
+ for(const timer of wheelTimers.values())clearTimeout(timer);wheelTouch.clear();dateRevision++;datePanel.close();dateDraft=null;dateSourceId=null;dateReturn?.focus({preventScroll:true});if(datePageScroll)window.scrollTo(datePageScroll.x,datePageScroll.y);
+}
+function applyDateChange(){
+ if(!datePanel.open||dateSourceId!==activeAccount.id)return;
+ // 最後のスクロール位置を同期し、日付全体を改めて検証します。
+ const parts=dateWheels.map((el,i)=>{const values=wheelValues.get(el),n=Math.max(0,Math.min(values.length-1,Math.round(el.scrollTop/44)));return values[n]??dateDraft[i];});
+ const date=dateText(parts);
+ if(!validAccountDate(date)){$('.date-error').textContent='今日以前の有効な日付を選び直してください。';return;}
+ if(!moveAccountDate(activeAccount,date)){$('.date-error').textContent='会計の状態を確認してください。日付は変更していません。';return;}
+ closeRowSwipe();renderAccountHeader();closeDatePanel();
+}
+$('#date-apply').onclick=applyDateChange;$('#date-close').onclick=closeDatePanel;$('#date-cancel').onclick=closeDatePanel;
+datePanel.addEventListener('cancel',e=>{e.preventDefault();closeDatePanel();});
+let dateBackdrop=false;const outsideDate=e=>{const r=datePanel.getBoundingClientRect();return e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom;};
+datePanel.addEventListener('pointerdown',e=>{dateBackdrop=e.target===datePanel&&outsideDate(e);});
+datePanel.addEventListener('click',e=>{if(dateBackdrop&&!dragged&&e.target===datePanel&&outsideDate(e))closeDatePanel();dateBackdrop=false;});
+document.addEventListener('keydown',e=>{if(datePanel.open&&e.key==='Escape'){e.stopImmediatePropagation();e.preventDefault();closeDatePanel();}},true);
+document.addEventListener('click',e=>{const trigger=e.target.closest('.date');if(trigger){e.preventDefault();e.stopImmediatePropagation();if(!dragged||e.detail===0)openDatePanel(trigger);}},true);
+window.addEventListener('resize',placeDatePanel);window.visualViewport?.addEventListener('resize',placeDatePanel);window.visualViewport?.addEventListener('scroll',placeDatePanel);
+
 showAccount(initialAccount);
 
 </script></body></html>
