@@ -459,7 +459,7 @@ body.account-demo .account.shared-account{background:#fff0dc}
 .account-list-row>span:nth-child(4){color:inherit;font-size:15px}
 .account-list-row>.account-list-icons{justify-content:flex-start;gap:4px;padding-left:0}
 .account-list-badge{flex:0 0 auto;width:auto;height:25px;padding:0 6px;border-radius:999px;font-size:13px;white-space:nowrap}
-.extra-columns,.extra-account-row{grid-template-columns:66px 88px minmax(62px,1fr);column-gap:16px;padding-left:14px;padding-right:14px}
+.extra-columns,.extra-account-row{grid-template-columns:124px 94px minmax(58px,1fr);column-gap:16px;padding-left:14px;padding-right:14px}
 .extra-columns>span:nth-child(3),.extra-account-row>span:nth-child(3){padding-left:8px;text-align:left}
 .extra-account-row>.extra-no-cell{justify-self:stretch}
 .current-account .extra-no-cell{background:transparent}
@@ -470,7 +470,7 @@ body.account-demo .account.shared-account{background:#fff0dc}
  .account-list-row>.account-list-icons{grid-column:2 / -1;min-height:0}
  .account-list-row>.account-list-icons:empty{display:none}
  .account-list-row:has(.account-list-badge){row-gap:6px}
- .extra-columns,.extra-account-row{grid-template-columns:66px 88px minmax(62px,1fr);column-gap:12px;padding-left:10px;padding-right:10px}
+ .extra-columns,.extra-account-row{grid-template-columns:112px 94px minmax(58px,1fr);column-gap:10px;padding-left:10px;padding-right:10px}
 }
 
 /* 2026-11-06 会計一覧：支払文字の直後から状態ピルを左詰め。 */
@@ -539,14 +539,17 @@ body.panel-text-pointer #memo-form input:focus,body.panel-text-pointer #hold-for
 #extra-account-panel,#extra-account-confirm{overflow:hidden}
 #extra-account-list{height:250px;flex:0 1 250px;min-height:0;-webkit-overflow-scrolling:touch}
 #extra-account-panel .extra-account-row{height:50px;min-height:50px;box-sizing:border-box;font-size:15px;font-weight:700;color:#293c33}
-#extra-account-panel .extra-no-text{white-space:normal;overflow-wrap:anywhere;line-height:1.15}
+#extra-account-panel .extra-no-text{white-space:nowrap;overflow-wrap:normal;line-height:1.15}
 #extra-account-panel .extra-no-cell{background:transparent}
 #extra-account-panel .current-account .extra-no-text{background:#fff0a8}
 #extra-account-panel .extra-empty{height:100%;min-height:0;margin:0;display:flex;align-items:center;justify-content:center;padding:12px;text-align:center;box-sizing:border-box;font-size:14px}
 #extra-restore[hidden]{display:none}
 #extra-account-confirm .extra-confirm-content{flex:1 1 auto}
 #extra-account-confirm #extra-change{font-size:20px;line-height:1.8;margin:8px 0 14px}
-#extra-account-confirm #extra-change>div{white-space:nowrap}
+.extra-restore-table{display:table;white-space:nowrap;overflow-wrap:normal}
+.extra-restore-row{display:table-row}
+.extra-restore-row>span{display:table-cell}
+.extra-restore-row>span:nth-child(2){padding-inline:12px;text-align:center}
 @media(max-width:374px){#extra-account-panel .extra-account-row{font-size:14px}}
 </style></head><body class="iphone-demo focus-view">
 <input class="state" type="radio" name="preview" id="main" checked aria-label="会計入力の見本"><input class="state" type="radio" name="preview" id="product" aria-label="品名パネルの見本"><input class="state" type="radio" name="preview" id="quantity" aria-label="数量パネルの見本"><input class="state" type="radio" name="preview" id="price" aria-label="単価パネルの見本"><input class="state" type="radio" name="preview" id="paypay" aria-label="別会計の見本">
@@ -1307,9 +1310,9 @@ const sizeSamples=new Map();
  const b=document.createElement('button');b.type='button';b.className='btn';b.textContent=text;b.onclick=()=>{let a=sizeSamples.get(text);if(!a){a=blankAccount();const row=a.body.rows[0];row.className='';row.cells[0].textContent=text==='長い品名・桁超過'?'ガーデンシクラメン長い品名の比較':'ビオラ';row.cells[2].textContent=price;row.cells[3].textContent=qty;row.cells[4].textContent=qty*price;a.registered=true;sizeSamples.set(text,a);}showAccount(a);};previews.append(b);
 });
 const extra=document.createElement('dialog');extra.id='extra-account-panel';extra.className='extra-dialog';extra.setAttribute('aria-labelledby','extra-title');
-extra.innerHTML='<header><h2 id="extra-title">複数会計</h2><button type="button" id="extra-close" aria-label="複数会計を取り消して閉じる">×</button></header><p class="extra-help">まとめる先の会計番号（No.）を選んでください。</p><div class="extra-columns"><span>No.</span><span>会計合計</span><span>支払方法</span></div><div id="extra-account-list" role="group" aria-label="会計の一覧"></div><footer class="extra-controls"><button type="button" id="extra-restore">複数会計を解除</button><button type="button" id="extra-cancel">キャンセル</button></footer>';
+extra.innerHTML='<header><h2 id="extra-title">複数会計</h2><button type="button" id="extra-close" aria-label="複数会計を取り消して閉じる">×</button></header><p class="extra-help"></p><div class="extra-columns"><span>No.</span><span>会計合計</span><span>支払方法</span></div><div id="extra-account-list" role="group" aria-label="会計の一覧"></div><footer class="extra-controls"><button type="button" id="extra-restore">複数会計を解除</button><button type="button" id="extra-cancel">キャンセル</button></footer>';
 document.body.append(extra);
-const confirmExtra=document.createElement('dialog');confirmExtra.id='extra-account-confirm';confirmExtra.className='extra-dialog';confirmExtra.setAttribute('aria-labelledby','extra-confirm-title');confirmExtra.innerHTML='<header><h2 id="extra-confirm-title">複数会計の確認</h2><button type="button" id="extra-confirm-close" aria-label="変更せず戻る">×</button></header><div class="extra-confirm-content"><p id="extra-question"></p><div id="extra-change" aria-label="変更後の会計番号"></div></div><footer class="extra-confirm-buttons"><button type="button" id="extra-no" autofocus>いいえ</button><button type="button" id="extra-yes">はい</button></footer>';document.body.append(confirmExtra);
+const confirmExtra=document.createElement('dialog');confirmExtra.id='extra-account-confirm';confirmExtra.className='extra-dialog';confirmExtra.setAttribute('aria-labelledby','extra-confirm-title');confirmExtra.innerHTML='<header><h2 id="extra-confirm-title">複数会計の確認</h2><button type="button" id="extra-confirm-close" aria-label="変更せず戻る">×</button></header><div class="extra-confirm-content"><p id="extra-question"></p><div id="extra-change"></div></div><footer class="extra-confirm-buttons"><button type="button" id="extra-no" autofocus>いいえ</button><button type="button" id="extra-yes">はい</button></footer>';document.body.append(confirmExtra);
 let extraSourceId=null,pendingGroup=null,pendingParentId=null,pendingRestore=false,pendingRestorePlan=null,extraReturn=null,extraScroll=null;
 function placeExtra(){
  const box=phone.getBoundingClientRect(),vv=window.visualViewport;
@@ -1379,7 +1382,23 @@ function askExtra(target=null,restore=false){
  if(restore){
   $('#extra-confirm-title').textContent='複数会計を解除';
   $('#extra-question').textContent='複数会計'+pendingRestorePlan.entries.length+'件を解除します。';
-  for(const entry of pendingRestorePlan.entries){const line=document.createElement('div');line.textContent=entry.before+' → No.'+entry.no;changes.append(line);}
+  const table=document.createElement('div');
+  table.className='extra-restore-table';
+  table.setAttribute('role','table');
+  table.setAttribute('aria-label','現在のNo.と解除後のNo.');
+  for(const entry of pendingRestorePlan.entries){
+   const row=document.createElement('div');
+   row.className='extra-restore-row';
+   row.setAttribute('role','row');
+   for(const text of [entry.before,'→','No.'+entry.no]){
+    const cell=document.createElement('span');
+    cell.setAttribute('role','cell');
+    cell.textContent=text;
+    row.append(cell);
+   }
+   table.append(row);
+  }
+  changes.append(table);
  }else{
   $('#extra-confirm-title').textContent='複数会計の確認';
   changes.textContent=accountNoLabel(activeAccount)+' → No.'+pendingGroup;
@@ -1392,7 +1411,7 @@ function populateExtra(){
  const source=demoAccounts.find(a=>a.id===extraSourceId);if(!source)return;
  const grouped=canRestoreAccount(source);
  extra.dataset.mode=grouped?'grouped':'single';
- $('.extra-help').textContent=grouped?'複数会計中 — このNo.の会計を全て解除できます。':'まとめる先の会計番号（No.）を選んでください。';
+ $('.extra-help').textContent=grouped?'複数会計中 — このNo.の会計を全て解除できます。':'No.'+source.groupNo+'をまとめる先の会計を選んでください。';
  const rows=grouped?groupedAccounts(source):demoAccounts.filter(a=>a.date===source.date&&(a.registered||!isNewBlank(a))&&canAcceptAccount(source,a)).sort(compareAccounts);
  for(const a of rows){
   // 内訳は選択操作のない通常文字色の行にします。
@@ -1470,7 +1489,7 @@ $('.caption').textContent='会計ごとの一時データです。前後・新�
 // 古い未実装案内と矛盾しないよう、手順欄の説明を現行試作に置き換えます。
 all('.guide>p.small,.guide>ul').forEach(el=>el.remove());
 holdNote.textContent='取り置きは会計ごとに保持します。完了⇔完了済・再編集は決済と独立です。両欄空白は登録せず、片欄のみは登録できます。記録自体の削除は未設計です。';
-const notice=document.createElement('p');notice.className='small';notice.textContent='複数会計は、単独の会計から同じ日付の会計番号（No.）へまとめます。複数会計中は、そのNo.の全会計を一括解除できます。確認画面に全件の解除後No.を表示し、いいえで取消、はいで確定します。明細・支払方法・決済・取り置き・メモは各会計に保持します。解除後は現在の日付で以前の番号へ戻し、履歴がなければ新しい番号を発行します。前後の移動は同日内のNo.順です。会計一覧は全日付を表示します。内容のない新規会計では番号を増やしません。全体の色は暫定です。一時データのため再読込で消えます。永続保存・CSV・設定・Access連携は未実装です。';$('.guide').append(notice);
+const notice=document.createElement('p');notice.className='small';notice.textContent='複数会計は、単独の会計を同じ日付の別の会計にまとめます。複数会計中は、そのNo.の全会計を一括解除できます。確認画面に全件の解除後No.を表示し、いいえで取消、はいで確定します。明細・支払方法・決済・取り置き・メモは各会計に保持します。解除後は現在の日付で以前の番号へ戻し、履歴がなければ新しい番号を発行します。前後の移動は同日内のNo.順です。会計一覧は全日付を表示します。内容のない新規会計では番号を増やしません。全体の色は暫定です。一時データのため再読込で消えます。永続保存・CSV・設定・Access連携は未実装です。';$('.guide').append(notice);
 $('.guide>p:not(.small)').textContent='品名→名称2、単価→数量の3タップ入力と、複数会計を試します。';
 $('.preview-menu label[for="paypay"]').firstChild.textContent='PayPay会計の見本';
 const howTo=all('.guide details').find(d=>d.querySelector('summary')?.textContent==='実機での確認順序');
